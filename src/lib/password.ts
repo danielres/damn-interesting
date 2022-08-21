@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { dev } from '$app/env'
 
 export const compare = bcrypt.compare
