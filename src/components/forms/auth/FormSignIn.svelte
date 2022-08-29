@@ -12,7 +12,7 @@
 
 	let errors: FormError[] = []
 
-	const onSubmit = async (event: Event) => {
+	const onSubmit = async () => {
 		const credentialsData = { email, password }
 
 		const response = await fetch('/auth/signin', {
