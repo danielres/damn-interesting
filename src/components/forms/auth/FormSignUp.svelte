@@ -1,10 +1,10 @@
 <script lang="ts" scope="module">
-	import type { FormError } from '../../../lib/validators'
+	import type { FormError } from '$lib/validators'
 
-	import * as validators from '../../../lib/validators'
-	import Row from '../Row.svelte'
-	import Errors from '../Errors.svelte'
 	import { dev } from '$app/env'
+	import * as validators from '$lib/validators'
+	import Errors from '../Errors.svelte'
+	import Row from '../Row.svelte'
 
 	export let onSuccess: () => void
 
@@ -15,7 +15,7 @@
 
 	let errors: FormError[] = []
 
-	const onSubmit = async (event: Event) => {
+	const onSubmit = async () => {
 		const newUserData = { username, email, password, password2 }
 
 		errors = await validators.newUser(newUserData)
