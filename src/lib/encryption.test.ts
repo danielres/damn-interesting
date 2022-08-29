@@ -12,8 +12,6 @@ describe('encryptObject(), decryptObject()', () => {
 		const encrypted = encryptObject(object)
 		const decrypted = decryptObject(encrypted)
 
-		console.log({ enc: encrypted, len: encrypted.length, dec: decrypted })
-
 		expect(decrypted).toEqual(object)
 	})
 })
