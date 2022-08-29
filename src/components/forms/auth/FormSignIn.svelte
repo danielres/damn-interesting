@@ -6,7 +6,8 @@
 	import Errors from '../Errors.svelte'
 	import Row from '../Row.svelte'
 
-	let email = dev ? 'dan@example.com' : ''
+	export let onSuccess = () => {}
+	export let email = dev ? 'dan@example.com' : ''
 	let password = dev ? 'pass' : ''
 
 	let errors: FormError[] = []
@@ -19,7 +20,10 @@
 			body: JSON.stringify(credentialsData),
 		})
 
-		if (response.ok) $userStore = await response.json()
+		if (response.ok) {
+			$userStore = await response.json()
+			onSuccess()
+		}
 		if (!response.ok) errors = await response.json()
 	}
 </script>
