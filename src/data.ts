@@ -1,9 +1,11 @@
 export type User = {
 	id: string
-	username: string
 	email: string
 	password: string
+	username: string
 	emailVerifiedAt?: string
+	invitedAt?: string
+	invitedBy?: string
 }
 import { hash } from './lib/password'
 
@@ -24,11 +26,23 @@ export const entries = [
 ]
 
 export const addUser = async (user: Omit<User, 'id'>) => {
-	const username = user.username
+	const id = crypto.randomUUID()
 	const email = user.email
 	const password = await hash(user.password)
-	const id = crypto.randomUUID()
+	const username = user.username
 	const emailVerifiedAt = new Date().toISOString()
-	users = [...users, { id, username, email, password, emailVerifiedAt }]
-	console.log({ users })
+	const invitedAt = user.invitedAt
+	const invitedBy = user.invitedBy
+	users = [
+		...users,
+		{
+			id,
+			email,
+			password,
+			username,
+			emailVerifiedAt,
+			invitedAt,
+			invitedBy,
+		},
+	]
 }
