@@ -10,10 +10,23 @@
 
 {#if $userStore}
 	<header>
-		{$userStore.username}
-		<button on:click={signOut}>Sign out</button>
+		<div>
+			<h1>
+				<a href="/"> Damn Interesting </a>
+			</h1>
+		</div>
+
+		<div>
+			<a href="/profile">
+				{$userStore.username}
+			</a>
+			<button on:click={signOut}>Sign out</button>
+		</div>
 	</header>
-	<slot />
+
+	<main>
+		<slot />
+	</main>
 {:else}
 	<h2>Damn Interesting!</h2>
 
@@ -45,10 +58,25 @@
 	}
 
 	header {
-		text-align: right;
 		padding: 1em;
+		display: flex;
+		justify-content: space-between;
+		background: #eee;
+		margin-bottom: 1em;
+		align-items: baseline;
 	}
 
+	header h1 {
+		line-height: 1;
+		margin: 0;
+		padding: 0;
+		font-size: larger;
+		font-weight: normal;
+	}
+
+	main {
+		margin: 1em;
+	}
 	h2 {
 		text-align: center;
 		font-weight: normal;
