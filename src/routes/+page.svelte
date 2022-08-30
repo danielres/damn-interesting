@@ -1,5 +1,4 @@
 <script lang="ts">
-	import FormInviteNewMember from '../components/forms/FormInviteNewMember.svelte'
 	import { entries } from '../data'
 
 	const YoutubeGetVideoDetails = async (url: string) =>
@@ -8,7 +7,7 @@
 	const promises = entries.map((entry) => YoutubeGetVideoDetails(entry.url))
 	const resolved = Promise.all(promises)
 
-	const WIDTH = 600
+	const WIDTH = 400
 </script>
 
 <h1>Damn interesting: latest</h1>
@@ -35,7 +34,3 @@
 		/>
 	{/each}
 {/await}
-
-<hr />
-<h3>Invite a new member</h3>
-<FormInviteNewMember />
