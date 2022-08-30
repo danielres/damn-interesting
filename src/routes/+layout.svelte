@@ -1,7 +1,10 @@
 <script scope="module">
+	import '../app.postcss'
+
 	import FormSignIn from '../components/forms/auth/FormSignIn.svelte'
 	import FormSignUp from '../components/forms/auth/FormSignUp.svelte'
 	import { userStore } from '../stores/user'
+
 	const signOut = () => ($userStore = undefined)
 
 	let signupSuccess = false
