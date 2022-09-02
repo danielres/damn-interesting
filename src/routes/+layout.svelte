@@ -11,55 +11,50 @@
 	const onSignupSuccess = () => (signupSuccess = true)
 </script>
 
-{#if $userStore}
-	<header>
-		<div>
-			<h1>
-				<a href="/"> Damn Interesting </a>
-			</h1>
-		</div>
+<header>
+	<div>
+		<h1 class="text-xl">
+			<a href="/">Damn Interesting</a>
+		</h1>
+	</div>
 
+	{#if $userStore}
 		<div>
 			<a href="/profile">
 				{$userStore.username}
 			</a>
 			<button on:click={signOut}>Sign out</button>
 		</div>
-	</header>
+	{/if}
+</header>
 
-	<main>
+<main>
+	{#if $userStore}
 		<slot />
-	</main>
-{:else}
-	<h2>Damn Interesting!</h2>
-
-	<div class="wrapper">
-		<div class="columns">
-			<div>
-				<h4>Sign in</h4>
-				<FormSignIn />
-			</div>
-			<div>
-				<h4>Sign up</h4>
-				{#if signupSuccess}
-					<div class="success">
-						<p>Almost there!</p>
-						<p>Please check your inbox and confirm your email.</p>
-					</div>
-				{:else}
-					<FormSignUp onSuccess={onSignupSuccess} />
-				{/if}
+	{:else}
+		<div class="wrapper">
+			<div class="columns">
+				<div>
+					<h4>Sign in</h4>
+					<FormSignIn />
+				</div>
+				<div>
+					<h4>Sign up</h4>
+					{#if signupSuccess}
+						<div class="success">
+							<p>Almost there!</p>
+							<p>Please check your inbox and confirm your email.</p>
+						</div>
+					{:else}
+						<FormSignUp onSuccess={onSignupSuccess} />
+					{/if}
+				</div>
 			</div>
 		</div>
-	</div>
-{/if}
+	{/if}
+</main>
 
 <style>
-	:global(body) {
-		margin: 0;
-		padding: 0;
-	}
-
 	header {
 		padding: 1em;
 		display: flex;
@@ -69,24 +64,8 @@
 		align-items: baseline;
 	}
 
-	header h1 {
-		line-height: 1;
-		margin: 0;
-		padding: 0;
-		font-size: larger;
-		font-weight: normal;
-	}
-
 	main {
 		margin: 1em;
-	}
-	h2 {
-		text-align: center;
-		font-weight: normal;
-	}
-
-	h4 {
-		font-weight: normal;
 	}
 
 	.wrapper {
