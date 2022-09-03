@@ -14,7 +14,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"bcryptjs": "^2.4.3"
+		"bcryptjs": "^2.4.3",
+		"lowdb": "^3.0.0"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.22.2",
