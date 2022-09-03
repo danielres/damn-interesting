@@ -3,6 +3,7 @@ import { JSONFile, Low } from 'lowdb'
 import * as fs from 'node:fs'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
+import { hash } from '../lib/password'
 
 export type User = {
 	id: string
@@ -71,13 +72,21 @@ export const Entries = {
 
 export const Users = {
 	insert: async (userData: Omit<User, 'id'>) => {
-		const newUser = { id: randomUUID(), ...userData }
+		const newUser = {
+			email: userData.email,
+			id: randomUUID(),
+			invitedAt: userData.invitedAt,
+			invitedBy: userData.invitedBy,
+			password: await hash(userData.password),
+			username: userData.username,
+		}
 		const db = await getDb()
 		db.data?.users.push(newUser)
 		await db.write()
 	},
 	list: async () => {
 		const db = await getDb()
-		return db.data?.users ?? []
+		const users = db.data?.users ?? []
+		return users.map(({ password, ...rest }) => rest) // eslint-disable-line @typescript-eslint/no-unused-vars
 	},
 }

@@ -15,12 +15,17 @@ describe('getDb()', () => {
 
 describe('Users.insert(), Users.list()', () => {
 	it.only('inserts then retrieves a user', async () => {
-		const userData = { username: 'Tom', email: 'tom@example.com', password: '123' }
+		const userData = {
+			username: 'Tom',
+			email: 'tom@example.com',
+			password: 'pass',
+		}
 		await Users.insert(userData)
 
-		const [dbUser] = await Users.list()
-		expect(dbUser.username).toEqual('Tom')
-		expect(dbUser.id.length).toEqual(36)
+		const [listedUser] = await Users.list()
+		expect(listedUser.username).toEqual('Tom')
+		expect(listedUser.id.length).toEqual(36)
+		expect(listedUser).not.toHaveProperty('password')
 	})
 })
 
