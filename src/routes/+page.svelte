@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { entries } from '../data'
+	import type { Entry } from '../db/types'
 
-	const YoutubeGetVideoDetails = async (url: string) =>
+	export let data
+
+	const getYoutubeGetVideoDetails = async (url: string) =>
 		fetch(`https://www.youtube.com/oembed?url=${url}&format=json`).then((res) => res.json())
 
-	const promises = entries.map((entry) => YoutubeGetVideoDetails(entry.url))
-	const resolved = Promise.all(promises)
-
 	const WIDTH = 500
+	const entries = data.entries
+	const promises = entries.map((entry: Entry) => getYoutubeGetVideoDetails(entry.url))
+	const resolved = Promise.all(promises)
 </script>
 
 <div class="flex justify-center">

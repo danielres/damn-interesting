@@ -3,13 +3,13 @@ import type { RequestHandler } from './$types'
 import { json } from '@sveltejs/kit'
 import { compare } from '../../../lib/password'
 
-import { users } from '../../../data'
+import { Users } from '../../../db/db'
 
 export const POST: RequestHandler = async ({ request }) => {
 	const errors: { message: string }[] = []
 	const { email, password } = await request.json()
 
-	const user = users.find((u) => u.email === email)
+	const user = await Users.findByEmail(email)
 
 	if (!user) {
 		errors.push({ message: 'Email/password combination is not valid' })

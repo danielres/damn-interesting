@@ -1,27 +1,11 @@
+import type { Entry, User } from './types'
+
 import { randomUUID } from 'crypto'
 import { JSONFile, Low } from 'lowdb'
 import * as fs from 'node:fs'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 import { hash } from '../lib/password'
-
-export type User = {
-	id: string
-	email: string
-	password: string
-	username: string
-	emailVerifiedAt?: string
-	invitedAt?: string
-	invitedBy?: string
-}
-
-export type Entry = {
-	id: string
-	ownerId: string
-	url: string
-	description?: string
-	createdAt?: string
-}
 
 type Data = {
 	users: User[]
@@ -63,6 +47,7 @@ export const Entries = {
 		const db = await getDb()
 		db.data?.entries.push(newEntry)
 		await db.write()
+		return newEntry
 	},
 	list: async () => {
 		const db = await getDb()
@@ -88,5 +73,17 @@ export const Users = {
 		const db = await getDb()
 		const users = db.data?.users ?? []
 		return users.map(({ password, ...rest }) => rest) // eslint-disable-line @typescript-eslint/no-unused-vars
+	},
+	findByEmail: async (email: string) => {
+		const db = await getDb()
+		const users = db.data?.users ?? []
+		const user = users.find((u) => u.email === email)
+		return user
+	},
+	findByUsername: async (username: string) => {
+		const db = await getDb()
+		const users = db.data?.users ?? []
+		const user = users.find((u) => u.username === username)
+		return user
 	},
 }
