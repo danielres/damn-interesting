@@ -9,3 +9,4 @@ node_modules
 
 .history
 src/db/db.test.json
+src/db/db.development.json
