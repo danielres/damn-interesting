@@ -5,6 +5,7 @@ import { JSONFile, Low } from 'lowdb'
 import * as fs from 'node:fs'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
+import { doesFileExist } from '../lib/fs'
 import { hash } from '../lib/password'
 
 type Data = {
@@ -22,11 +23,8 @@ export const getDbPath = () => {
 
 export const delDbFile = async () => {
 	const file = getDbPath()
-	return new Promise((resolve) =>
-		fs.exists(file, (exists) => {
-			exists ? fs.unlink(file, () => resolve(undefined)) : resolve(undefined)
-		})
-	)
+	const exists = await doesFileExist(file)
+	if (exists) await fs.promises.unlink(file)
 }
 
 export const getDb = async () => {
