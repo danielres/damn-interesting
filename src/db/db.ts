@@ -114,6 +114,12 @@ export const Users = {
 		const user = users.find((u) => u.email === email)
 		return user
 	},
+	findById: async (id: string) => {
+		const db = await getDb()
+		const users = db.data?.users ?? []
+		const user = users.find((u) => u.id === id)
+		return user
+	},
 	findByUsername: async (username: string) => {
 		const db = await getDb()
 		const users = db.data?.users ?? []
