@@ -1,11 +1,13 @@
 import type { RequestHandler } from './$types'
 
 import { json } from '@sveltejs/kit'
+import { Users } from '../../../db/db'
+import { encryptObject } from '../../../lib/encryption'
 import { compare } from '../../../lib/password'
 
-import { Users } from '../../../db/db'
+const COOKIE_MAX_AGE = 60 // in seconds
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ setHeaders, request }) => {
 	const errors: { message: string }[] = []
 	const { email, password } = await request.json()
 
@@ -22,6 +24,12 @@ export const POST: RequestHandler = async ({ request }) => {
 		errors.push({ message: 'Email/password combination is not valid' })
 		return new Response(JSON.stringify(errors), { status: 403 })
 	}
+
+	const sessionData = encryptObject({ userId: user.id })
+
+	setHeaders({
+		'set-cookie': `session=${sessionData}; Max-Age=${COOKIE_MAX_AGE}; HttpOnly; SameSite=Strict; Path=/; Secure`,
+	})
 
 	return json({
 		username: user.username,
