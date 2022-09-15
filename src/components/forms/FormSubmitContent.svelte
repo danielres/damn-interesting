@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { FormError } from '$lib/validators'
-	import type { Entry } from '../../data'
+	import type { Entry } from '../../db/types'
 	import Errors from './Errors.svelte'
 	import Row from './Row.svelte'
 	import { dev } from '$app/env'

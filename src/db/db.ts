@@ -1,4 +1,4 @@
-import type { Entry, User } from './types'
+import type { Entry, EntryInput, User } from './types'
 
 import { randomUUID } from 'crypto'
 import { JSONFile, Low } from 'lowdb'
@@ -36,12 +36,48 @@ export const getDb = async () => {
 	return db
 }
 
+const getYoutubeGetVideoDetails = async (url: string) =>
+	fetch(`https://www.youtube.com/oembed?url=${url}&format=json`).then((res) => res.json())
+
 export const Entries = {
-	insert: async (entryData: Omit<Entry, 'id'>) => {
-		const newEntry = {
-			id: randomUUID(),
-			...entryData,
+	insert: async (entryInput: EntryInput) => {
+		const {
+			author_name: authorName,
+			author_url: authorUrl,
+			type: resourceType,
+			height,
+			width,
+			provider_name: providerName,
+			thumbnail_height: thumbnailHeight,
+			thumbnail_width: thumbnailWidth,
+			thumbnail_url: thumbnailUrl,
+			title,
+		} = await getYoutubeGetVideoDetails(entryInput.url)
+
+		const ratio = width / height
+		const resourceId = thumbnailUrl.split('/vi/')[1].split('/')[0]
+
+		const details = {
+			authorName,
+			authorUrl,
+			height,
+			providerName,
+			ratio,
+			resourceId,
+			resourceType,
+			thumbnailHeight,
+			thumbnailWidth,
+			thumbnailUrl,
+			title,
+			width,
 		}
+
+		const newEntry = {
+			id: resourceId,
+			...entryInput,
+			...details,
+		}
+
 		const db = await getDb()
 		db.data?.entries.push(newEntry)
 		await db.write()
