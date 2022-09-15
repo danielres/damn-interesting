@@ -14,5 +14,8 @@ export const attemptAuthRestore = async () => {
 }
 
 export const signOut = async () => {
+	if (!browser) return
+	const response = await fetch('/auth/signout', { method: 'POST' })
+	if (!response.ok) return
 	userStore.set(undefined)
 }
