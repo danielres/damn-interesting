@@ -29,7 +29,7 @@
 	{/if}
 </header>
 
-<main>
+<main class="fade-in">
 	{#if $userStore}
 		<slot />
 	{:else}
