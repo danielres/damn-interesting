@@ -25,10 +25,10 @@ export const POST: RequestHandler = async ({ setHeaders, request }) => {
 		return new Response(JSON.stringify(errors), { status: 403 })
 	}
 
-	const sessionData = encryptObject({ userId: user.id })
+	const encryptedSession = encryptObject({ userId: user.id })
 
 	setHeaders({
-		'set-cookie': `session=${sessionData}; Max-Age=${COOKIE_MAX_AGE}; HttpOnly; SameSite=Strict; Path=/; Secure`,
+		'set-cookie': `session=${encryptedSession}; Max-Age=${COOKIE_MAX_AGE}; HttpOnly; SameSite=Strict; Path=/; Secure`,
 	})
 
 	return json({
