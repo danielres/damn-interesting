@@ -20,8 +20,6 @@ describe('object.keysToCamel()', () => {
 
 		const actual = object.keysToCamel(obj)
 
-		console.log(JSON.stringify(actual))
-
 		const expected = {
 			userOne: {
 				userDetails: {
