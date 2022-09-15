@@ -3,9 +3,10 @@
 
 	import FormSignIn from '../components/forms/auth/FormSignIn.svelte'
 	import FormSignUp from '../components/forms/auth/FormSignUp.svelte'
+	import { attemptAuthRestore, signOut } from '../lib/auth'
 	import { userStore } from '../stores/user'
 
-	const signOut = () => ($userStore = undefined)
+	attemptAuthRestore()
 
 	let signupSuccess = false
 	const onSignupSuccess = () => (signupSuccess = true)
