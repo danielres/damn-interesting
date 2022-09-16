@@ -4,9 +4,7 @@ import { json } from '@sveltejs/kit'
 import cookie from 'cookie'
 import { Users } from '../../../db/db'
 import { decryptObject } from '../../../lib/encryption'
-
-const makeUnauthorizedResponse = (message = 'Unauthorized') =>
-	new Response(JSON.stringify({ errors: [{ message }] }), { status: 401 })
+import { makeUnauthorizedResponse } from '../../../lib/response'
 
 export const POST: RequestHandler = async ({ request }) => {
 	const cookies = request.headers.get('cookie')
