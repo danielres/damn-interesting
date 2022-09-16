@@ -21,7 +21,6 @@ export type Entry = EntryInput & {
 	authorUrl: string
 	height: number
 	providerName: string
-	ratio: number
 	resourceId: string
 	resourceType: string
 	title: string

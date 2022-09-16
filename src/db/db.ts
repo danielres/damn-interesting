@@ -54,7 +54,6 @@ export const Entries = {
 			title,
 		} = await getYoutubeGetVideoDetails(entryInput.url)
 
-		const ratio = width / height
 		const resourceId = thumbnailUrl.split('/vi/')[1].split('/')[0]
 
 		const details = {
@@ -62,7 +61,6 @@ export const Entries = {
 			authorUrl,
 			height,
 			providerName,
-			ratio,
 			resourceId,
 			resourceType,
 			thumbnailHeight,
