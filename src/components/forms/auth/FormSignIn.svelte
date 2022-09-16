@@ -1,6 +1,8 @@
 <script lang="ts" scope="module">
 	import type { FormError } from '../../../lib/validators'
 
+	export let onSuccess = () => {}
+
 	import { dev } from '$app/env'
 	import { userStore } from '../../../stores/user'
 	import Errors from '../Errors.svelte'
@@ -21,6 +23,7 @@
 
 		if (response.ok) {
 			$userStore = await response.json()
+			onSuccess()
 			window.location.reload()
 		}
 		if (!response.ok) errors = await response.json()
