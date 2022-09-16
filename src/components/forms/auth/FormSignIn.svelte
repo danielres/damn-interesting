@@ -6,7 +6,6 @@
 	import Errors from '../Errors.svelte'
 	import Row from '../Row.svelte'
 
-	export let onSuccess = () => {}
 	export let email = dev ? 'dan@example.com' : ''
 	let password = dev ? 'pass' : ''
 
@@ -22,7 +21,7 @@
 
 		if (response.ok) {
 			$userStore = await response.json()
-			onSuccess()
+			window.location.reload()
 		}
 		if (!response.ok) errors = await response.json()
 	}
