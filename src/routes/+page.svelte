@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { Entry } from '../db/types'
+	import type { EntryView } from '../db/types'
 
 	export let data
 
 	const WIDTH = 500
-	const entries: Entry[] = data.entries
+	const entries: EntryView[] = data.entries
 </script>
 
 <div class="flex justify-center">
@@ -14,6 +14,11 @@
 			{@const id = entry.thumbnailUrl.split('/vi/')[1].split('/')[0]}
 
 			<div class="my-16">
+				<div class="owner">
+					<span>
+						{entry.owner.username}
+					</span>
+				</div>
 				<h3 class="flex items-baseline justify-between">
 					<div class="title opacity-75">
 						{entry.title}
@@ -42,5 +47,11 @@
 <style>
 	.entries {
 		width: 500px;
+	}
+
+	.owner span {
+		display: inline-block;
+		background: rgba(0, 0, 0, 0.082);
+		padding: 0.125rem 0.25rem;
 	}
 </style>

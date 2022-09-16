@@ -1,3 +1,5 @@
+import type { YoutubeVideoDetails } from '../lib/Entry/types'
+
 export type User = {
 	id: string
 	email: string
@@ -8,24 +10,22 @@ export type User = {
 	invitedBy?: string
 }
 
-export type EntryInput = {
-	ownerId: string
+export type EntryFormInput = {
 	url: string
-	description?: string
-	createdAt?: string
+	description: string
 }
 
-export type Entry = EntryInput & {
-	id: string
-	authorName: string
-	authorUrl: string
-	height: number
-	providerName: string
-	resourceId: string
-	resourceType: string
-	title: string
-	thumbnailHeight: number
-	thumbnailWidth: number
-	thumbnailUrl: string
-	width: number
+export type EntryDbInput = EntryFormInput & {
+	ownerId: string
+	createdAt?: string
+}
+export type EntryDbRecord = EntryDbInput &
+	YoutubeVideoDetails & {
+		id: string
+	}
+
+export type EntryView = Omit<EntryDbRecord, 'ownerId'> & {
+	owner: {
+		username: string
+	}
 }

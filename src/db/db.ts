@@ -1,16 +1,17 @@
-import type { Entry, EntryInput, User } from './types'
+import type { EntryDbInput, EntryDbRecord, User } from './types'
 
 import { randomUUID } from 'crypto'
 import { JSONFile, Low } from 'lowdb'
 import * as fs from 'node:fs'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
+import { getYoutubeGetVideoDetails } from '../lib/Entry/youtube'
 import { doesFileExist } from '../lib/fs'
 import { hash } from '../lib/password'
 
 type Data = {
 	users: User[]
-	entries: Entry[]
+	entries: EntryDbRecord[]
 }
 
 export const initialState: Data = { users: [], entries: [] }
@@ -36,44 +37,16 @@ export const getDb = async () => {
 	return db
 }
 
-const getYoutubeGetVideoDetails = async (url: string) =>
-	fetch(`https://www.youtube.com/oembed?url=${url}&format=json`).then((res) => res.json())
-
 export const Entries = {
-	insert: async (entryInput: EntryInput) => {
-		const {
-			author_name: authorName,
-			author_url: authorUrl,
-			type: resourceType,
-			height,
-			width,
-			provider_name: providerName,
-			thumbnail_height: thumbnailHeight,
-			thumbnail_width: thumbnailWidth,
-			thumbnail_url: thumbnailUrl,
-			title,
-		} = await getYoutubeGetVideoDetails(entryInput.url)
+	insert: async (entryInput: EntryDbInput) => {
+		const youtubeVideoDetails = await getYoutubeGetVideoDetails(entryInput.url)
 
-		const resourceId = thumbnailUrl.split('/vi/')[1].split('/')[0]
+		const resourceId = youtubeVideoDetails.thumbnailUrl.split('/vi/')[1].split('/')[0]
 
-		const details = {
-			authorName,
-			authorUrl,
-			height,
-			providerName,
-			resourceId,
-			resourceType,
-			thumbnailHeight,
-			thumbnailWidth,
-			thumbnailUrl,
-			title,
-			width,
-		}
-
-		const newEntry = {
+		const newEntry: EntryDbRecord = {
 			id: resourceId,
 			...entryInput,
-			...details,
+			...youtubeVideoDetails,
 		}
 
 		const db = await getDb()
@@ -83,7 +56,24 @@ export const Entries = {
 	},
 	list: async () => {
 		const db = await getDb()
-		return db.data?.entries ?? []
+		const entries = db.data?.entries
+		if (!entries) return []
+
+		const ownerIds = [...new Set(entries.map((e) => e.ownerId))]
+		const owners = (await Promise.all(ownerIds.map((id) => Users.findById(id)))) as User[]
+
+		const entriesWithOwnerDetails = entries.map(({ ownerId, ...rest }) => {
+			const owner = owners.find((o) => o.id === ownerId) as User
+			const { username } = owner
+			return {
+				...rest,
+				owner: {
+					username,
+				},
+			}
+		})
+
+		return entriesWithOwnerDetails
 	},
 }
 

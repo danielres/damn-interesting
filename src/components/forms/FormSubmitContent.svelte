@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { FormError } from '$lib/validators'
-	import type { Entry } from '../../db/types'
+	import type { EntryView } from '../../db/types'
 	import Errors from './Errors.svelte'
 	import Row from './Row.svelte'
 	import { dev } from '$app/env'
@@ -8,7 +8,7 @@
 	let url = dev ? 'https://youtu.be/1G72936Y3xA' : ''
 	let description = ''
 	let errors: FormError[] = []
-	let result: Entry | undefined = undefined
+	let result: EntryView | undefined = undefined
 
 	const addAnother = () => {
 		url = ''

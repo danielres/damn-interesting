@@ -31,7 +31,11 @@ describe('Users.insert(), Users.list()', () => {
 
 describe('Entries.insert(), Entries.list()', () => {
 	it('inserts then retrieves an entry', async () => {
-		const entryData = { url: 'URL', ownerId: '123' }
+		const entryData = {
+			url: 'URL',
+			ownerId: '123',
+			description: 'Lorem',
+		}
 		await Entries.insert(entryData)
 
 		const [dbEntry] = await Entries.list()
