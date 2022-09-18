@@ -1,19 +1,22 @@
 <script lang="ts">
 	import type { EntryView } from '../db/types'
+
+	import { format } from '$lib/date'
+
 	export let entry: EntryView
 
 	const WIDTH = 500
 	const ratio = entry.width / entry.height
 </script>
 
-<div class="my-12">
+<div>
 	<div class="head">
-		<span>
+		<span class="created-at">{format(entry.createdAt)}</span>
+		<span class="owner">
 			<a href={`/user/${entry.owner.slug}`}>
 				{entry.owner.username}
 			</a>
 		</span>
-		<span>{entry.createdAt}</span>
 	</div>
 	<h3 class="flex items-baseline justify-between">
 		<div class="title opacity-75">
@@ -37,10 +40,20 @@
 	<div>{entry.description}</div>
 </div>
 
-<style>
+<style lang="postcss">
+	.head {
+		text-align: right;
+	}
 	.head span {
-		display: inline-block;
-		background: rgba(0, 0, 0, 0.082);
 		padding: 0.125rem 0.25rem;
+	}
+
+	.head .created-at {
+		@apply text-sm;
+		color: rgba(0, 0, 0, 0.384);
+	}
+
+	.head .owner {
+		background: rgba(0, 0, 0, 0.082);
 	}
 </style>

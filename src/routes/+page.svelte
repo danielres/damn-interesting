@@ -15,8 +15,11 @@
 	</div>
 </div>
 
-<style>
+<style lang="postcss">
 	.entries {
 		width: 500px;
+	}
+	.entries > :global(*) {
+		@apply my-12;
 	}
 </style>
