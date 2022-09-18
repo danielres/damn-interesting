@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { format } from '$lib/date'
 	import FormInviteNewMember from '../../components/forms/FormInviteNewMember.svelte'
 	import FormSubmitContent from '../../components/forms/FormSubmitContent.svelte'
 	import { userStore } from '../../stores/user'
@@ -14,6 +15,9 @@
 			</a>
 		</b>
 	</div>
+	{#if $userStore?.invitedAt}
+		<div>Invited: <b>{format($userStore?.invitedAt)}</b></div>
+	{/if}
 </section>
 
 <section>
