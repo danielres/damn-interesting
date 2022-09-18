@@ -1,7 +1,7 @@
 <script lang="ts" scope="module">
 	import type { FormError } from '../../../lib/validators'
 
-	export let onSuccess = () => {}
+	export let onSuccess = () => window.location.reload()
 
 	import { dev } from '$app/env'
 	import { userStore } from '../../../stores/user'
@@ -24,7 +24,6 @@
 		if (response.ok) {
 			$userStore = await response.json()
 			onSuccess()
-			window.location.reload()
 		}
 		if (!response.ok) errors = await response.json()
 	}
