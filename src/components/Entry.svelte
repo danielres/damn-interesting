@@ -7,12 +7,13 @@
 </script>
 
 <div class="my-12">
-	<div class="owner">
+	<div class="head">
 		<span>
 			<a href={`/user/${entry.owner.slug}`}>
 				{entry.owner.username}
 			</a>
 		</span>
+		<span>{entry.createdAt}</span>
 	</div>
 	<h3 class="flex items-baseline justify-between">
 		<div class="title opacity-75">
@@ -37,7 +38,7 @@
 </div>
 
 <style>
-	.owner span {
+	.head span {
 		display: inline-block;
 		background: rgba(0, 0, 0, 0.082);
 		padding: 0.125rem 0.25rem;
