@@ -11,7 +11,7 @@
 </script>
 
 {#if step === 0}
-	<h3>Welcome! You have been invited by [{data.invitedBy}].</h3>
+	<h3>Welcome! You have been invited by <b>{data.invitedBy.username}</b>.</h3>
 	<button on:click={() => (step = 1)}>Accept my invitation and create an account</button>
 {/if}
 
@@ -46,8 +46,8 @@
 
 {#if step === 1.1}
 	<div>
-		Please contact [{data.invitedBy}] and ask them to create a new invitation for you with your
-		correct email
+		Please contact <b>{data.invitedBy.username}</b> and ask them to create a new invitation for you with
+		your correct email
 	</div>
 {/if}
 

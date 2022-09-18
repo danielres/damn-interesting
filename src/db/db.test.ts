@@ -1,4 +1,5 @@
 import type { YoutubeVideoDetails } from '$lib/Entry/types'
+import type { EntryDbInput } from './types'
 
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { delDbFile, Entries, getDb, initialState, Users } from './db'
@@ -44,8 +45,11 @@ describe('Users.insert(), Users.list()', () => {
 	it('inserts then retrieves a user', async () => {
 		const userData = {
 			username: 'Tom',
+			slug: 'tom',
 			email: 'tom@example.com',
 			password: 'pass',
+			invitedById: '[UUID]',
+			invitedAt: new Date().toISOString(),
 		}
 		await Users.insert(userData)
 
@@ -60,13 +64,16 @@ describe('Entries.insert(), Entries.list()', () => {
 	it('inserts then retrieves an entry', async () => {
 		const userData = {
 			username: 'Tom',
+			slug: 'tom',
 			email: 'tom@example.com',
 			password: 'pass',
+			invitedById: '[UUID]',
+			invitedAt: new Date().toISOString(),
 		}
 		await Users.insert(userData)
 		const [user] = await Users.list()
 
-		const entryData = {
+		const entryData: EntryDbInput = {
 			url: 'https://youtu.be/123',
 			ownerId: user.id,
 			description: 'Lorem',

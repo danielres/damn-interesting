@@ -1,4 +1,5 @@
-import { writable } from 'svelte/store'
-import type { User } from '../db/types'
+import type { CurrentUserView } from '../db/types'
 
-export const userStore = writable<User | undefined>(undefined)
+import { writable } from 'svelte/store'
+
+export const userStore = writable<CurrentUserView | undefined>(undefined)

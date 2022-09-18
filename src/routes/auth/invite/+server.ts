@@ -1,10 +1,16 @@
+import type { InvitationObject } from '../../../db/types'
+import type { Locals } from '../../../routes/types'
 import type { RequestHandler } from './$types'
 
 import { encryptObject } from '$lib/encryption'
+import { makeUnauthorizedResponse } from '$lib/response'
 import { json } from '@sveltejs/kit'
 import { Users } from '../../../db/db'
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async (params) => {
+	const { request } = params
+	const locals = params.locals as Locals
+
 	const errors: { message: string }[] = []
 	const { email } = await request.json()
 
@@ -15,7 +21,17 @@ export const POST: RequestHandler = async ({ request }) => {
 		return new Response(JSON.stringify(errors), { status: 403 })
 	}
 
-	const code = encryptObject({ email, invitedBy: 'uuid', invitedAt: new Date().toISOString() })
+	const currentUser = locals.user
+
+	if (!currentUser) return makeUnauthorizedResponse('Inviter user not found')
+
+	const invitationObject: InvitationObject = {
+		email,
+		invitedById: currentUser.id,
+		invitedAt: new Date().toISOString(),
+	}
+
+	const code = encryptObject(invitationObject)
 
 	return json(code)
 }

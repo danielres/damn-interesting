@@ -7,6 +7,13 @@
 <section>
 	<div>Username: <b>{$userStore?.username}</b></div>
 	<div>Email: <b>{$userStore?.email}</b></div>
+	<div>
+		Invited by: <b>
+			<a href={`/user/${$userStore?.invitedBy?.slug}`}>
+				{$userStore?.invitedBy?.username}
+			</a>
+		</b>
+	</div>
 </section>
 
 <section>

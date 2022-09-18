@@ -1,6 +1,7 @@
 import type { RequestHandler } from './$types'
 
 import { Users } from '../../../db/db'
+import { slugify } from '$lib/string'
 
 export const POST: RequestHandler = async ({ request }) => {
 	const errors: { field: string; message: string }[] = []
@@ -14,7 +15,17 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	if (errors.length > 0) return new Response(JSON.stringify(errors), { status: 422 })
 
-	await Users.insert({ username, email, password })
+	const id = crypto.randomUUID()
+
+	await Users.insert({
+		id,
+		email,
+		password,
+		slug: slugify(username),
+		username,
+		invitedById: id,
+		invitedAt: new Date().toISOString(),
+	})
 
 	return new Response()
 }

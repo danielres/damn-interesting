@@ -1,5 +1,6 @@
-import type { EntryDbInput, EntryDbRecord, User } from './types'
+import type { EntryDbInput, EntryDbRecord, EntryView, UserDbInput, UserDbRecord } from './types'
 
+import { slugify } from '$lib/string'
 import { randomUUID } from 'crypto'
 import { JSONFile, Low } from 'lowdb'
 import * as fs from 'node:fs'
@@ -10,7 +11,7 @@ import { doesFileExist } from '../lib/fs'
 import { hash } from '../lib/password'
 
 type Data = {
-	users: User[]
+	users: UserDbRecord[]
 	entries: EntryDbRecord[]
 }
 
@@ -45,6 +46,7 @@ export const Entries = {
 
 		const newEntry: EntryDbRecord = {
 			id: resourceId,
+			createdAt: new Date().toISOString(),
 			...entryInput,
 			...youtubeVideoDetails,
 		}
@@ -60,32 +62,42 @@ export const Entries = {
 		if (!entries) return []
 
 		const ownerIds = [...new Set(entries.map((e) => e.ownerId))]
-		const owners = (await Promise.all(ownerIds.map((id) => Users.findById(id)))) as User[]
+		const owners = (await Promise.all(ownerIds.map((id) => Users.findById(id)))) as UserDbRecord[]
 
-		const entriesWithOwnerDetails = entries.map(({ ownerId, ...rest }) => {
-			const owner = owners.find((o) => o.id === ownerId) as User
-			const { username } = owner
-			return {
+		const withOwnerDetails = entries.map(({ ownerId, ...rest }) => {
+			const owner = owners.find((o) => o.id === ownerId)
+			if (!owner) throw new Error(`Owner not found for entry ${rest.id} "${rest.title}"`)
+			const { username, slug } = owner
+
+			const entryView: EntryView = {
 				...rest,
 				owner: {
 					username,
+					slug,
 				},
 			}
+			return entryView
 		})
 
-		return entriesWithOwnerDetails
+		return withOwnerDetails
+	},
+	listByOwnerSlug: async (ownerSlug: UserDbRecord['slug']) => {
+		const all = await Entries.list()
+		const filtered = all.filter((e) => e.owner.slug === ownerSlug)
+		return filtered
 	},
 }
 
 export const Users = {
-	insert: async (userData: Omit<User, 'id'>) => {
+	insert: async (userData: UserDbInput) => {
 		const newUser = {
 			email: userData.email,
-			id: randomUUID(),
+			id: userData.id ?? randomUUID(),
 			invitedAt: userData.invitedAt,
-			invitedBy: userData.invitedBy,
+			invitedById: userData.invitedById,
 			password: await hash(userData.password),
 			username: userData.username,
+			slug: slugify(userData.username),
 		}
 		const db = await getDb()
 		db.data?.users.push(newUser)
@@ -96,22 +108,46 @@ export const Users = {
 		const users = db.data?.users ?? []
 		return users.map(({ password, ...rest }) => rest) // eslint-disable-line @typescript-eslint/no-unused-vars
 	},
-	findByEmail: async (email: string) => {
+	findByEmail: async (email: UserDbRecord['email']) => {
 		const db = await getDb()
 		const users = db.data?.users ?? []
 		const user = users.find((u) => u.email === email)
 		return user
 	},
-	findById: async (id: string) => {
+	findById: async (id: UserDbRecord['id']) => {
 		const db = await getDb()
 		const users = db.data?.users ?? []
 		const user = users.find((u) => u.id === id)
+		if (!user) throw new Error(`User ${id} not found`)
 		return user
 	},
-	findByUsername: async (username: string) => {
+	findByUsername: async (username: UserDbRecord['username']) => {
 		const db = await getDb()
 		const users = db.data?.users ?? []
 		const user = users.find((u) => u.username === username)
 		return user
 	},
+	findBySlug: async (slug: UserDbRecord['slug']) => {
+		const db = await getDb()
+		const users = db.data?.users ?? []
+		const user = users.find((u) => u.slug === slug)
+		return user
+	},
+}
+
+export const populateUser = async (
+	user: Pick<UserDbRecord, 'id' | 'email' | 'slug' | 'username' | 'invitedAt' | 'invitedById'>
+) => {
+	const { invitedById, ...rest } = user
+
+	const inviterUser = await Users.findById(invitedById)
+	const inviterUserView = {
+		username: inviterUser.username,
+		slug: inviterUser.slug,
+	}
+
+	return {
+		...rest,
+		invitedBy: inviterUserView,
+	}
 }
