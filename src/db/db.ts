@@ -78,8 +78,8 @@ export const Entries = {
 			}
 			return entryView
 		})
-
-		return withOwnerDetails
+		const sorted = withOwnerDetails.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+		return sorted
 	},
 	listByOwnerSlug: async (ownerSlug: UserDbRecord['slug']) => {
 		const all = await Entries.list()
