@@ -21,7 +21,7 @@
 
 	{#if $userStore}
 		<div>
-			<a href="/profile">
+			<a href="/me">
 				{$userStore.username}
 			</a>
 			<button on:click={signOut}>Sign out</button>
