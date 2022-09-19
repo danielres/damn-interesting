@@ -1,5 +1,4 @@
 import type { InvitationObject } from '../../../../db/types'
-import type { Locals } from '../../../../routes/types'
 import type { RequestHandler } from './$types'
 
 import { encryptObject } from '$lib/encryption'
@@ -7,10 +6,7 @@ import { makeUnauthorizedResponse } from '$lib/response'
 import { json } from '@sveltejs/kit'
 import { Users } from '../../../../db/db'
 
-export const POST: RequestHandler = async (params) => {
-	const { request } = params
-	const locals = params.locals as Locals
-
+export const POST: RequestHandler = async ({ locals, request }) => {
 	const errors: { message: string }[] = []
 	const { email } = await request.json()
 
