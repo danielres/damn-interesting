@@ -3,8 +3,8 @@
 
 	import { dev } from '$app/environment'
 	import * as validators from '$lib/validators'
-	import Errors from '../../../../components/forms/Errors.svelte'
-	import Row from '../../../../components/forms/Row.svelte'
+	import Errors from '../../../../../components/forms/Errors.svelte'
+	import Row from '../../../../../components/forms/Row.svelte'
 
 	export let onSuccess: () => void
 	export let code: string

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { EntryView } from '../db/types'
-	import Entry from '../components/Entry.svelte'
+	import type { EntryView } from '../../db/types'
+	import Entry from '../../components/Entry.svelte'
 
 	export let data
 

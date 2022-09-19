@@ -1,5 +1,5 @@
 <script scope="module">
-	import Entry from '../../../components/Entry.svelte'
+	import Entry from '../../../../components/Entry.svelte'
 	export let data
 	const { entries, user } = data
 </script>

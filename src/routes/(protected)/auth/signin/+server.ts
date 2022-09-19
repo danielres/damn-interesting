@@ -1,9 +1,9 @@
 import type { RequestHandler } from './$types'
 
+import { encryptObject } from '$lib/encryption'
+import { compare } from '$lib/password'
 import { json } from '@sveltejs/kit'
-import { Users } from '../../../db/db'
-import { encryptObject } from '../../../lib/encryption'
-import { compare } from '../../../lib/password'
+import { Users } from '../../../../db/db'
 
 const COOKIE_MAX_AGE = 60 // in seconds
 

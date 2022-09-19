@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types'
 
-import { Users } from '../../../db/db'
+import { Users } from '../../../../db/db'
 import { slugify } from '$lib/string'
 
 export const POST: RequestHandler = async ({ request }) => {

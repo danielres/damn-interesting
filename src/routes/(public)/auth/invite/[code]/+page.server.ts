@@ -1,8 +1,8 @@
-import type { InvitationObject } from '../../../../db/types'
+import type { InvitationObject } from '../../../../../db/types'
 import type { PageServerLoad } from './$types'
 
 import { decryptObject } from '$lib/encryption'
-import { Users } from '../../../../db/db'
+import { Users } from '../../../../../db/db'
 
 export const load: PageServerLoad = async ({ params }) => {
 	const { invitedById, invitedAt, email }: InvitationObject = decryptObject(params.code)

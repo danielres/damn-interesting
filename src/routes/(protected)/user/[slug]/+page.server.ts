@@ -1,9 +1,9 @@
 import pick from 'lodash.pick'
 
-import type { UserView } from '../../../db/types'
+import type { UserView } from '../../../../db/types'
 import type { PageServerLoad } from './$types'
 
-import { Entries, populateUser, Users } from '../../../db/db'
+import { Entries, populateUser, Users } from '../../../../db/db'
 
 export const load: PageServerLoad = async ({ params }) => {
 	const userSlug = params.slug

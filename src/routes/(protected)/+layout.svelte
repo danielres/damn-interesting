@@ -1,10 +1,10 @@
 <script scope="module">
-	import '../app.postcss'
+	import '../../app.postcss'
 
-	import FormSignIn from '../components/forms/auth/FormSignIn.svelte'
-	import FormSignUp from '../components/forms/auth/FormSignUp.svelte'
-	import { attemptAuthRestore, signOut } from '../lib/auth'
-	import { userStore } from '../stores/user'
+	import { attemptAuthRestore, signOut } from '$lib/auth'
+	import FormSignIn from '../../components/forms/auth/FormSignIn.svelte'
+	import FormSignUp from '../../components/forms/auth/FormSignUp.svelte'
+	import { userStore } from '../../stores/user'
 
 	attemptAuthRestore()
 
