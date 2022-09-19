@@ -1,12 +1,16 @@
-<script scope="module">
+<script scope="module" lang="ts">
+	import type { LayoutData } from './$types'
+
 	import '../../app.postcss'
 
 	import FormSignIn from '$components/forms/auth/FormSignIn.svelte'
 	import FormSignUp from '$components/forms/auth/FormSignUp.svelte'
-	import { attemptAuthRestore, signOut } from '$lib/auth'
+	import { signOut } from '$lib/auth'
 	import { userStore } from '$stores/user'
 
-	attemptAuthRestore()
+	export let data: LayoutData
+
+	$userStore = data.user
 
 	let signupSuccess = false
 	const onSignupSuccess = () => (signupSuccess = true)
