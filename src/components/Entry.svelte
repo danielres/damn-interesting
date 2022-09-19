@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { EntryView } from '../db/types'
+	import type { EntryView } from '$db/types'
 
 	import { format } from '$lib/date'
 

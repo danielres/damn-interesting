@@ -1,8 +1,8 @@
 <script lang="ts">
+	import FormInviteNewMember from '$components/forms/FormInviteNewMember.svelte'
+	import FormSubmitContent from '$components/forms/FormSubmitContent.svelte'
 	import { format } from '$lib/date'
-	import FormInviteNewMember from '../../../components/forms/FormInviteNewMember.svelte'
-	import FormSubmitContent from '../../../components/forms/FormSubmitContent.svelte'
-	import { userStore } from '../../../stores/user'
+	import { userStore } from '$stores/user'
 </script>
 
 <section>

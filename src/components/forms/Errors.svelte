@@ -1,5 +1,5 @@
 <script lang="ts" scope="module">
-	import type { FormError } from '../../lib/validators'
+	import type { FormError } from '$lib/validators'
 
 	export let errors: FormError[] = []
 </script>

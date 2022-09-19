@@ -1,6 +1,6 @@
 <script lang="ts">
+	import type { EntryView } from '$db/types'
 	import type { FormError } from '$lib/validators'
-	import type { EntryView } from '../../db/types'
 
 	import { dev } from '$app/environment'
 	import Errors from './Errors.svelte'

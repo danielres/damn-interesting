@@ -1,11 +1,11 @@
-import type { CurrentUserView } from 'src/db/types'
+import type { CurrentUserView } from '../../../../db/types'
 import type { RequestHandler } from './$types'
 
 import { getCurrentUserFromCookies } from '$lib/request'
+import { makeUnauthorizedResponse } from '$lib/response'
 import { json } from '@sveltejs/kit'
 import pick from 'lodash.pick'
 import { populateUser } from '../../../../db/db'
-import { makeUnauthorizedResponse } from '../../../../lib/response'
 
 export const POST: RequestHandler = async ({ cookies }) => {
 	const userDbRecord = await getCurrentUserFromCookies(cookies)

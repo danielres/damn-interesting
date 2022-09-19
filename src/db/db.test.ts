@@ -21,7 +21,7 @@ const fixtures: {
 	},
 }
 
-vi.mock('../lib/Entry/youtube', () => ({
+vi.mock('$lib/Entry/youtube', () => ({
 	getYoutubeGetVideoDetails: async () => fixtures.youtubeVideoDetails,
 }))
 

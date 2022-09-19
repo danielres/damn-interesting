@@ -1,8 +1,8 @@
-import type { Locals } from 'src/routes/types'
+import type { Locals } from '../../../types'
 import type { RequestHandler } from './$types'
 
+import { makeUnauthorizedResponse } from '$lib/response'
 import { Entries } from '../../../../db/db'
-import { makeUnauthorizedResponse } from '../../../../lib/response'
 
 export const POST: RequestHandler = async ({ locals, request }) => {
 	const { user } = locals as Locals

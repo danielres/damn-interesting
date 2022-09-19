@@ -2,9 +2,9 @@
 	import type { FormError } from '$lib/validators'
 
 	import { dev } from '$app/environment'
+	import Errors from '$components/forms/Errors.svelte'
+	import Row from '$components/forms/Row.svelte'
 	import * as validators from '$lib/validators'
-	import Errors from '../../../../../components/forms/Errors.svelte'
-	import Row from '../../../../../components/forms/Row.svelte'
 
 	export let onSuccess: () => void
 	export let code: string

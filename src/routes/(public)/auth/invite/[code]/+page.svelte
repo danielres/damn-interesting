@@ -1,8 +1,8 @@
 <script lang="ts" scope="module">
-	import type { PageData } from '../../../../../../.svelte-kit/types/src/routes/auth/invite/[code]/$types'
+	import type { PageData } from './$types'
 
 	import { goto } from '$app/navigation'
-	import FormSignIn from '../../../../../components/forms/auth/FormSignIn.svelte'
+	import FormSignIn from '$components/forms/auth/FormSignIn.svelte'
 	import FormRegister from './FormRegister.svelte'
 
 	export let data: PageData

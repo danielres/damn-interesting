@@ -1,10 +1,10 @@
 <script lang="ts" scope="module">
-	import type { FormError } from '../../../lib/validators'
+	import type { FormError } from '$lib/validators'
 
 	export let onSuccess = () => window.location.reload()
 
 	import { dev } from '$app/environment'
-	import { userStore } from '../../../stores/user'
+	import { userStore } from '$stores/user'
 	import Errors from '../Errors.svelte'
 	import Row from '../Row.svelte'
 
