@@ -2,7 +2,7 @@ import type { RequestHandler } from './$types'
 
 import { decryptObject } from '$lib/encryption'
 import { slugify } from '$lib/string'
-import { Users } from '../../../../db/db'
+import { Users } from '../../../../../db/db'
 
 export const POST: RequestHandler = async ({ request }) => {
 	const errors: { field: string; message: string }[] = []
