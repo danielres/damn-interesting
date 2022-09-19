@@ -1,9 +1,10 @@
 <script lang="ts">
 	import type { FormError } from '$lib/validators'
 	import type { EntryView } from '../../db/types'
+
+	import { dev } from '$app/environment'
 	import Errors from './Errors.svelte'
 	import Row from './Row.svelte'
-	import { dev } from '$app/env'
 
 	let url = dev ? 'https://youtu.be/1G72936Y3xA' : ''
 	let description = ''

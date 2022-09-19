@@ -3,7 +3,7 @@
 
 	export let onSuccess = () => window.location.reload()
 
-	import { dev } from '$app/env'
+	import { dev } from '$app/environment'
 	import { userStore } from '../../../stores/user'
 	import Errors from '../Errors.svelte'
 	import Row from '../Row.svelte'

@@ -2,7 +2,7 @@
 	import type { FormError } from '$lib/validators'
 	import { page } from '$app/stores'
 
-	import { dev } from '$app/env'
+	import { dev } from '$app/environment'
 	import Errors from './Errors.svelte'
 	import Row from './Row.svelte'
 

@@ -1,7 +1,7 @@
 <script lang="ts" scope="module">
 	import type { FormError } from '$lib/validators'
 
-	import { dev } from '$app/env'
+	import { dev } from '$app/environment'
 	import * as validators from '$lib/validators'
 	import Errors from '../../../../components/forms/Errors.svelte'
 	import Row from '../../../../components/forms/Row.svelte'

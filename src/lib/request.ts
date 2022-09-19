@@ -1,14 +1,13 @@
-import cookie from 'cookie'
-import { decryptObject } from './encryption'
-import { Users } from '../db/db'
+import type { Cookies } from '@sveltejs/kit'
 
-export const getCurrentUserFromRequest = async (request: Request) => {
-	const cookies = request.headers.get('cookie')
-	if (!cookies) return
-	const { session: encryptedSession } = cookie.parse(cookies)
-	if (!encryptedSession) return
+import { Users } from '../db/db'
+import { decryptObject } from './encryption'
+
+export const getCurrentUserFromCookies = async (cookies: Cookies) => {
+	const encryptedSession = cookies.get('session')
+	if (!encryptedSession) return undefined
+
 	const { userId } = decryptObject(encryptedSession)
 	const user = await Users.findById(userId)
-	if (!user) return
 	return user
 }

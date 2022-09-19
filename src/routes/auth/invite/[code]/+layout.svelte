@@ -6,6 +6,11 @@
 
 <style>
 	:global(body) {
+		margin: 0;
+		padding: 0;
+	}
+
+	:global(body) {
 		background: #eee;
 	}
 

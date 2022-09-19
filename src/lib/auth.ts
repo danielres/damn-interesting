@@ -1,6 +1,6 @@
 import '../app.postcss'
 
-import { browser } from '$app/env'
+import { browser } from '$app/environment'
 import { get } from 'svelte/store'
 import { userStore } from '../stores/user'
 

@@ -7,7 +7,7 @@ import { compare } from '../../../lib/password'
 
 const COOKIE_MAX_AGE = 60 // in seconds
 
-export const POST: RequestHandler = async ({ setHeaders, request }) => {
+export const POST: RequestHandler = async ({ request, cookies }) => {
 	const errors: { message: string }[] = []
 	const { email, password } = await request.json()
 
@@ -27,8 +27,12 @@ export const POST: RequestHandler = async ({ setHeaders, request }) => {
 
 	const encryptedSession = encryptObject({ userId: user.id })
 
-	setHeaders({
-		'set-cookie': `session=${encryptedSession}; Max-Age=${COOKIE_MAX_AGE}; HttpOnly; SameSite=Strict; Path=/; Secure`,
+	cookies.set('session', encryptedSession, {
+		maxAge: COOKIE_MAX_AGE,
+		httpOnly: true,
+		sameSite: 'strict',
+		path: '/',
+		secure: true,
 	})
 
 	return json({

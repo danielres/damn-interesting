@@ -3,10 +3,10 @@ import type { CurrentUserView, UserDbRecord } from './db/types'
 
 import pick from 'lodash.pick'
 import { populateUser } from './db/db'
-import { getCurrentUserFromRequest } from './lib/request'
+import { getCurrentUserFromCookies } from './lib/request'
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const dbUser: UserDbRecord | undefined = await getCurrentUserFromRequest(event.request)
+	const dbUser: UserDbRecord | undefined = await getCurrentUserFromCookies(event.cookies)
 
 	if (!dbUser) return resolve(event)
 
