@@ -11,3 +11,8 @@ export const getCurrentUserFromCookies = async (cookies: Cookies) => {
 	const user = await Users.findById(userId)
 	return user
 }
+
+export const getFormEntriesFromRequest = async (request: Request) => {
+	const formData = await request.formData()
+	return JSON.parse(JSON.stringify(Object.fromEntries(formData)))
+}

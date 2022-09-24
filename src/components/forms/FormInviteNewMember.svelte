@@ -1,8 +1,9 @@
 <script lang="ts" scope="module">
-	import type { FormError } from '$lib/validators'
 	import { page } from '$app/stores'
+	import type { FormError } from '$lib/validators'
 
 	import { dev } from '$app/environment'
+	import { enhance } from '$app/forms'
 	import Errors from './Errors.svelte'
 	import Row from './Row.svelte'
 
@@ -17,20 +18,20 @@
 	const copyToClipboard = (text: string) => {
 		window.prompt('Copy to clipboard: Ctrl+C, Enter', text)
 	}
-
-	const onSubmit = async () => {
-		errors = []
-		const response = await fetch('/auth/invite', {
-			method: 'POST',
-			body: JSON.stringify({ email }),
-		})
-
-		if (response.ok) code = await response.json()
-		if (!response.ok) errors = await response.json()
-	}
 </script>
 
-<form method="POST" on:submit|preventDefault={onSubmit}>
+<form
+	method="POST"
+	action="/auth?/generate-invitation-code"
+	use:enhance={() => {
+		return ({ result }) => {
+			errors = []
+			if (result.type === 'success') code = result.data?.code
+			if (result.type === 'invalid') errors = result.data?.errors
+			if (result.type === 'error') errors = [result.error]
+		}
+	}}
+>
 	<Row>
 		<input type="email" name="email" placeholder="email" bind:value={email} />
 	</Row>

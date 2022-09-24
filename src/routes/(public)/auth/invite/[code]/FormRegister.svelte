@@ -2,6 +2,7 @@
 	import type { FormError } from '$lib/validators'
 
 	import { dev } from '$app/environment'
+	import { enhance } from '$app/forms'
 	import Errors from '$components/forms/Errors.svelte'
 	import Row from '$components/forms/Row.svelte'
 	import * as validators from '$lib/validators'
@@ -17,53 +18,48 @@
 	let isCodeOfConductApproved = dev ? true : false
 
 	let errors: FormError[] = []
-
-	const onSubmit = async () => {
-		const NewUserFromCodeData = { username, password, password2, code }
-
-		errors = await validators.newUserFromCode(NewUserFromCodeData)
-		if (errors.length > 0) return
-
-		const response = await fetch('/auth/invite/register', {
-			method: 'POST',
-			body: JSON.stringify(NewUserFromCodeData),
-		})
-
-		if (response.ok) {
-			errors = []
-			onSuccess()
-		}
-
-		if (!response.ok) errors = await response.json()
-	}
 </script>
 
-<form method="POST" on:submit|preventDefault={onSubmit}>
+<form
+	method="POST"
+	action="/auth?/signup-with-code"
+	use:enhance={({ data, cancel }) => {
+		errors = validators.newUserFromCode(data)
+		if (errors.length > 0) cancel()
+
+		return async ({ result }) => {
+			if (result.type === 'success') onSuccess()
+			if (result.type === 'invalid') errors = result.data?.errors
+			if (result.type === 'error') errors = [result.error]
+		}
+	}}
+>
+	<input type="hidden" name="code" value={code} />
 	<Row>
 		<label>
 			My email:
-			<input type="text" value={email} disabled />
+			<input type="text" name="email" value={email} disabled />
 		</label>
 	</Row>
 
 	<Row>
 		<label>
 			My username:
-			<input type="text" bind:value={username} />
+			<input type="text" name="username" bind:value={username} />
 		</label>
 	</Row>
 
 	<Row>
 		<label>
 			Password:
-			<input type="password" bind:value={password} />
+			<input type="password" name="password" bind:value={password} />
 		</label>
 	</Row>
 
 	<Row>
 		<label>
 			Password (repeat):
-			<input type="password" bind:value={password2} />
+			<input type="password" name="password2" bind:value={password2} />
 		</label>
 	</Row>
 

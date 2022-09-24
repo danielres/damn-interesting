@@ -2,6 +2,7 @@
 	import type { FormError } from '$lib/validators'
 
 	import { dev } from '$app/environment'
+	import { enhance } from '$app/forms'
 	import * as validators from '$lib/validators'
 	import Errors from '../Errors.svelte'
 	import Row from '../Row.svelte'
@@ -14,28 +15,22 @@
 	let password2 = dev ? 'pass' : ''
 
 	let errors: FormError[] = []
-
-	const onSubmit = async () => {
-		const newUserData = { username, email, password, password2 }
-
-		errors = await validators.newUser(newUserData)
-		if (errors.length > 0) return
-
-		const response = await fetch('/auth/signup', {
-			method: 'POST',
-			body: JSON.stringify(newUserData),
-		})
-
-		if (response.ok) {
-			errors = []
-			onSuccess()
-		}
-
-		if (!response.ok) errors = await response.json()
-	}
 </script>
 
-<form method="POST" on:submit|preventDefault={onSubmit}>
+<form
+	method="POST"
+	action="/auth?/signup"
+	use:enhance={({ data, cancel }) => {
+		errors = validators.newUser(data)
+		if (errors.length > 0) cancel()
+
+		return async ({ result }) => {
+			if (result.type === 'success') onSuccess()
+			if (result.type === 'invalid') errors = result.data?.errors
+			if (result.type === 'error') errors = [result.error]
+		}
+	}}
+>
 	<Row>
 		<input type="text" name="username" placeholder="username" bind:value={username} />
 	</Row>

@@ -3,9 +3,9 @@
 
 	import '../../app.postcss'
 
+	import { enhance } from '$app/forms'
 	import FormSignIn from '$components/forms/auth/FormSignIn.svelte'
 	import FormSignUp from '$components/forms/auth/FormSignUp.svelte'
-	import { signOut } from '$lib/auth'
 	import { userStore } from '$stores/user'
 
 	export let data: LayoutData
@@ -28,7 +28,14 @@
 			<a href="/me">
 				{$userStore.username}
 			</a>
-			<button on:click={signOut}>Sign out</button>
+			<form
+				use:enhance={() => () => ($userStore = undefined)}
+				action="/auth?/signout"
+				class="inline"
+				method="POST"
+			>
+				<button type="submit">Sign out</button>
+			</form>
 		</div>
 	{/if}
 </header>
