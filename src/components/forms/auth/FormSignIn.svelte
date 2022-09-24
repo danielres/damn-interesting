@@ -8,7 +8,7 @@
 
 	export let onSuccess = () => window.location.reload()
 
-	let email = dev ? 'dan@example.com' : ''
+	export let email = dev ? 'dan@example.com' : ''
 	let password = dev ? 'pass' : ''
 
 	let errors: FormError[] = []
