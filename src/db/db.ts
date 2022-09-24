@@ -108,7 +108,8 @@ export const Users = {
 		const users = db.data?.users ?? []
 		return users.map(({ password, ...rest }) => rest) // eslint-disable-line @typescript-eslint/no-unused-vars
 	},
-	findByEmail: async (email: UserDbRecord['email']) => {
+	findByEmail: async (email?: UserDbRecord['email']) => {
+		if (!email) return undefined
 		const db = await getDb()
 		const users = db.data?.users ?? []
 		const user = users.find((u) => u.email === email)
