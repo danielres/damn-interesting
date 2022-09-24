@@ -3,7 +3,7 @@
 
 	import { goto } from '$app/navigation'
 	import FormSignIn from '$components/forms/auth/FormSignIn.svelte'
-	import FormRegister from './FormRegister.svelte'
+	import FormSignupWithCode from '$components/forms/auth/FormSignupWithCode.svelte'
 
 	export let data: PageData
 
@@ -54,7 +54,7 @@
 
 {#if step === 2}
 	<h4>2. Last steps!</h4>
-	<FormRegister code={data.code} email={data.email} onSuccess={() => (step = 3)} />
+	<FormSignupWithCode code={data.code} email={data.email} onSuccess={() => (step = 3)} />
 {/if}
 
 {#if step === 3}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import FormInviteNewMember from '$components/forms/FormInviteNewMember.svelte'
+	import FormGenerateInvitationCode from '$components/forms/auth/FormGenerateInvitationCode.svelte'
 	import FormSubmitContent from '$components/forms/FormSubmitContent.svelte'
 	import { format } from '$lib/date'
 	import { userStore } from '$stores/user'
@@ -27,7 +27,7 @@
 
 <section>
 	<h2>Invite a new member</h2>
-	<FormInviteNewMember />
+	<FormGenerateInvitationCode />
 </section>
 
 <style lang="postcss">

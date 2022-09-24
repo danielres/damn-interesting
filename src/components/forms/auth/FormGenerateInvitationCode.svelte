@@ -4,8 +4,8 @@
 
 	import { dev } from '$app/environment'
 	import { enhance } from '$app/forms'
-	import Errors from './Errors.svelte'
-	import Row from './Row.svelte'
+	import Errors from '../Errors.svelte'
+	import Row from '../Row.svelte'
 
 	let email = dev ? 'tom@example.com' : ''
 	let code = ''
