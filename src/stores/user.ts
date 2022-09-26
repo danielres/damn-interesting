@@ -1,4 +1,4 @@
-import type { CurrentUserView } from '../db/types'
+import type { CurrentUserView } from '$types'
 
 import { writable } from 'svelte/store'
 

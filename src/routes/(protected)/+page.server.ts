@@ -1,8 +1,9 @@
-import type { PageServerLoad } from './$types'
+import type { PageServerLoad } from '../../../.svelte-kit/types/src/routes/(protected)/$types'
 
-import { Entries } from '../../db/db'
+export const load: PageServerLoad = async ({ locals }) => {
+	const entries = await locals.prisma.entry.findMany({
+		include: { owner: { select: { username: true, slug: true } } },
+	})
 
-export const load: PageServerLoad = async () => {
-	const entries = await Entries.list()
 	return { entries }
 }

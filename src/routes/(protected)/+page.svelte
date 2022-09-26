@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { EntryView } from '$db/types'
+	import type { EntryView } from '$types'
 
 	import Entry from '$components/Entry.svelte'
 
@@ -8,6 +8,7 @@
 	const entries: EntryView[] = data.entries
 </script>
 
+XXXXXX
 <div class="flex justify-center">
 	<div class="entries">
 		{#each entries as entry}

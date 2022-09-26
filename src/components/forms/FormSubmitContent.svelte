@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { EntryView } from '$db/types'
+	import type { EntryView } from '$types'
 	import type { FormError } from '$lib/validators'
 
 	import { dev } from '$app/environment'

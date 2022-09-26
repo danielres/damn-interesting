@@ -10,8 +10,8 @@
 	<div>Email: <b>{$userStore?.email}</b></div>
 	<div>
 		Invited by: <b>
-			<a href={`/user/${$userStore?.invitedBy?.slug}`}>
-				{$userStore?.invitedBy?.username}
+			<a href={`/user/${$userStore?.inviter?.slug}`}>
+				{$userStore?.inviter?.username}
 			</a>
 		</b>
 	</div>

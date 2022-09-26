@@ -3,10 +3,18 @@
 // and what to do when importing types
 declare namespace App {
 	interface Locals {
-		user?: import('./db/types').CurrentUserView
+		prisma: import('@prisma/client').PrismaClient
+		user: null | {
+			id: string
+			email: string
+			username: string
+			slug: string
+			inviter: null | { username: string; slug: string }
+			invitedAt: Date
+		}
+		// interface Platform {}
+		// interface PrivateEnv {}
+		// interface PublicEnv {}
+		// interface Session {}
 	}
-	// interface Platform {}
-	// interface PrivateEnv {}
-	// interface PublicEnv {}
-	// interface Session {}
 }

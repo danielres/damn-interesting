@@ -1,0 +1,4 @@
+export const HTTP_CODES = {
+	FORBIDDEN: 403,
+	UNPROCESSABLE_ENTITY: 422,
+}

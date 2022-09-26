@@ -15,8 +15,9 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			$components: 'src/components',
-			$db: 'src/db',
+			$constants: 'src/constants.ts',
 			$stores: 'src/stores',
+			$types: 'src/types.d.ts',
 		},
 	},
 }

@@ -1,21 +1,20 @@
-import type { InvitationObject } from '../../../../../db/types'
+import type { InvitationObject } from '$types'
 import type { PageServerLoad } from './$types'
 
 import { decryptObject } from '$lib/encryption'
-import { Users } from '../../../../../db/db'
 
-export const load: PageServerLoad = async ({ params }) => {
-	const { invitedById, invitedAt, email }: InvitationObject = decryptObject(params.code)
+export const load: PageServerLoad = async ({ params, locals }) => {
+	const { inviterId, invitedAt, email }: InvitationObject = decryptObject(params.code)
 
-	const invitedBy = await Users.findById(invitedById)
+	const inviter = await locals.prisma.user.findUniqueOrThrow({
+		where: { id: inviterId },
+		select: { username: true, slug: true },
+	})
 
 	return {
 		code: params.code,
 		email,
 		invitedAt,
-		invitedBy: {
-			username: invitedBy.username,
-			slug: invitedBy.slug,
-		},
+		inviter,
 	}
 }

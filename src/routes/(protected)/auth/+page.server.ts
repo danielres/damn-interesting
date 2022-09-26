@@ -1,28 +1,29 @@
-import type { InvitationObject } from '../../../db/types'
+import type { InvitationObject } from '$types'
 import type { Actions } from './$types'
 
+import { HTTP_CODES } from '$constants'
 import { decryptObject, encryptObject } from '$lib/encryption'
-import { compare } from '$lib/password'
+import { compare, hash } from '$lib/password'
 import { getFormEntriesFromRequest } from '$lib/request'
 import { slugify } from '$lib/string'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { invalid } from '@sveltejs/kit'
-import { Users } from '../../../db/db'
 
-const COOKIE_MAX_AGE = 60 // in seconds
+const COOKIE_MAX_AGE = 60 * 10 // in seconds
 const COOKIE_NAME = 'session'
 const COOKIE_OPTIONS = { httpOnly: true, sameSite: 'strict', path: '/', secure: true } as const
 
-const HTTP_CODES = {
-	FORBIDDEN: 403,
-	UNPROCESSABLE_ENTITY: 422,
-}
-
 export const actions: Actions = {
-	signin: async ({ cookies, request }) => {
-		const errors: { message: string; field?: string }[] = []
+	signin: async ({ cookies, request, locals }) => {
+		const errors: { field?: string; message: string }[] = []
 		const { email, password } = await getFormEntriesFromRequest(request)
 
-		const user = await Users.findByEmail(email.toString())
+		let user
+		try {
+			user = await locals.prisma.user.findFirst({ where: { email: email } })
+		} catch (error) {
+			console.log(error)
+		}
 
 		if (!user) {
 			errors.push({ message: 'Email/password combination is not valid' })
@@ -43,59 +44,86 @@ export const actions: Actions = {
 
 	signout: ({ cookies }) => cookies.delete(COOKIE_NAME, COOKIE_OPTIONS),
 
-	signup: async ({ request }) => {
-		const errors: { field: string; message: string }[] = []
+	signup: async ({ request, locals }) => {
 		const { username, email, password } = await getFormEntriesFromRequest(request)
-
-		const foundByUsername = await Users.findByUsername(username)
-		const foundByEmail = await Users.findByEmail(email)
-
-		if (foundByUsername) errors.push({ field: 'username', message: 'already in use' })
-		if (foundByEmail) errors.push({ field: 'email', message: 'already in use' })
-
-		if (errors.length > 0) return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
-
 		const id = crypto.randomUUID()
 
-		await Users.insert({
+		const data = {
 			id,
 			email,
-			password,
 			slug: slugify(username),
 			username,
-			invitedById: id,
-			invitedAt: new Date().toISOString(),
-		})
+			inviterId: id,
+			password,
+		}
+
+		// TODO: Dry up (1/2)
+		try {
+			await locals.prisma.user.create({ data })
+		} catch (error) {
+			if (error instanceof PrismaClientKnownRequestError) {
+				const isUniqueConstraintError = error.code === 'P2002'
+
+				if (isUniqueConstraintError) {
+					const errors = Array(error.meta?.target).map((field) => ({
+						field,
+						message: 'already in use',
+					}))
+					return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
+				}
+			}
+
+			throw error
+		}
 	},
 
-	'signup-with-code': async ({ request }) => {
+	'signup-with-code': async ({ request, locals }) => {
 		const errors: { field: string; message: string }[] = []
 		const { username, password, code } = await getFormEntriesFromRequest(request)
-		const { email, invitedById, invitedAt } = decryptObject(code)
+		const { email, inviterId, invitedAt } = decryptObject(code)
 
-		const foundByUsername = await Users.findByUsername(username)
-		const foundByEmail = await Users.findByEmail(email)
+		const foundByUsername = await locals.prisma.user.count({ where: { username } })
+		const foundByEmail = await locals.prisma.user.count({ where: { email } })
 
-		if (foundByUsername) errors.push({ field: 'username', message: 'already in use' })
-		if (foundByEmail) errors.push({ field: 'email', message: 'already in use' })
+		if (foundByUsername > 0) errors.push({ field: 'username', message: 'already in use' })
+		if (foundByEmail > 0) errors.push({ field: 'email', message: 'already in use' })
 
 		if (errors.length > 0) return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
 
-		await Users.insert({
+		const data = {
 			email,
 			invitedAt,
-			invitedById,
-			password,
+			inviterId,
+			password: await hash(password),
 			slug: slugify(username),
 			username,
-		})
+		}
+
+		// TODO: Dry up (2/2)
+		try {
+			await locals.prisma.user.create({ data })
+		} catch (error) {
+			if (error instanceof PrismaClientKnownRequestError) {
+				const isUniqueConstraintError = error.code === 'P2002'
+
+				if (isUniqueConstraintError) {
+					const errors = Array(error.meta?.target).map((field) => ({
+						field,
+						message: 'already in use',
+					}))
+					return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
+				}
+			}
+
+			throw error
+		}
 	},
 
 	'generate-invitation-code': async ({ locals, request }) => {
 		const errors: { message: string }[] = []
 		const { email } = await getFormEntriesFromRequest(request)
 
-		const user = await Users.findByEmail(email)
+		const user = await locals.prisma.user.findUnique({ where: { email } })
 
 		if (user) {
 			errors.push({ message: 'This user has been invited already.' })
@@ -112,7 +140,7 @@ export const actions: Actions = {
 
 		const invitationObject: InvitationObject = {
 			email,
-			invitedById: currentUser.id,
+			inviterId: currentUser.id,
 			invitedAt: new Date().toISOString(),
 		}
 

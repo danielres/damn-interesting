@@ -8,5 +8,3 @@ node_modules
 !.env.example
 
 .history
-src/db/db.test.json
-src/db/db.development.json
