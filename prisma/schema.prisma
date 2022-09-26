@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://foobar:foobar@localhost:5555/foobar?schema=public&connection_limit=1"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  slug      String   @unique
+  username  String   @unique
+  password  String
+  invitedAt DateTime @default(now())
+  inviterId String
+  inviter   User     @relation("InviterInvitees", fields: [inviterId], references: [id])
+  invitees  User[]   @relation("InviterInvitees")
+  entries   Entry[]
+}
+
+model Entry {
+  id              String   @id @default(uuid())
+  createdAt       DateTime @default(now())
+  url             String
+  description     String
+  owner           User     @relation(fields: [ownerId], references: [id])
+  ownerId         String
+  authorName      String
+  authorUrl       String
+  height          Int
+  providerName    String
+  thumbnailHeight Int
+  thumbnailUrl    String
+  thumbnailWidth  Int
+  title           String
+  resourceType    String
+  width           Int
+}
