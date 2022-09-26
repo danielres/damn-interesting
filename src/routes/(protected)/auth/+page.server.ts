@@ -18,12 +18,7 @@ export const actions: Actions = {
 		const errors: { field?: string; message: string }[] = []
 		const { email, password } = await getFormEntriesFromRequest(request)
 
-		let user
-		try {
-			user = await locals.prisma.user.findFirst({ where: { email: email } })
-		} catch (error) {
-			console.log(error)
-		}
+		const user = await locals.prisma.user.findFirst({ where: { email: email } })
 
 		if (!user) {
 			errors.push({ message: 'Email/password combination is not valid' })
