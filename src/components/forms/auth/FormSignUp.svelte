@@ -5,7 +5,6 @@
 	import { enhance } from '$app/forms'
 	import * as validators from '$lib/validators'
 	import Errors from '../Errors.svelte'
-	import Row from '../Row.svelte'
 
 	export let onSuccess: () => void
 
@@ -18,6 +17,7 @@
 </script>
 
 <form
+	class="grid gap-4"
 	method="POST"
 	action="/auth?/signup"
 	use:enhance={({ data, cancel }) => {
@@ -31,34 +31,32 @@
 		}
 	}}
 >
-	<Row>
+	<div>
 		<input type="text" name="username" placeholder="username" bind:value={username} />
-	</Row>
+	</div>
 
-	<Row>
+	<div>
 		<input type="email" name="email" placeholder="email" bind:value={email} />
-	</Row>
+	</div>
 
-	<Row>
+	<div>
 		<input type="password" name="password" placeholder="password" bind:value={password} />
-	</Row>
+	</div>
 
-	<Row>
+	<div>
 		<input
 			type="password"
 			name="password2"
 			placeholder="password (repeat)"
 			bind:value={password2}
 		/>
-	</Row>
+	</div>
 
 	{#if errors.length > 0}
-		<Row>
-			<Errors {errors} />
-		</Row>
+		<Errors {errors} />
 	{/if}
 
-	<Row>
-		<button type="submit">Submit</button>
-	</Row>
+	<div>
+		<button class="btn" type="submit">Submit</button>
+	</div>
 </form>

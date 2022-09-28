@@ -5,7 +5,6 @@
 	import { dev } from '$app/environment'
 	import { enhance } from '$app/forms'
 	import Errors from '../Errors.svelte'
-	import Row from '../Row.svelte'
 
 	let email = dev ? 'tom@example.com' : ''
 	let code = ''
@@ -21,6 +20,7 @@
 </script>
 
 <form
+	class="grid gap-4"
 	method="POST"
 	action="/auth?/generate-invitation-code"
 	use:enhance={() => {
@@ -32,18 +32,18 @@
 		}
 	}}
 >
-	<Row>
+	<div>
 		<input type="email" name="email" placeholder="email" bind:value={email} />
-	</Row>
+	</div>
 
-	<Row>
+	<div>
 		<button>Get invitation link</button>
-	</Row>
+	</div>
 
 	{#if errors.length > 0}
-		<Row>
+		<div>
 			<Errors {errors} />
-		</Row>
+		</div>
 	{/if}
 
 	{#if code}
@@ -52,7 +52,7 @@
 		<p class="invitation-link-preview">
 			{truncate(invitationHref)}
 		</p>
-		<button on:click={() => copyToClipboard(invitationHref)}>Copy to clipboard</button>
+		<button class="btn" on:click={() => copyToClipboard(invitationHref)}>Copy to clipboard</button>
 	{/if}
 </form>
 

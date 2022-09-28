@@ -4,7 +4,6 @@
 
 	import { dev } from '$app/environment'
 	import Errors from './Errors.svelte'
-	import Row from './Row.svelte'
 
 	let url = dev ? 'https://youtu.be/1G72936Y3xA' : ''
 	let description = ''
@@ -40,8 +39,8 @@
 		Add another
 	</button>
 {:else}
-	<form on:submit|preventDefault={onSubmit}>
-		<Row>
+	<form on:submit|preventDefault={onSubmit} class="grid gap-4">
+		<div>
 			<div>
 				<label for="url">Url</label>
 			</div>
@@ -49,9 +48,9 @@
 			<div>
 				<small>Note: only Youtube urls are currently supported</small>
 			</div>
-		</Row>
+		</div>
 
-		<Row>
+		<div>
 			<div>
 				<label for="description">What do you find particularly interesting in this content?</label>
 			</div>
@@ -63,17 +62,17 @@
 				placeholder="Description"
 				rows="3"
 			/>
-		</Row>
+		</div>
 
 		{#if errors.length > 0}
-			<Row>
+			<div>
 				<Errors {errors} />
-			</Row>
+			</div>
 		{/if}
 
-		<Row>
-			<button type="submit">Submit</button>
-		</Row>
+		<div>
+			<button type="submit" class="btn">Submit</button>
+		</div>
 	</form>
 {/if}
 

@@ -5,21 +5,12 @@
 
 	export let entry: EntryView
 
-	const WIDTH = 500
-	const ratio = entry.width / entry.height
+	export let mode: 'thumbnail' | 'view' = 'view'
 </script>
 
-<div>
-	<div class="head">
-		<span class="created-at">{format(entry.createdAt)}</span>
-		<span class="owner">
-			<a href={`/user/${entry.owner.slug}`}>
-				{entry.owner.username}
-			</a>
-		</span>
-	</div>
-	<h3 class="flex items-baseline justify-between">
-		<div class="title opacity-75">
+<div class="grid gap-4">
+	<h3>
+		<div>
 			{entry.title}
 		</div>
 		<div class="text-sm opacity-50">
@@ -28,16 +19,43 @@
 			</a>
 		</div>
 	</h3>
-	<iframe
-		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-		allowfullscreen
-		frameborder="0"
-		height={WIDTH / ratio}
-		src={`https://www.youtube.com/embed/${entry.id}?feature=oembed`}
-		title="Top 10 Knots To Know"
-		width={WIDTH}
-	/>
-	<div>{entry.description}</div>
+
+	{#if mode === 'thumbnail'}
+		<a href={`/entries/${entry.id}`} class="opacity-70 hover:opacity-100">
+			<img
+				src={entry.thumbnailUrl}
+				alt=""
+				class="w-full rounded-lg border-4 border-slate-600 hover:border-slate-400 transition-all hover:shadow-lg"
+				style={`aspect-ratio: ${entry.width} / ${entry.height}`}
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+			/>
+		</a>
+	{/if}
+
+	{#if mode === 'view'}
+		<iframe
+			class="w-full rounded-lg border-4 border-slate-600"
+			style={`aspect-ratio: ${entry.width} / ${entry.height}`}
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+			allowfullscreen
+			frameborder="0"
+			src={`https://www.youtube.com/embed/${entry.id}?feature=oembed`}
+			title="Top 10 Knots To Know"
+		/>
+	{/if}
+
+	<hr class="border-black/10 mt-2" />
+
+	<div class="head">
+		<span class="created-at">{format(entry.createdAt)}</span>
+		<span class="owner">
+			<a href={`/user/${entry.owner.slug}`}>
+				{entry.owner.username}
+			</a>
+		</span>
+	</div>
+
+	<div class="max-h-24 overflow-y-auto text-sm">{entry.description}</div>
 </div>
 
 <style lang="postcss">

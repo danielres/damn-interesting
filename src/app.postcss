@@ -1,21 +1,22 @@
+@import './forms.postcss';
 /* Write your global styles here, in PostCSS syntax */
 @tailwind base;
 @tailwind components;
-
-.fade-in {
-	animation: 2s fadeIn;
-}
-
-@keyframes fadeIn {
-	0% {
-		opacity: 0;
-	}
-	30% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-
 @tailwind utilities;
+
+body {
+	@apply bg-slate-800 text-slate-200;
+}
+
+@layer components {
+	.btn {
+		@apply bg-slate-400 hover:bg-slate-300 hover:shadow-lg px-3 py-2;
+		@apply rounded font-semibold text-slate-800;
+		@apply transition-all;
+		@apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300;
+	}
+
+	.card {
+		@apply bg-slate-500 rounded-xl p-8 shadow-lg;
+	}
+}

@@ -16,14 +16,14 @@
 	const onSignupSuccess = () => (signupSuccess = true)
 </script>
 
-<header>
-	<div>
-		<h1 class="text-xl">
-			<a href="/">Damn Interesting</a>
-		</h1>
-	</div>
+{#if $userStore}
+	<header class="bg-slate-500">
+		<div>
+			<h1 class="text-xl">
+				<a href="/">Damn Interesting</a>
+			</h1>
+		</div>
 
-	{#if $userStore}
 		<div>
 			<a href="/me">
 				{$userStore.username}
@@ -37,20 +37,21 @@
 				<button type="submit">Sign out</button>
 			</form>
 		</div>
-	{/if}
-</header>
+	</header>
+{/if}
 
-<main class="fade-in">
+<main>
 	{#if $userStore}
 		<slot />
 	{:else}
-		<div class="wrapper">
-			<div class="columns">
-				<div>
+		<div class="grid content-center min-h-screen p-8 lg:w-1/2 mx-auto">
+			<div class="card grid md:grid-cols-2">
+				<div class="md:pr-8">
 					<h4>Sign in</h4>
 					<FormSignIn />
 				</div>
-				<div>
+
+				<div class="mt-8 md:mt-0">
 					<h4>Sign up</h4>
 					{#if signupSuccess}
 						<div class="success">
@@ -66,31 +67,8 @@
 	{/if}
 </main>
 
-<style>
-	header {
-		padding: 1em;
-		display: flex;
-		justify-content: space-between;
-		background: #eee;
-		margin-bottom: 1em;
-		align-items: baseline;
-	}
-
-	main {
-		margin: 1em;
-	}
-
-	.wrapper {
-		display: flex;
-		justify-content: center;
-	}
-
-	.columns {
-		display: flex;
-	}
-
-	.columns > div {
-		flex: 1;
-		padding: 0 2em;
+<style lang="postcss">
+	h4 {
+		@apply text-xl mb-6 border-b-2 border-slate-400/50;
 	}
 </style>

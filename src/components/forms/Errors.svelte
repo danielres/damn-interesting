@@ -1,10 +1,12 @@
 <script lang="ts" scope="module">
 	import type { FormError } from '$lib/validators'
 
+	import { fade } from 'svelte/transition'
+
 	export let errors: FormError[] = []
 </script>
 
-<ul class="errors">
+<ul class="errors" transition:fade>
 	{#each errors as error}
 		<li>
 			{#if error.field}
@@ -16,22 +18,11 @@
 	{/each}
 </ul>
 
-<style>
+<style lang="postcss">
 	ul.errors {
-		background: rgba(255, 0, 0, 0.116);
-		padding: 0.75em 1em;
-		margin: 0;
-		color: rgba(138, 0, 0, 0.712);
-		list-style: none;
-		font-size: small;
-		font-family: sans-serif;
-	}
-
-	ul.errors > li {
-		margin-bottom: 0.25em;
-	}
-
-	ul.errors > li:last-child {
-		margin-bottom: 0;
+		@apply bg-red-200 rounded border-4 border-red-300;
+		@apply text-red-600 text-sm;
+		@apply px-3 py-2;
+		@apply grid gap-1;
 	}
 </style>

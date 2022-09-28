@@ -4,7 +4,6 @@
 	import { dev } from '$app/environment'
 	import { enhance } from '$app/forms'
 	import Errors from '../Errors.svelte'
-	import Row from '../Row.svelte'
 
 	export let onSuccess = () => window.location.reload()
 
@@ -15,6 +14,7 @@
 </script>
 
 <form
+	class="grid gap-4"
 	method="POST"
 	action="/auth?/signin"
 	use:enhance={() => {
@@ -25,21 +25,19 @@
 		}
 	}}
 >
-	<Row>
+	<div>
 		<input type="email" name="email" placeholder="email" bind:value={email} />
-	</Row>
+	</div>
 
-	<Row>
+	<div>
 		<input type="password" name="password" placeholder="password" bind:value={password} />
-	</Row>
+	</div>
 
 	{#if errors.length > 0}
-		<Row>
-			<Errors {errors} />
-		</Row>
+		<Errors {errors} />
 	{/if}
 
-	<Row>
-		<button type="submit">Submit</button>
-	</Row>
+	<div>
+		<button class="btn" type="submit">Submit</button>
+	</div>
 </form>

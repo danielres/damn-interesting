@@ -8,20 +8,18 @@
 	const entries: EntryView[] = data.entries
 </script>
 
-XXXXXX
-<div class="flex justify-center">
-	<div class="entries">
+<div class="p-8 max-w-7xl mx-auto">
+	<div class="grid gap-8">
 		{#each entries as entry}
-			<Entry {entry} />
+			<div class="card hover:shadow-2xl hover:bg-slate-600 transition-all">
+				<Entry {entry} mode="thumbnail" />
+			</div>
 		{/each}
 	</div>
 </div>
 
 <style lang="postcss">
-	.entries {
-		width: 500px;
-	}
-	.entries > :global(*) {
-		@apply my-12;
+	.grid {
+		grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
 	}
 </style>
