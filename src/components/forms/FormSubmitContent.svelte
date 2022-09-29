@@ -41,19 +41,15 @@
 {:else}
 	<form on:submit|preventDefault={onSubmit} class="grid gap-4">
 		<div>
-			<div>
-				<label for="url">Url</label>
-			</div>
 			<input type="text" name="url" id="url" placeholder="url" bind:value={url} />
 			<div>
-				<small>Note: only Youtube urls are currently supported</small>
+				<small class="opacity-60">Note: only Youtube urls are currently supported</small>
 			</div>
 		</div>
 
-		<div>
-			<div>
-				<label for="description">What do you find particularly interesting in this content?</label>
-			</div>
+		<div class="grid gap-4">
+			<label for="description">What do you find particularly interesting in this content?</label>
+
 			<textarea
 				bind:value={description}
 				cols="30"

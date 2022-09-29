@@ -47,7 +47,7 @@
 	{#if $userStore}
 		<slot />
 	{:else}
-		<div class="grid content-center px-8 py-24 lg:w-1/2 mx-auto">
+		<div class="grid content-center px-8 py-24 max-w-2xl mx-auto">
 			<div class="card grid md:grid-cols-2">
 				<div class="md:pr-8">
 					<h4>Sign in</h4>
@@ -72,6 +72,6 @@
 
 <style lang="postcss">
 	h4 {
-		@apply text-xl mb-6 border-b-2 border-slate-400/50;
+		@apply text-xl mb-6 border-b-2 pb-1 border-slate-400/50;
 	}
 </style>

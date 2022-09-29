@@ -12,15 +12,16 @@
 
 	$: invitationHref = `${$page.url.origin}/auth/invite/${code}`
 
-	const truncate = (string: string) => string.substring(0, 75) + '...'
+	const truncate = (string: string) => string.substring(0, 30) + '...'
 
 	const copyToClipboard = (text: string) => {
 		window.prompt('Copy to clipboard: Ctrl+C, Enter', text)
+		code = ''
 	}
 </script>
 
 <form
-	class="grid gap-4"
+	class="flex flex-col space-y-4 h-full"
 	method="POST"
 	action="/auth?/generate-invitation-code"
 	use:enhance={() => {
@@ -32,34 +33,28 @@
 		}
 	}}
 >
-	<div>
-		<input type="email" name="email" placeholder="email" bind:value={email} />
-	</div>
-
-	<div>
-		<button>Get invitation link</button>
-	</div>
-
-	{#if errors.length > 0}
+	{#if !code}
 		<div>
-			<Errors {errors} />
+			<input type="email" name="email" placeholder="email" bind:value={email} />
 		</div>
+
+		<div class="">
+			<button class="btn">Get invitation link</button>
+		</div>
+
+		{#if errors.length > 0}
+			<div>
+				<Errors {errors} />
+			</div>
+		{/if}
 	{/if}
 
 	{#if code}
-		<hr />
-		<p>Invitation link for <b>{email}</b>:</p>
-		<p class="invitation-link-preview">
-			{truncate(invitationHref)}
-		</p>
-		<button class="btn" on:click={() => copyToClipboard(invitationHref)}>Copy to clipboard</button>
+		<div class="grid gap-4">
+			<p>Invitation link generated!</p>
+			<button class="btn" on:click={() => copyToClipboard(invitationHref)}>
+				Copy to clipboard
+			</button>
+		</div>
 	{/if}
 </form>
-
-<style>
-	.invitation-link-preview {
-		color: gray;
-		font-size: small;
-		font-family: sans-serif;
-	}
-</style>
