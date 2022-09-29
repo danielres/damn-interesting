@@ -1,5 +1,4 @@
 import type { InvitationObject } from '$types'
-import type { Prisma } from '@prisma/client'
 import type { Actions } from './$types'
 
 import { HTTP_CODES } from '$constants'
@@ -7,7 +6,7 @@ import { decryptObject, encryptObject } from '$lib/encryption'
 import { compare, hash } from '$lib/password'
 import { getFormEntriesFromRequest } from '$lib/request'
 import { slugify } from '$lib/string'
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
+import { Prisma } from '@prisma/client'
 import { invalid } from '@sveltejs/kit'
 
 const COOKIE_MAX_AGE = 60 * 10 // in seconds
@@ -20,7 +19,7 @@ const handlePrismaCreate = async (fn: () => void) => {
 	try {
 		await fn()
 	} catch (error) {
-		if (error instanceof PrismaClientKnownRequestError) {
+		if (error instanceof Prisma.PrismaClientKnownRequestError) {
 			const isUniqueConstraintError = error.code === 'P2002'
 
 			if (isUniqueConstraintError) {
