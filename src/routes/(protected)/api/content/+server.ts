@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types'
 import { HTTP_CODES } from '$constants'
 import { getYoutubeGetVideoDetails } from '$lib/Entry/youtube'
 import { makeUnauthorizedResponse } from '$lib/response'
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
+import { Prisma } from '@prisma/client'
 
 export const POST: RequestHandler = async ({ locals, request }) => {
 	const errors: { field?: string; message: string }[] = []
@@ -37,7 +37,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 
 		return new Response(JSON.stringify(result))
 	} catch (error) {
-		if (error instanceof PrismaClientKnownRequestError) {
+		if (error instanceof Prisma.PrismaClientKnownRequestError) {
 			const isUniqueConstraintError = error.code === 'P2002'
 
 			if (isUniqueConstraintError) {
