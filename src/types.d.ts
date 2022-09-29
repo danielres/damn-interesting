@@ -1,6 +1,13 @@
 import type { YoutubeVideoDetails } from '$lib/Entry/types'
 type ID = string
 
+export type UserView = {
+	username: string
+	slug: string
+	inviter?: UserView
+	invitedAt?: Date
+}
+
 export type CurrentUserView = null | {
 	id: string
 	email: string
