@@ -38,7 +38,7 @@
 			<input type="email" name="email" placeholder="email" bind:value={email} />
 		</div>
 
-		<div class="">
+		<div>
 			<button class="btn">Get invitation link</button>
 		</div>
 

@@ -12,7 +12,7 @@
 		{data.user.username}
 	</h1>
 
-	<div class="">
+	<div>
 		<div class="grid entries gap-8">
 			{#each data.entries as entry}
 				<div class="card p-4 md:p-6 hover:shadow-2xl hover:bg-slate-600 transition-all">

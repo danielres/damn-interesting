@@ -46,15 +46,15 @@
 		</div>
 	</section>
 
-	<section class="">
-		<h3 class="">Submit content</h3>
+	<section>
+		<h3>Submit content</h3>
 		<div class="card bg-slate-900 rounded-none">
 			<FormSubmitContent />
 		</div>
 	</section>
 
-	<section class="">
-		<h3 class="">Invite a new member</h3>
+	<section>
+		<h3>Invite a new member</h3>
 		<div class="card bg-slate-900 rounded-none">
 			<FormGenerateInvitationCode />
 		</div>
