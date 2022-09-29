@@ -11,7 +11,7 @@
 <div class="py-12 px-8 max-w-7xl mx-auto">
 	<div class="grid gap-8">
 		{#each entries as entry}
-			<div class="card hover:shadow-2xl hover:bg-slate-600 transition-all">
+			<div class="card p-6 hover:shadow-2xl hover:bg-slate-600 transition-all">
 				<Entry {entry} mode="thumbnail" />
 			</div>
 		{/each}

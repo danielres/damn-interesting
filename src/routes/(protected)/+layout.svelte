@@ -19,19 +19,25 @@
 {#if $userStore}
 	<header class="flex bg-slate-900 px-8 py-4 items-baseline">
 		<h1 class="text-xl flex-grow">
-			<a href="/">Damn Interesting</a>
+			<a href="/" class="drop-shadow-sharp hover:text-white transition-colors">Damn Interesting</a>
 		</h1>
 
 		<div class="ml-auto flex space-x-8">
-			<a href="/me">{$userStore.username} </a>
+			<a class="hover:underline underline-offset-4 hover:text-white transition-colors" href="/me"
+				>{$userStore.username}
+			</a>
 
 			<form
-				class="inline"
+				class="inline-block"
 				use:enhance={() => () => ($userStore = undefined)}
 				action="/auth?/signout"
 				method="POST"
 			>
-				<button type="submit">Sign out</button>
+				<button type="submit">
+					<span class="hover:underline underline-offset-4 hover:text-white transition-colors"
+						>Sign out</span
+					></button
+				>
 			</form>
 		</div>
 	</header>

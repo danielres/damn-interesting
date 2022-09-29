@@ -18,14 +18,19 @@
 				<div class="text-sm flex gap-4">
 					<div>
 						<span class="text-slate-400">Created by</span>
-						<a class="inline-block" href={`/user/${data.entry.authorUrl}`}>
+						<a
+							class="inline-block hover:underline underline-offset-4"
+							href={`/user/${data.entry.authorUrl}`}
+						>
 							{data.entry.authorName}
 						</a>
 					</div>
 
 					<div>
 						<span class="text-slate-400">Shared by</span>
-						<a href={`/user/${data.entry.owner.slug}`}>{data.entry.owner.username}</a>
+						<a class="hover:underline underline-offset-4" href={`/user/${data.entry.owner.slug}`}
+							>{data.entry.owner.username}</a
+						>
 						<span class="text-slate-400 inline-block">on {format(data.entry.createdAt)}</span>
 					</div>
 				</div>
@@ -50,7 +55,7 @@
 
 		<div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
 			{#each data.suggestionsByAuthor as suggested}
-				<div class="card bg-slate-700">
+				<div class="card p-6 bg-slate-700">
 					<Entry entry={suggested} mode="thumbnail" />
 				</div>
 			{/each}

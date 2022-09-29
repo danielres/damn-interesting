@@ -8,13 +8,13 @@
 	export let mode: 'thumbnail' | 'view' = 'view'
 </script>
 
-<div class="grid gap-4">
-	<h3>
+<div class="flex flex-col h-full space-y-4">
+	<h3 class="drop-shadow-sharp flex-grow">
 		<div>
 			{entry.title}
 		</div>
 		<div class="text-sm opacity-50">
-			<a class="hover:underline" href={entry.authorUrl} target="_BLANK">
+			<a class="underline-offset-4 hover:underline" href={entry.authorUrl} target="_BLANK">
 				{entry.authorName}
 			</a>
 		</div>
@@ -44,38 +44,16 @@
 		/>
 	{/if}
 
-	<hr class="border-black/10 mt-2" />
+	<div class="grid gap-2">
+		<div class="flex items-baseline space-x-4">
+			<span class="ml-auto text-sm opacity-50">{format(entry.createdAt)}</span>
+			<span class="mx-4">
+				<a href={`/user/${entry.owner.slug}`} class="hover:underline underline-offset-4">
+					{entry.owner.username}
+				</a>
+			</span>
+		</div>
 
-	<div class="head">
-		<span class="created-at">{format(entry.createdAt)}</span>
-		<span class="owner">
-			<a href={`/user/${entry.owner.slug}`}>
-				{entry.owner.username}
-			</a>
-		</span>
+		<div class="fade-bottom h-20 overflow-y-hidden text-sm">{entry.description}</div>
 	</div>
-
-	<div class="max-h-24 overflow-y-auto text-sm">{entry.description}</div>
 </div>
-
-<style lang="postcss">
-	.head {
-		text-align: right;
-	}
-	.head span {
-		padding: 0.125rem 0.25rem;
-	}
-
-	.head .created-at {
-		@apply text-sm;
-		color: rgba(0, 0, 0, 0.384);
-	}
-
-	.head .owner {
-		background: rgba(0, 0, 0, 0.082);
-	}
-
-	h3 {
-		text-shadow: 0px 2px 0px black;
-	}
-</style>
