@@ -1,13 +1,31 @@
 <script lang="ts">
+	import { dev } from '$app/environment'
 	import FormGenerateInvitationCode from '$components/forms/auth/FormGenerateInvitationCode.svelte'
 	import FormSubmitContent from '$components/forms/FormSubmitContent.svelte'
+	import * as seeds from '$dev/seeds'
 	import { format } from '$lib/date'
 	import { userStore } from '$stores/user'
+
+	const seed = async () => {
+		const promises = seeds.entries.map((data) =>
+			fetch('/api/content', { method: 'POST', body: JSON.stringify(data) })
+		)
+		await Promise.all(promises)
+	}
 </script>
 
 <div class="grid gap-12 my-12 max-w-3xl mx-auto grid-cols-2">
+	{#if dev}
+		<section class="col-span-2">
+			<h3 class="text-violet-400">Dev</h3>
+			<form class="card bg-violet-500/50" on:submit|preventDefault={() => seed()}>
+				<button class="btn bg-purple-500 hover:bg-purple-400">Insert contents</button>
+			</form>
+		</section>
+	{/if}
+
 	<section class="col-span-2">
-		<h3 class="">Account</h3>
+		<h3>Account</h3>
 		<div class="card bg-slate-700 rounded-none grid grid-cols-2 gap-y-2 text-sm">
 			<div>Username</div>
 			<div><b>{$userStore?.username}</b></div>

@@ -18,6 +18,7 @@ const config = {
 		alias: {
 			$components: 'src/components',
 			$constants: 'src/constants.ts',
+			$dev: 'src/dev',
 			$stores: 'src/stores',
 			$types: 'src/types.d.ts',
 		},
