@@ -1,9 +1,9 @@
 <script scope="module" lang="ts">
-	import Entry from '$components/Entry.svelte'
-	import { getFormEntriesFromRequest } from '$lib/request'
-	import type { CurrentUserView, EntryView } from '$types'
+	import type { EntryView, UserView } from '$types'
 
-	export let data: { user: CurrentUserView; entries: EntryView[] }
+	import Entry from '$components/Entry.svelte'
+
+	export let data: { user: UserView; entries: EntryView[] }
 </script>
 
 <div class="max-w-7xl mx-auto my-12 grid gap-12 md:p-8">
