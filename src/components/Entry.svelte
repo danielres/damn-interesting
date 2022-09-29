@@ -74,4 +74,8 @@
 	.head .owner {
 		background: rgba(0, 0, 0, 0.082);
 	}
+
+	h3 {
+		text-shadow: 0px 2px 0px black;
+	}
 </style>

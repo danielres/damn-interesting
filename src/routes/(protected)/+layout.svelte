@@ -17,21 +17,18 @@
 </script>
 
 {#if $userStore}
-	<header class="bg-slate-500">
-		<div>
-			<h1 class="text-xl">
-				<a href="/">Damn Interesting</a>
-			</h1>
-		</div>
+	<header class="flex bg-slate-900 px-8 py-4 items-baseline">
+		<h1 class="text-xl flex-grow">
+			<a href="/">Damn Interesting</a>
+		</h1>
 
-		<div>
-			<a href="/me">
-				{$userStore.username}
-			</a>
+		<div class="ml-auto flex space-x-8">
+			<a href="/me">{$userStore.username} </a>
+
 			<form
+				class="inline"
 				use:enhance={() => () => ($userStore = undefined)}
 				action="/auth?/signout"
-				class="inline"
 				method="POST"
 			>
 				<button type="submit">Sign out</button>
@@ -44,7 +41,7 @@
 	{#if $userStore}
 		<slot />
 	{:else}
-		<div class="grid content-center min-h-screen p-8 lg:w-1/2 mx-auto">
+		<div class="grid content-center px-8 py-24 lg:w-1/2 mx-auto">
 			<div class="card grid md:grid-cols-2">
 				<div class="md:pr-8">
 					<h4>Sign in</h4>
