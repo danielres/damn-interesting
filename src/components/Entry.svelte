@@ -21,7 +21,7 @@
 	</h3>
 
 	{#if mode === 'thumbnail'}
-		<a href={`/entries/${entry.id}`} class="opacity-70 hover:opacity-100">
+		<a href={`/entries/${entry.id}`} class="opacity-70 hover:opacity-100" data-sveltekit-prefetch>
 			<img
 				src={entry.thumbnailUrl}
 				alt=""
