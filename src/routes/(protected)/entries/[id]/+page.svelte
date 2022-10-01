@@ -10,9 +10,9 @@
 	}
 </script>
 
-<div class="max-w-5xl mx-auto grid gap-16 py-12 px-8">
+<div class="max-w-5xl mx-auto grid gap-16 py-12 md:px-8">
 	<div class="card grid gap-6 bg-slate-900 border-2 border-black">
-		<div class="px-2 grid gap-4">
+		<div class=" grid gap-4">
 			<h1 class="grid gap-2">
 				<div class="text-2xl text-slate-400">{data.entry.title}</div>
 				<div class="text-sm flex gap-4">
@@ -47,7 +47,7 @@
 			title={data.entry.title}
 		/>
 
-		<div class="px-2">{data.entry.description}</div>
+		<div class="">{data.entry.description}</div>
 	</div>
 
 	<div class="grid gap-4">
