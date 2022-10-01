@@ -10,6 +10,11 @@ datasource db {
   url      = env("PG_URL")
 }
 
+enum Role {
+  USER
+  SUPERADMIN
+}
+
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
@@ -21,6 +26,7 @@ model User {
   inviter   User     @relation("InviterInvitees", fields: [inviterId], references: [id])
   invitees  User[]   @relation("InviterInvitees")
   entries   Entry[]
+  role      Role     @default(USER)
 }
 
 model Entry {
