@@ -3,3 +3,8 @@ export const HTTP_CODES = {
 	UNAUTHORIZED: 401,
 	UNPROCESSABLE_ENTITY: 422,
 }
+
+export const USER_ROLES = {
+	SUPERADMIN: 'SUPERADMIN',
+	USER: 'USER',
+}

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { dev } from '$app/environment'
 	import FormGenerateInvitationCode from '$components/forms/auth/FormGenerateInvitationCode.svelte'
 	import FormSubmitContent from '$components/forms/FormSubmitContent.svelte'
+	import { USER_ROLES } from '$constants'
 	import * as seeds from '$dev/seeds'
 	import { format } from '$lib/date'
 	import { userStore } from '$stores/user'
@@ -14,16 +14,18 @@
 	}
 </script>
 
-<div class="grid gap-12 my-12 max-w-3xl mx-auto md:grid-cols-2">
-	{#if dev}
-		<section class="md:col-span-2">
-			<h3 class="text-violet-400">Dev</h3>
-			<form class="card bg-violet-500/50" on:submit|preventDefault={() => seed()}>
+{#if $userStore?.role === USER_ROLES.SUPERADMIN}
+	<section class="px-6 pt-6 grid">
+		<div class="ml-auto">
+			<a href="/admin" class="btn bg-red-500 opacity-60 hover:opacity-100">Admin</a>
+			<form class="inline-block " on:submit|preventDefault={() => seed()}>
 				<button class="btn bg-purple-500 hover:bg-purple-400">Insert contents</button>
 			</form>
-		</section>
-	{/if}
+		</div>
+	</section>
+{/if}
 
+<div class="grid gap-12 my-12 max-w-3xl mx-auto md:grid-cols-2">
 	<section class="md:col-span-2">
 		<h3>Account</h3>
 		<div class="card bg-slate-700 rounded-none grid grid-cols-2 gap-y-2 text-sm">
@@ -31,6 +33,8 @@
 			<div><b>{$userStore?.username}</b></div>
 			<div>Email</div>
 			<div><b>{$userStore?.email}</b></div>
+			<div>Role</div>
+			<div><b>{$userStore?.role}</b></div>
 			<div>Invited by</div>
 			<div>
 				<b>

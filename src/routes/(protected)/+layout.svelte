@@ -4,6 +4,7 @@
 	import '../../app.postcss'
 
 	import { enhance } from '$app/forms'
+	import { page } from '$app/stores'
 	import FormSignIn from '$components/forms/auth/FormSignIn.svelte'
 	import FormSignUp from '$components/forms/auth/FormSignUp.svelte'
 	import { userStore } from '$stores/user'
@@ -14,10 +15,13 @@
 
 	let signupSuccess = false
 	const onSignupSuccess = () => (signupSuccess = true)
+
+	let isAdmin = false
+	$: isAdmin = $page.url.pathname.startsWith('/admin')
 </script>
 
 {#if $userStore}
-	<header class="flex bg-slate-900 px-8 py-4 items-baseline">
+	<header class={`flex ${isAdmin ? 'bg-red-900/50' : 'bg-slate-900'} px-8 py-4 items-baseline`}>
 		<h1 class="text-xl flex-grow">
 			<a href="/" class="drop-shadow-sharp hover:text-white transition-colors">Damn Interesting</a>
 		</h1>
