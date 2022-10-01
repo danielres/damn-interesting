@@ -26,6 +26,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			id: true,
 			email: true,
 			username: true,
+			role: true,
 			slug: true,
 			inviter: { select: { username: true, slug: true } },
 			invitedAt: true,

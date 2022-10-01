@@ -8,6 +8,7 @@ declare namespace App {
 			id: string
 			email: string
 			username: string
+			role: import('@prisma/client').Role
 			slug: string
 			inviter: null | { username: string; slug: string }
 			invitedAt: Date
