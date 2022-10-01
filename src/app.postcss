@@ -9,8 +9,12 @@ body {
 }
 
 @layer components {
+	*:disabled {
+		@apply opacity-60 cursor-not-allowed;
+	}
+
 	.btn {
-		@apply bg-slate-400 hover:bg-slate-300 hover:shadow-lg px-3 py-2;
+		@apply bg-slate-400 enabled:hover:bg-slate-300 enabled:hover:shadow-lg px-3 py-2;
 		@apply rounded font-semibold text-slate-800;
 		@apply transition-all;
 		@apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300;
