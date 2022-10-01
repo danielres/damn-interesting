@@ -17,3 +17,5 @@ export const slugify = (string: string) => {
 		.replace(/^-+/, '') // Trim - from start of text
 		.replace(/-+$/, '') // Trim - from end of text
 }
+
+export const truncate = (string: string, length = 30) => string.substring(0, length) + '…'

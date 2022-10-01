@@ -12,8 +12,6 @@
 
 	$: invitationHref = `${$page.url.origin}/auth/invite/${code}`
 
-	const truncate = (string: string) => string.substring(0, 30) + '...'
-
 	const copyToClipboard = (text: string) => {
 		window.prompt('Copy to clipboard: Ctrl+C, Enter', text)
 		code = ''
