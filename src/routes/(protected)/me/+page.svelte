@@ -14,9 +14,9 @@
 	}
 </script>
 
-<div class="grid gap-12 my-12 max-w-3xl mx-auto grid-cols-2">
+<div class="grid gap-12 my-12 max-w-3xl mx-auto md:grid-cols-2">
 	{#if dev}
-		<section class="col-span-2">
+		<section class="md:col-span-2">
 			<h3 class="text-violet-400">Dev</h3>
 			<form class="card bg-violet-500/50" on:submit|preventDefault={() => seed()}>
 				<button class="btn bg-purple-500 hover:bg-purple-400">Insert contents</button>
@@ -24,7 +24,7 @@
 		</section>
 	{/if}
 
-	<section class="col-span-2">
+	<section class="md:col-span-2">
 		<h3>Account</h3>
 		<div class="card bg-slate-700 rounded-none grid grid-cols-2 gap-y-2 text-sm">
 			<div>Username</div>
