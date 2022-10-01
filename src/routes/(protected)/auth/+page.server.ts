@@ -16,9 +16,9 @@ const COOKIE_OPTIONS = { httpOnly: true, sameSite: 'strict', path: '/', secure: 
 
 type FormActionError = { field?: string; message: string }
 
-const handlePrismaCreate = (fn: () => void) => {
+const handlePrismaCreate = async (fn: () => Promise<unknown>) => {
 	try {
-		fn()
+		await fn()
 	} catch (error) {
 		if (error instanceof Prisma.PrismaClientKnownRequestError) {
 			const isUniqueConstraintError = error.code === 'P2002'
