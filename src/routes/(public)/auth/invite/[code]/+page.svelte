@@ -11,55 +11,96 @@
 	let step = 0
 </script>
 
-{#if step === 0}
-	<h3>Welcome! You have been invited by <b>{data.inviter.username}</b>.</h3>
-	<button on:click={() => (step = 1)}>Accept my invitation and create an account</button>
-{/if}
+<div class="card max-w-2xl mx-auto my-12 ">
+	<div class="grid gap-4">
+		{#if step === 0}
+			<div class="grid gap-8 mx-auto text-center py-8">
+				<h4>
+					<div>Welcome!</div>
+					<div>You have been invited by {data.inviter.username}.</div>
+				</h4>
+				<div>
+					<button class="btn" on:click={() => (step = 1)}>
+						Accept my invitation and create an account
+					</button>
+				</div>
+				<div>
+					<button
+						class="hover:underline underline-offset-4 opacity-60 hover:opacity-100 transition-opacity"
+						on:click={() => goto('/')}>Cancel</button
+					>
+				</div>
+			</div>
+		{/if}
 
-{#if 0 < step && step < 3}
-	<button on:click={() => (step = Math.floor(step - 1))}>Back</button>
-{/if}
+		{#if 0 < step && step < 3}
+			<div>
+				<button
+					class="hover:underline underline-offset-4 opacity-60 hover:opacity-100 transition-opacity"
+					on:click={() => (step = Math.floor(step - 1))}>Back</button
+				>
+			</div>
+		{/if}
 
-<button on:click={() => goto('/')}>Cancel</button>
+		{#if step === 1}
+			<div class="grid gap-4 mx-auto py-8 max-w-md">
+				<h4>1. Please confirm that your email is correct</h4>
+				<label>
+					<input
+						on:click={() => (step = 2)}
+						type="radio"
+						bind:group={isEmailCorrect}
+						value={true}
+					/>
+					<div>My email is indeed <b>{data.email}</b></div>
+				</label>
+				<label>
+					<input
+						on:click={() => (step = 1.1)}
+						type="radio"
+						bind:group={isEmailCorrect}
+						value={false}
+					/>
+					<div>Oopsie! My email is <u>NOT</u> <b>{data.email}</b></div>
+				</label>
+			</div>
+		{/if}
 
-{#if step === 1}
-	<h4>1. Please verify that your email is correct</h4>
-	<div>
-		<div>
-			<label>
-				<input on:click={() => (step = 2)} type="radio" bind:group={isEmailCorrect} value={true} />
-				My email is indeed <b>{data.email}</b>
-			</label>
-		</div>
-		<div>
-			<label>
-				<input
-					on:click={() => (step = 1.1)}
-					type="radio"
-					bind:group={isEmailCorrect}
-					value={false}
-				/>
-				Oopsie! My email is NOT <b>{data.email}</b>
-			</label>
-		</div>
+		{#if step === 1.1}
+			<div class="grid gap-4 mx-auto py-8 max-w-md">
+				<p>
+					Please contact <b>{data.inviter.username}</b> and ask them to create a new invitation for you
+					with your correct email.
+				</p>
+			</div>
+		{/if}
+
+		{#if step === 2}
+			<div class="grid gap-4 mx-auto py-8 max-w-md">
+				<h4>2. Last steps!</h4>
+				<FormSignupWithCode code={data.code} email={data.email} onSuccess={() => (step = 3)} />
+			</div>
+		{/if}
+
+		{#if step === 3}
+			<div class="grid gap-6 mx-auto text-center py-8">
+				<div class="grid gap-4">
+					<h4>Welcome!</h4>
+					<p>You can now sign in with your email and password.</p>
+				</div>
+
+				<FormSignIn email={data.email} onSuccess={() => goto('/')} />
+			</div>
+		{/if}
 	</div>
-{/if}
+</div>
 
-{#if step === 1.1}
-	<div>
-		Please contact <b>{data.inviter.username}</b> and ask them to create a new invitation for you with
-		your correct email
-	</div>
-{/if}
+<style lang="postcss">
+	h4 {
+		@apply text-xl;
+	}
 
-{#if step === 2}
-	<h4>2. Last steps!</h4>
-	<FormSignupWithCode code={data.code} email={data.email} onSuccess={() => (step = 3)} />
-{/if}
-
-{#if step === 3}
-	<h4>Welcome!</h4>
-	<p>You can now sign in with your email and password</p>
-
-	<FormSignIn email={data.email} onSuccess={() => goto('/')} />
-{/if}
+	label {
+		@apply flex gap-3 items-center;
+	}
+</style>
