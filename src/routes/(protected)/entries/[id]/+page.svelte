@@ -50,15 +50,17 @@
 		<div class="">{data.entry.description}</div>
 	</div>
 
-	<div class="grid gap-4">
-		<h3 class="border-b border-slate-500">Also by {data.entry.authorName}</h3>
+	{#if data.suggestionsByAuthor.length > 0}
+		<div class="grid gap-4">
+			<h3 class="border-b border-slate-500">Also by {data.entry.authorName}</h3>
 
-		<div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
-			{#each data.suggestionsByAuthor as suggested}
-				<div class="card p-6 bg-slate-700">
-					<Entry entry={suggested} mode="thumbnail" />
-				</div>
-			{/each}
+			<div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
+				{#each data.suggestionsByAuthor as suggested}
+					<div class="card p-6 bg-slate-700">
+						<Entry entry={suggested} mode="thumbnail" />
+					</div>
+				{/each}
+			</div>
 		</div>
-	</div>
+	{/if}
 </div>

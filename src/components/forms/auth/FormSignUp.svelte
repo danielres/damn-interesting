@@ -32,19 +32,32 @@
 	}}
 >
 	<div>
-		<input type="text" name="username" placeholder="username" bind:value={username} />
+		<input
+			disabled={!dev}
+			type="text"
+			name="username"
+			placeholder="username"
+			bind:value={username}
+		/>
 	</div>
 
 	<div>
-		<input type="email" name="email" placeholder="email" bind:value={email} />
-	</div>
-
-	<div>
-		<input type="password" name="password" placeholder="password" bind:value={password} />
+		<input disabled={!dev} type="email" name="email" placeholder="email" bind:value={email} />
 	</div>
 
 	<div>
 		<input
+			disabled={!dev}
+			type="password"
+			name="password"
+			placeholder="password"
+			bind:value={password}
+		/>
+	</div>
+
+	<div>
+		<input
+			disabled={!dev}
 			type="password"
 			name="password2"
 			placeholder="password (repeat)"
@@ -57,6 +70,6 @@
 	{/if}
 
 	<div>
-		<button class="btn" type="submit">Submit</button>
+		<button disabled={!dev} class="btn" type="submit">Submit</button>
 	</div>
 </form>

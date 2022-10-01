@@ -1,6 +1,7 @@
 import type { InvitationObject } from '$types'
 import type { Actions } from './$types'
 
+import { dev } from '$app/environment'
 import { HTTP_CODES } from '$constants'
 import { decryptObject, encryptObject } from '$lib/encryption'
 import { compare, hash } from '$lib/password'
@@ -62,6 +63,12 @@ export const actions: Actions = {
 	signout: ({ cookies }) => cookies.delete(COOKIE_NAME, COOKIE_OPTIONS),
 
 	signup: async ({ request, locals }) => {
+		const errors: FormActionError[] = []
+		if (!dev) {
+			errors.push({ message: 'Sorry, by invitation only at this time.' })
+			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
+		}
+
 		const { username, email, password } = await getFormEntriesFromRequest(request)
 		const id = crypto.randomUUID()
 
