@@ -1,5 +1,6 @@
 import type { Handle } from '@sveltejs/kit'
 
+import { can } from '$can'
 import { decryptObject } from '$lib/encryption'
 import { hash } from '$lib/password'
 import { PrismaClient } from '@prisma/client'
@@ -14,6 +15,8 @@ prisma.$use(async (params, next) => {
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.prisma = prisma
+
+	event.locals.can = can(prisma)
 
 	const encryptedSession = event.cookies.get('session')
 	if (!encryptedSession) return resolve(event)

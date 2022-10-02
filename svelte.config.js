@@ -16,6 +16,7 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		alias: {
+			$can: 'src/lib/can.ts',
 			$components: 'src/components',
 			$constants: 'src/constants.ts',
 			$dev: 'src/dev',

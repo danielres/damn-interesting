@@ -1,7 +1,6 @@
 import type { InvitationObject } from '$types'
 import type { Actions } from './$types'
 
-import { dev } from '$app/environment'
 import { HTTP_CODES } from '$constants'
 import { decryptObject, encryptObject } from '$lib/encryption'
 import { compare, hash } from '$lib/password'
@@ -64,21 +63,19 @@ export const actions: Actions = {
 
 	signup: async ({ request, locals }) => {
 		const errors: FormActionError[] = []
-		if (!dev) {
+
+		const canSignup = await locals.can(locals.prisma).signup()
+
+		if (!canSignup) {
 			errors.push({ message: 'Sorry, by invitation only at this time.' })
 			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
 		}
 
-		const { username, email, password } = await getFormEntriesFromRequest(request)
-		const id = crypto.randomUUID()
+		const values = await getFormEntriesFromRequest(request)
 
 		const data: Prisma.UserUncheckedCreateInput = {
-			id,
-			email,
-			inviterId: id,
-			password,
-			slug: slugify(username),
-			username,
+			...values,
+			slug: slugify(values.username),
 		}
 
 		return handlePrismaCreate(() => locals.prisma.user.create({ data }))

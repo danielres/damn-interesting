@@ -3,8 +3,11 @@
 
 	import { dev } from '$app/environment'
 	import { enhance } from '$app/forms'
+	import { page } from '$app/stores'
 	import * as validators from '$lib/validators'
 	import Errors from '../Errors.svelte'
+
+	const can = $page.data.can
 
 	export let onSuccess: () => void
 
@@ -33,7 +36,7 @@
 >
 	<div>
 		<input
-			disabled={!dev}
+			disabled={!can.signup}
 			type="text"
 			name="username"
 			placeholder="username"
@@ -42,12 +45,18 @@
 	</div>
 
 	<div>
-		<input disabled={!dev} type="email" name="email" placeholder="email" bind:value={email} />
+		<input
+			disabled={!can.signup}
+			type="email"
+			name="email"
+			placeholder="email"
+			bind:value={email}
+		/>
 	</div>
 
 	<div>
 		<input
-			disabled={!dev}
+			disabled={!can.signup}
 			type="password"
 			name="password"
 			placeholder="password"
@@ -57,7 +66,7 @@
 
 	<div>
 		<input
-			disabled={!dev}
+			disabled={!can.signup}
 			type="password"
 			name="password2"
 			placeholder="password (repeat)"
@@ -70,6 +79,6 @@
 	{/if}
 
 	<div>
-		<button disabled={!dev} class="btn" type="submit">Submit</button>
+		<button disabled={!can.signup} class="btn" type="submit">Submit</button>
 	</div>
 </form>
