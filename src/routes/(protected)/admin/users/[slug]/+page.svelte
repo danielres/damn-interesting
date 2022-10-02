@@ -23,11 +23,13 @@
 				<div>Invited at</div>
 				<div>{format(user.invitedAt)}</div>
 				<div>Invited by</div>
-				<div>
-					<a href={`/admin/users/${user.inviter.slug}`}>
-						{user.inviter.username}
-					</a>
-				</div>
+				{#if user.inviter}
+					<div>
+						<a href={`/admin/users/${user.inviter.slug}`}>
+							{user.inviter.username}
+						</a>
+					</div>
+				{/if}
 				<div>Invitees:</div>
 				<div class="flex flex-wrap gap-1">
 					{#each user.invitees as invitee}

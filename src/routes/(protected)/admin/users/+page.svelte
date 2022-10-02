@@ -16,9 +16,12 @@
 				<div>{user.email}</div>
 				<div>{user.role}</div>
 				<div>{format(user.invitedAt)}</div>
-				<div>
-					Invited by <a href={`/admin/users/${user.inviter.slug}`}>{user.inviter.username}</a>
-				</div>
+				{#if user.inviter}
+					<div>
+						Invited by
+						<a href={`/admin/users/${user.inviter.slug}`}>{user.inviter.username}</a>
+					</div>
+				{/if}
 			</div>
 		</div>
 	{/each}

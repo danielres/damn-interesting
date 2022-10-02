@@ -22,8 +22,8 @@ model User {
   username  String   @unique
   password  String
   invitedAt DateTime @default(now())
-  inviterId String
-  inviter   User     @relation("InviterInvitees", fields: [inviterId], references: [id])
+  inviterId String?
+  inviter   User?    @relation("InviterInvitees", fields: [inviterId], references: [id])
   invitees  User[]   @relation("InviterInvitees")
   entries   Entry[]
   role      Role     @default(USER)
