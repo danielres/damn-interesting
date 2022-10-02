@@ -64,14 +64,13 @@ export const actions: Actions = {
 	signup: async ({ request, locals }) => {
 		const errors: FormActionError[] = []
 
-		const canSignup = await locals.can(locals.prisma).signup()
+		const canSignup = await locals.can.signup()
 
 		if (!canSignup) {
 			errors.push({ message: 'Sorry, by invitation only at this time.' })
 			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
 		}
-
-		const values = await getFormEntriesFromRequest(request)
+		const { password2, ...values } = await getFormEntriesFromRequest(request) // eslint-disable-line @typescript-eslint/no-unused-vars
 
 		const data: Prisma.UserUncheckedCreateInput = {
 			...values,
