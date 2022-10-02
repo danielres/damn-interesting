@@ -1,7 +1,7 @@
 import type { InvitationObject } from '$types'
 import type { Actions } from './$types'
 
-import { HTTP_CODES } from '$constants'
+import { HTTP_CODES, USER_ROLES } from '$constants'
 import { decryptObject, encryptObject } from '$lib/encryption'
 import { compare, hash } from '$lib/password'
 import { getFormEntriesFromRequest } from '$lib/request'
@@ -72,9 +72,12 @@ export const actions: Actions = {
 		}
 		const { password2, ...values } = await getFormEntriesFromRequest(request) // eslint-disable-line @typescript-eslint/no-unused-vars
 
+		const isFirstUser = (await locals.prisma.user.count({})) === 0
+
 		const data: Prisma.UserUncheckedCreateInput = {
 			...values,
 			slug: slugify(values.username),
+			...(isFirstUser ? { role: USER_ROLES.SUPERADMIN } : {}),
 		}
 
 		return handlePrismaCreate(() => locals.prisma.user.create({ data }))
