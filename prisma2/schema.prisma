@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/client2"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("PG_URL2")
+}
+
+enum Action {
+  create
+  createMany
+  update
+  updateMAny
+  delete
+  deleteMany
+}
+
+model Operation {
+  id         Int      @id @default(autoincrement())
+  model      String?
+  action     String?
+  params     Json?
+  executedAt DateTime @default(now())
+}
