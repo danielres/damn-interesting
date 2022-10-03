@@ -21,11 +21,11 @@
 </script>
 
 {#if $userStore}
-	<header class={`flex ${isAdmin ? 'bg-red-900/50' : 'bg-slate-900'} px-6 sm:px-8 py-4`}>
+	<header class=" {isAdmin ? 'bg-red-900/50' : 'bg-slate-900'} flex px-6 sm:px-8 py-4">
 		<h1 class="">
-			<a href="/" class="drop-shadow-sharp hover:text-white transition-colors flex gap-2 ">
+			<a href="/" class="flex gap-2 transition-colors drop-shadow-sharp hover:text-white ">
 				<svg
-					class="h-8 w-8 opacity-70 self-end"
+					class="self-end w-8 h-8 opacity-70"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
@@ -44,21 +44,21 @@
 			</a>
 		</h1>
 
-		<div class="ml-auto flex space-x-8  self-end leading-none">
+		<div class="flex self-end ml-auto space-x-8 leading-none">
 			<a
-				class="drop-shadow-sharp hover:underline underline-offset-4 hover:text-white transition-colors"
+				class="transition-colors drop-shadow-sharp hover:underline underline-offset-4 hover:text-white"
 				href="/me"
 				>{$userStore.username}
 			</a>
 
 			<form
-				class="drop-shadow-sharp inline-block"
+				class="inline-block drop-shadow-sharp"
 				use:enhance={() => () => ($userStore = undefined)}
 				action="/auth?/signout"
 				method="POST"
 			>
 				<button type="submit">
-					<span class="hover:underline underline-offset-4 hover:text-white transition-colors"
+					<span class="transition-colors hover:underline underline-offset-4 hover:text-white"
 						>Sign out</span
 					></button
 				>
@@ -71,8 +71,8 @@
 	{#if $userStore}
 		<slot />
 	{:else}
-		<div class="grid content-center px-8 py-24 max-w-2xl mx-auto">
-			<div class="card grid md:grid-cols-2">
+		<div class="grid content-center max-w-2xl px-8 py-24 mx-auto">
+			<div class="grid card md:grid-cols-2">
 				<div class="md:pr-8">
 					<h4>Sign in</h4>
 					<FormSignIn />
