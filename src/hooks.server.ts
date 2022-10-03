@@ -2,20 +2,14 @@ import type { Handle } from '@sveltejs/kit'
 
 import { can } from '$can'
 import { decryptObject } from '$lib/encryption'
-import { hash } from '$lib/password'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '$lib/prisma/clients'
+import { hashUserPassword, logMutations } from '$lib/prisma/middlewares'
 
-const prisma = new PrismaClient()
-
-prisma.$use(async (params, next) => {
-	if (params.model === 'User' && params.action === 'create')
-		params.args.data.password = await hash(params.args.data.password)
-	return next(params)
-})
+prisma.$use(hashUserPassword)
+prisma.$use(logMutations)
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.prisma = prisma
-
 	event.locals.can = can(prisma)
 
 	const encryptedSession = event.cookies.get('session')
