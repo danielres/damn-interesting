@@ -3,7 +3,7 @@
 // and what to do when importing types
 declare namespace App {
 	interface Locals {
-		can: ReturnType<import('$can').Can>
+		can: import('$can').Can
 		prisma: import('@prisma/client').PrismaClient
 		user: null | {
 			id: string

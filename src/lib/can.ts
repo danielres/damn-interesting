@@ -1,8 +1,6 @@
 import type { PrismaClient } from '@prisma/client'
 
-export type Can = (prisma: PrismaClient) => {
-	[k: string]: () => Promise<boolean>
-}
+export type Can = ReturnType<typeof can>
 
 export const can: Can = (prisma: PrismaClient) => {
 	return {
