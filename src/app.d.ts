@@ -5,6 +5,7 @@ declare namespace App {
 	interface Locals {
 		can: import('$can').Can
 		prisma: import('@prisma/client').PrismaClient
+		prisma2: import('@prisma/client2').PrismaClient
 		user: null | {
 			id: string
 			email: string

@@ -8,6 +8,7 @@ import { getFormEntriesFromRequest } from '$lib/request'
 import { slugify } from '$lib/string'
 import { Prisma } from '@prisma/client'
 import { invalid } from '@sveltejs/kit'
+import { randomUUID } from 'crypto'
 
 const COOKIE_MAX_AGE = 60 * 10 // in seconds
 const COOKIE_NAME = 'session'
@@ -75,6 +76,7 @@ export const actions: Actions = {
 		const isFirstUser = (await locals.prisma.user.count({})) === 0
 
 		const data: Prisma.UserUncheckedCreateInput = {
+			id: randomUUID(),
 			...values,
 			slug: slugify(values.username),
 			...(isFirstUser ? { role: USER_ROLES.SUPERADMIN } : {}),
@@ -97,6 +99,7 @@ export const actions: Actions = {
 		if (errors.length > 0) return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
 
 		const data: Prisma.UserUncheckedCreateInput = {
+			id: randomUUID(),
 			email,
 			invitedAt,
 			inviterId,
