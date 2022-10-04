@@ -1,10 +1,11 @@
 <script lang="ts" scope="module">
+	import { browser } from '$app/environment'
 	import { goto } from '$app/navigation'
 	import { page } from '$app/stores'
 	import { USER_ROLES } from '$constants'
 
-	if ($page.data.user.role !== USER_ROLES.SUPERADMIN) goto('/')
-	if ($page.url.pathname === '/admin') goto('/admin/users')
+	if (browser && $page.data.user.role !== USER_ROLES.SUPERADMIN) goto('/')
+	if (browser && $page.url.pathname === '/admin') goto('/admin/users')
 </script>
 
 {#if $page.data.user.role === USER_ROLES.SUPERADMIN}
