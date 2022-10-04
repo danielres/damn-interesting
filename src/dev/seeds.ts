@@ -7,11 +7,15 @@ export const entries = [
 	{
 		url: 'https://www.youtube.com/watch?v=1p11-oggW1E',
 		description:
-			'Thought-provoking, and With delightful humor, a presentation on fundamental principles that apply to evolution as well as various areas of life.',
+			'Thought-provoking with delightful humor, a presentation on fundamental principles that apply to evolution as well as various areas of life.',
 	},
 	{
 		url: 'https://www.youtube.com/watch?v=mzizK6ms-gY',
 		description:
 			'Is everything predertermined? An astonishing demonstration of complex systems emerging from simple principles, with deep philosophical implications for our universe.',
+	},
+	{
+		url: 'https://www.youtube.com/watch?v=eALwDyS7rB0',
+		description: 'On the work conditions, churn and burnout plaguing the VFX industry.',
 	},
 ]
