@@ -3,7 +3,7 @@ import type { Actions } from './$types'
 
 import { HTTP_CODES, USER_ROLES } from '$constants'
 import { decryptObject, encryptObject } from '$lib/encryption'
-import { compare, hash } from '$lib/password'
+import { compare } from '$lib/password'
 import { getFormEntriesFromRequest } from '$lib/request'
 import { slugify } from '$lib/string'
 import { Prisma } from '@prisma/client'
@@ -40,6 +40,7 @@ export const actions: Actions = {
 	signin: async ({ cookies, request, locals }) => {
 		const errors: FormActionError[] = []
 		const { email, password } = await getFormEntriesFromRequest(request)
+		console.log({ email, password })
 
 		const user = await locals.prisma.user.findFirst({ where: { email: email } })
 
@@ -103,7 +104,7 @@ export const actions: Actions = {
 			email,
 			invitedAt,
 			inviterId,
-			password: await hash(password),
+			password,
 			slug: slugify(username),
 			username,
 		}
