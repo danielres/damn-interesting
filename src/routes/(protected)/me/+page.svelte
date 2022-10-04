@@ -1,6 +1,5 @@
 <script lang="ts">
 	import FormGenerateInvitationCode from '$components/forms/auth/FormGenerateInvitationCode.svelte'
-	import FormSubmitContent from '$components/forms/FormSubmitContent.svelte'
 	import { USER_ROLES } from '$constants'
 	import * as seeds from '$dev/seeds'
 	import { format } from '$lib/date'
@@ -51,13 +50,6 @@
 				<div>Invited</div>
 				<div><b>{format($userStore?.invitedAt)}</b></div>
 			{/if}
-		</div>
-	</section>
-
-	<section>
-		<h3>Submit content</h3>
-		<div class="card bg-slate-900 rounded-none">
-			<FormSubmitContent />
 		</div>
 	</section>
 
