@@ -1,21 +1,14 @@
 <script lang="ts">
-	import type { EntryView } from '$types'
 	import type { FormError } from '$lib/validators'
 
 	import { dev } from '$app/environment'
 	import Errors from './Errors.svelte'
 
+	export let onSuccess = () => {}
+
 	let url = dev ? 'https://youtu.be/1G72936Y3xA' : ''
 	let description = ''
 	let errors: FormError[] = []
-	let result: EntryView | undefined = undefined
-
-	const addAnother = () => {
-		url = ''
-		description = ''
-		errors = []
-		result = undefined
-	}
 
 	const onSubmit = async () => {
 		errors = []
@@ -25,52 +18,42 @@
 			body: JSON.stringify({ url, description }),
 		})
 
-		if (response.ok) result = await response.json()
+		if (response.ok) onSuccess()
 		if (!response.ok) errors = await response.json()
 	}
 </script>
 
-{#if result}
-	<pre>{JSON.stringify(result, null, 2)}</pre>
-	<button
-		on:click={addAnother}
-		class="py-2 px-4 bg-green-200 text-green-700 font-bold my-4 opacity-70 hover:opacity-100"
-	>
-		Add another
-	</button>
-{:else}
-	<form on:submit|preventDefault={onSubmit} class="grid gap-4">
+<form on:submit|preventDefault={onSubmit} class="grid gap-4">
+	<div>
+		<input type="text" name="url" id="url" placeholder="url" bind:value={url} />
 		<div>
-			<input type="text" name="url" id="url" placeholder="url" bind:value={url} />
-			<div>
-				<small class="opacity-60">Note: only Youtube urls are currently supported</small>
-			</div>
+			<small class="opacity-60">Note: only Youtube urls are currently supported</small>
 		</div>
+	</div>
 
-		<div class="grid gap-4">
-			<label for="description">What do you find particularly interesting in this content?</label>
+	<div class="grid gap-4">
+		<label for="description">What do you find particularly interesting in this content?</label>
 
-			<textarea
-				bind:value={description}
-				cols="30"
-				id="description"
-				name="description"
-				placeholder="Description"
-				rows="3"
-			/>
-		</div>
+		<textarea
+			bind:value={description}
+			cols="30"
+			id="description"
+			name="description"
+			placeholder="Description"
+			rows="3"
+		/>
+	</div>
 
-		{#if errors.length > 0}
-			<div>
-				<Errors {errors} />
-			</div>
-		{/if}
-
+	{#if errors.length > 0}
 		<div>
-			<button type="submit" class="btn">Submit</button>
+			<Errors {errors} />
 		</div>
-	</form>
-{/if}
+	{/if}
+
+	<div>
+		<button type="submit" class="btn">Submit</button>
+	</div>
+</form>
 
 <style lang="postcss">
 	input[type='text'],
