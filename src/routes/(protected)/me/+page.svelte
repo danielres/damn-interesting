@@ -37,11 +37,15 @@
 			<div><b>{$userStore?.role}</b></div>
 			<div>Invited by</div>
 			<div>
-				<b>
-					<a href={`/user/${$userStore?.inviter?.slug}`}>
-						{$userStore?.inviter?.username}
-					</a>
-				</b>
+				{#if $userStore?.inviter}
+					<b>
+						<a href={`/user/${$userStore?.inviter?.slug}`}>
+							{$userStore?.inviter?.username}
+						</a>
+					</b>
+				{:else}
+					/
+				{/if}
 			</div>
 			{#if $userStore?.invitedAt}
 				<div>Invited</div>
