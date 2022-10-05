@@ -54,6 +54,10 @@
 			</span>
 		</div>
 
-		<div class="fade-bottom h-20 overflow-y-hidden text-sm">{entry.description}</div>
+		<div class="fade-bottom h-20 overflow-y-hidden text-sm">
+			{#each entry.description.split('\n') as paragraph}
+				<p>{paragraph}</p>
+			{/each}
+		</div>
 	</div>
 </div>
