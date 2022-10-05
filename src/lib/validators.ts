@@ -1,4 +1,5 @@
-export type FormError = { field: string; message: string }
+export type FormError = { field?: string; message: string }
+
 import { dev } from '$app/environment'
 
 const minPwLength = dev ? 4 : 8
