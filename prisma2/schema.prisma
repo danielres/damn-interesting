@@ -24,6 +24,6 @@ model Operation {
   id         Int      @id @default(autoincrement())
   model      String?
   action     String?
-  params     Json?    @unique
+  params     Json?
   executedAt DateTime @default(now())
 }
