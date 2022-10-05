@@ -4,6 +4,7 @@
 	import { dev } from '$app/environment'
 	import Errors from './Errors.svelte'
 
+	export let autofocus = false
 	export let onSuccess = () => {}
 
 	let url = dev ? 'https://youtu.be/1G72936Y3xA' : ''
@@ -25,7 +26,8 @@
 
 <form on:submit|preventDefault={onSubmit} class="grid gap-4">
 	<div>
-		<input type="text" name="url" id="url" placeholder="url" bind:value={url} />
+		<!-- svelte-ignore a11y-autofocus -->
+		<input {autofocus} type="text" name="url" id="url" placeholder="url" bind:value={url} />
 		<div>
 			<small class="opacity-60">Note: only Youtube urls are currently supported</small>
 		</div>
