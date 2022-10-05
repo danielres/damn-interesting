@@ -1,3 +1,4 @@
+import type { FormError } from '$lib/validators'
 import type { InvitationObject } from '$types'
 import type { Actions } from './$types'
 
@@ -13,8 +14,6 @@ import { randomUUID } from 'crypto'
 const COOKIE_MAX_AGE = 60 * 10 // in seconds
 const COOKIE_NAME = 'session'
 const COOKIE_OPTIONS = { httpOnly: true, sameSite: 'strict', path: '/', secure: true } as const
-
-type FormActionError = { field?: string; message: string }
 
 const handlePrismaCreate = async (fn: () => Promise<unknown>) => {
 	try {
@@ -38,9 +37,8 @@ const handlePrismaCreate = async (fn: () => Promise<unknown>) => {
 
 export const actions: Actions = {
 	signin: async ({ cookies, request, locals }) => {
-		const errors: FormActionError[] = []
+		const errors: FormError[] = []
 		const { email, password } = await getFormEntriesFromRequest(request)
-		console.log({ email, password })
 
 		const user = await locals.prisma.user.findFirst({ where: { email: email } })
 
@@ -64,7 +62,7 @@ export const actions: Actions = {
 	signout: ({ cookies }) => cookies.delete(COOKIE_NAME, COOKIE_OPTIONS),
 
 	signup: async ({ request, locals }) => {
-		const errors: FormActionError[] = []
+		const errors: FormError[] = []
 
 		const canSignup = await locals.can.signup()
 
@@ -87,7 +85,7 @@ export const actions: Actions = {
 	},
 
 	'signup-with-code': async ({ request, locals }) => {
-		const errors: FormActionError[] = []
+		const errors: FormError[] = []
 		const { username, password, code } = await getFormEntriesFromRequest(request)
 		const { email, inviterId, invitedAt } = decryptObject(code)
 
@@ -113,7 +111,7 @@ export const actions: Actions = {
 	},
 
 	'generate-invitation-code': async ({ locals, request }) => {
-		const errors: FormActionError[] = []
+		const errors: FormError[] = []
 		const { email } = await getFormEntriesFromRequest(request)
 
 		const user = await locals.prisma.user.findUnique({ where: { email } })
