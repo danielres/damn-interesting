@@ -1,15 +1,22 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition'
+	import { onMount } from 'svelte/internal'
 
 	export let isOpen = false
 	export const open = () => (isOpen = true)
 	export const close = () => (isOpen = false)
+
+	onMount(() => {
+		const listener = (event: KeyboardEvent) => event.key === 'Escape' && (isOpen = false)
+		addEventListener('keydown', listener)
+		return () => removeEventListener('keydown', listener)
+	})
 </script>
 
 <slot {open} {close} />
 
 {#if isOpen}
-	<div class="card modal " transition:fade>
+	<div class="card modal" transition:fade>
 		<slot name="content" />
 	</div>
 
