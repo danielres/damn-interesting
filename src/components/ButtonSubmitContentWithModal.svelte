@@ -17,6 +17,7 @@
 		<div slot="content" class="grid gap-4">
 			<h3 class="text-xl">Submit new content</h3>
 			<FormSubmitContent
+				autofocus={true}
 				onSuccess={() => {
 					invalidateAll()
 					close()
