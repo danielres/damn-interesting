@@ -1,27 +1,84 @@
 <script lang="ts" scope="module">
+	import type { FormError } from '$lib/validators'
 	import type { PageData } from './$types'
 
+	import { enhance } from '$app/forms'
+	import { invalidateAll } from '$app/navigation'
 	import { page } from '$app/stores'
+	import Entry from '$components/Entry.svelte'
+	import Errors from '$components/forms/Errors.svelte'
 	import { format } from '$lib/date'
 
 	export let data: PageData
-	const entry = data.admin.entry
+
+	let errors: FormError[] = []
+	let title = data.admin.entry?.title || ''
+	let description = data.admin.entry?.description || ''
+
+	$: ischanged = title !== data.admin.entry?.title || description !== data.admin.entry?.description
 </script>
 
-<div class="max-w-xl mx-auto grid gap-16 my-8">
-	{#if entry}
-		<div class="card">
-			<div class="grid grid-cols-2 gap-2">
-				<div>Title</div>
-				<div>{entry.title}</div>
-				<div>Added</div>
-				<div>{format(entry.createdAt)}</div>
-				<div>Added by</div>
+<div class="max-w-4xl mx-auto my-8 grid gap-8 md:grid-cols-2">
+	{#if data.admin.entry}
+		<form
+			class="card grid gap-4"
+			method="POST"
+			action="/entries/{data.admin.entry.id}?/update"
+			use:enhance={() => {
+				return ({ result }) => {
+					errors = []
+					if (result.type === 'success') invalidateAll()
+					if (result.type === 'invalid') errors = result.data?.errors
+					if (result.type === 'error') errors = [result.error]
+				}
+			}}
+		>
+			<div>
+				<label for="title">Title</label>
+				<textarea id="title" name="title" bind:value={title} rows="3" />
+			</div>
+
+			<div>
+				<label for="createdAt">Added</label>
+				<input
+					disabled
+					type="text"
+					name="createdAt"
+					id="createdAt"
+					value={format(data.admin.entry.createdAt)}
+				/>
+			</div>
+
+			<div>
+				<label for="owner">Added by</label>
+				<input
+					disabled
+					type="text"
+					name="owner"
+					id="owner"
+					value={data.admin.entry.owner.username}
+				/>
+			</div>
+
+			<div>
+				<label for="description">Description</label>
+				<textarea name="description" id="description" bind:value={description} rows="4" />
+			</div>
+
+			{#if errors.length > 0}
 				<div>
-					<a href={`/admin/users/${entry.owner.slug}`}>
-						{entry.owner.username}
-					</a>
+					<Errors {errors} />
 				</div>
+			{/if}
+
+			<div>
+				<button disabled={!ischanged} class="btn">Update</button>
+			</div>
+		</form>
+
+		<div>
+			<div>
+				<Entry entry={{ ...data.admin.entry, title, description }} />
 			</div>
 		</div>
 	{:else}
@@ -30,10 +87,15 @@
 </div>
 
 <style lang="postcss">
-	.card a {
-		@apply bg-black inline-block px-1 rounded bg-opacity-20;
-		&:hover {
-			@apply bg-opacity-40;
+	form > div {
+		@apply py-1 grid gap-0.5;
+
+		label {
+			@apply font-bold;
+		}
+
+		textarea {
+			@apply text-sm resize-y;
 		}
 	}
 </style>
