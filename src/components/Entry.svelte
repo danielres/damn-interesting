@@ -24,9 +24,8 @@
 		<a href={`/entries/${entry.id}`} class="opacity-70 hover:opacity-100" data-sveltekit-prefetch>
 			<img
 				src={entry.thumbnailUrl}
-				alt=""
-				class="w-full rounded-lg border-4 border-slate-600 hover:border-slate-400 transition-all hover:shadow-lg object-cover"
-				style={`aspect-ratio: ${entry.width} / ${entry.height}`}
+				alt={entry.title}
+				class="w-full rounded-lg border-4 border-slate-600 hover:border-slate-400 transition-all hover:shadow-lg object-cover aspect-video"
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 			/>
 		</a>
