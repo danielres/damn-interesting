@@ -7,11 +7,16 @@
 	import { page } from '$app/stores'
 	import FormSignIn from '$components/forms/auth/FormSignIn.svelte'
 	import FormSignUp from '$components/forms/auth/FormSignUp.svelte'
+	import { COOKIES } from '$constants'
+	import { onInterval } from '$lib/interval'
+	import { renewSession } from '$lib/session'
 	import { userStore } from '$stores/user'
 
 	export let data: LayoutData
 
 	$userStore = data.user
+
+	onInterval(() => $userStore && renewSession(), (COOKIES.session.maxAge * 1000) / 3)
 
 	let signupSuccess = false
 	const onSignupSuccess = () => (signupSuccess = true)

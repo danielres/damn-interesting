@@ -32,6 +32,16 @@ const handlePrismaCreate = async (fn: () => Promise<unknown>) => {
 }
 
 export const actions: Actions = {
+	renew: async ({ cookies }) => {
+		const encryptedSession = cookies.get(COOKIES.session.name)
+		if (!encryptedSession) return
+		cookies.set(COOKIES.session.name, encryptedSession, {
+			...COOKIES.session.options,
+			maxAge: COOKIES.session.maxAge,
+		})
+		return
+	},
+
 	signin: async ({ cookies, request, locals }) => {
 		const errors: FormError[] = []
 		const { email, password } = await getFormEntriesFromRequest(request)
@@ -52,10 +62,13 @@ export const actions: Actions = {
 
 		const encryptedSession = encryptObject({ userId: user.id })
 
-		cookies.set(COOKIE_NAME, encryptedSession, { ...COOKIE_OPTIONS, maxAge: COOKIE_MAX_AGE })
+		cookies.set(COOKIES.session.name, encryptedSession, {
+			...COOKIES.session.options,
+			maxAge: COOKIES.session.maxAge,
+		})
 	},
 
-	signout: ({ cookies }) => cookies.delete(COOKIE_NAME, COOKIE_OPTIONS),
+	signout: ({ cookies }) => cookies.delete(COOKIES.session.name, COOKIES.session.options),
 
 	signup: async ({ request, locals }) => {
 		const errors: FormError[] = []
