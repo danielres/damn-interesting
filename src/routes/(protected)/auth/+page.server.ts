@@ -2,7 +2,7 @@ import type { FormError } from '$lib/validators'
 import type { InvitationObject } from '$types'
 import type { Actions } from './$types'
 
-import { HTTP_CODES, USER_ROLES } from '$constants'
+import { COOKIES, HTTP_CODES, USER_ROLES } from '$constants'
 import { decryptObject, encryptObject } from '$lib/encryption'
 import { compare } from '$lib/password'
 import { getFormEntriesFromRequest } from '$lib/request'
@@ -10,10 +10,6 @@ import { slugify } from '$lib/string'
 import { Prisma } from '@prisma/client'
 import { invalid } from '@sveltejs/kit'
 import { randomUUID } from 'crypto'
-
-const COOKIE_MAX_AGE = 60 * 10 // in seconds
-const COOKIE_NAME = 'session'
-const COOKIE_OPTIONS = { httpOnly: true, sameSite: 'strict', path: '/', secure: true } as const
 
 const handlePrismaCreate = async (fn: () => Promise<unknown>) => {
 	try {

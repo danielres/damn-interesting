@@ -8,3 +8,11 @@ export const USER_ROLES = {
 	SUPERADMIN: 'SUPERADMIN',
 	USER: 'USER',
 }
+
+export const COOKIES = {
+	session: {
+		maxAge: 60 * 10, // in seconds
+		name: 'session',
+		options: { httpOnly: true, sameSite: 'strict', path: '/', secure: true } as const,
+	},
+}
