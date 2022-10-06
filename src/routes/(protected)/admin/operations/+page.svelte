@@ -17,6 +17,7 @@
 			width,
 			providerName,
 			authorUrl,
+			password,
 			...values
 		} = operation.params?.args.data
 		return values
