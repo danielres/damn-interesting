@@ -92,11 +92,13 @@
 		{/if}
 	</main>
 
-	<footer class="mt-auto bg-slate-900 px-6 sm:px-8 py-4">
-		<div class="flex justify-center">
-			<a href="/about" class="nav-link-text">About</a>
-		</div>
-	</footer>
+	{#if $userStore}
+		<footer class="mt-auto bg-slate-900 px-6 sm:px-8 py-4">
+			<div class="flex justify-center">
+				<a href="/about" class="nav-link-text">About</a>
+			</div>
+		</footer>
+	{/if}
 </div>
 
 <style lang="postcss">
