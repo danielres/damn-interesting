@@ -72,7 +72,7 @@
 			{/if}
 
 			<div>
-				<button disabled={!ischanged} class="btn">Update</button>
+				<button disabled={!ischanged} type="submit" class="btn">Update</button>
 			</div>
 		</form>
 
