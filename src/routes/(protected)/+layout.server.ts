@@ -5,7 +5,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 	return {
 		user: <CurrentUserView>locals.user,
 		can: {
-			signup: await locals.can.signup(),
+			signup: await locals.can.signup(locals.prisma),
 		},
 	}
 }

@@ -1,20 +1,29 @@
+import type { PrismaClient } from '@prisma/client'
+import type { EntryView } from '$types'
+
+import { browser } from '$app/environment'
 import { USER_ROLES } from '$constants'
-import type { Entry, PrismaClient } from '@prisma/client'
-type User = App.Locals['user']
 
-export type Can = ReturnType<typeof can>
+export type Can = typeof can
 
-export const can = (prisma: PrismaClient) => {
-	return {
-		signup: async () => (await prisma.user.count()) === 0,
+// Note: certain abilities (ex: depending on prisma) can only be resolved in the backend
+const backendOnlyAbilityError = new Error('This ability can only be resolved on the backend')
 
-		replay: async () => (await prisma.user.count()) === 0,
+export const can = {
+	signup: async (prisma: PrismaClient) => {
+		if (!browser) return (await prisma.user.count()) === 0
+		throw backendOnlyAbilityError
+	},
 
-		updateEntry: (user: User | null, entry: Entry | null) => {
-			if (!user) return false
-			if (user.role === USER_ROLES.SUPERADMIN) return true
-			if (entry?.ownerId === user.id) return true
-			return false
-		},
-	}
+	replay: async (prisma: PrismaClient) => {
+		if (!browser) return (await prisma.user.count()) === 0
+		throw backendOnlyAbilityError
+	},
+
+	updateEntry: (user: App.Locals['user'] | null, entry: EntryView | null) => {
+		if (!user || !entry) return false
+		if (user.role === USER_ROLES.SUPERADMIN) return true
+		if (entry.owner.slug === user.slug) return true
+		return false
+	},
 }

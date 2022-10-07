@@ -73,7 +73,7 @@ export const actions: Actions = {
 	signup: async ({ request, locals }) => {
 		const errors: FormError[] = []
 
-		const canSignup = await locals.can.signup()
+		const canSignup = await locals.can.signup(locals.prisma)
 
 		if (!canSignup) {
 			errors.push({ message: 'Sorry, by invitation only at this time.' })

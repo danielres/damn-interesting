@@ -10,7 +10,7 @@ prisma.$use(sourceEvents)
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.prisma = prisma
 	event.locals.prisma2 = prisma2
-	event.locals.can = can(prisma)
+	event.locals.can = can
 
 	const encryptedSession = event.cookies.get('session')
 	if (!encryptedSession) return resolve(event)
