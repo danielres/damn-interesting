@@ -3,6 +3,7 @@ import type { Actions, PageServerLoad } from './$types'
 
 import { HTTP_CODES } from '$constants'
 import { getFormEntriesFromRequest } from '$lib/request'
+import * as validators from '$lib/validators'
 import { invalid } from '@sveltejs/kit'
 
 export const load: PageServerLoad = async ({ params, locals }) => {
@@ -25,7 +26,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 
 export const actions: Actions = {
 	update: async ({ request, locals, params }) => {
-		const errors: FormError[] = []
+		let errors: FormError[] = []
 
 		const id = params.id
 		const user = locals.user
@@ -37,8 +38,9 @@ export const actions: Actions = {
 			errors.push({ message: 'Sorry, not allowed.' })
 			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
 		}
-
 		const { id: _id, ...data } = await getFormEntriesFromRequest(request) // eslint-disable-line @typescript-eslint/no-unused-vars
+		errors = [...errors, ...validators.updatedEntry(data)]
+		if (errors.length > 0) return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
 
 		await locals.prisma.entry.update({ data, where: { id } })
 	},
