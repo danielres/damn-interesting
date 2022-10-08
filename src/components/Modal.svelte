@@ -1,16 +1,13 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition'
+	import { onKey } from '$lib/onKey'
 	import { onMount } from 'svelte/internal'
+	import { fade } from 'svelte/transition'
 
 	export let isOpen = false
 	export const open = () => (isOpen = true)
 	export const close = () => (isOpen = false)
 
-	onMount(() => {
-		const listener = (event: KeyboardEvent) => event.key === 'Escape' && (isOpen = false)
-		addEventListener('keydown', listener)
-		return () => removeEventListener('keydown', listener)
-	})
+	onMount(() => onKey('Escape', () => (isOpen = false)))
 </script>
 
 <slot {open} {close} />

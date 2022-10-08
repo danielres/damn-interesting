@@ -10,6 +10,7 @@
 	import { format } from '$lib/date'
 	import Tags from './Tags.svelte'
 	import { onMount } from 'svelte'
+	import { onKey } from '$lib/onKey'
 
 	export let data: {
 		user: App.Locals['user']
@@ -25,11 +26,7 @@
 
 	$: ischanged = title !== data.entry?.title || description !== data.entry?.description
 
-	onMount(() => {
-		const listener = (event: KeyboardEvent) => event.key === 'Escape' && (isEditing = false)
-		addEventListener('keydown', listener)
-		return () => removeEventListener('keydown', listener)
-	})
+	onMount(() => onKey('Escape', () => (isEditing = false)))
 </script>
 
 <div class="max-w-5xl mx-auto grid gap-16 py-12 md:px-8">
