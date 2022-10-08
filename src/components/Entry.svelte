@@ -32,7 +32,7 @@
 
 	{#if mode === 'view'}
 		<iframe
-			class="w-full rounded-lg border-4 border-slate-600"
+			class="w-full rounded-lg border-4 border-slate-600 aspect-video"
 			allowfullscreen
 			frameborder="0"
 			src="https://www.youtube.com/embed/{entry.id}?feature=oembed"
