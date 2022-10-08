@@ -1,5 +1,5 @@
 import type { YoutubeVideoDetails } from '$lib/Entry/types'
-import type { Role } from '@prisma/client'
+import type { Role, Tag } from '@prisma/client'
 
 type ID = string
 
@@ -32,6 +32,7 @@ export type EntryView = {
 		username: string
 		slug: string
 	}
+	tags: Tag[]
 } & YoutubeVideoDetails
 
 export type InvitationObject = {
