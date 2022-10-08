@@ -16,17 +16,18 @@ enum Role {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  slug      String   @unique
-  username  String   @unique
-  password  String
-  invitedAt DateTime @default(now())
-  inviterId String?
-  inviter   User?    @relation("InviterInvitees", fields: [inviterId], references: [id])
-  invitees  User[]   @relation("InviterInvitees")
-  entries   Entry[]
-  role      Role     @default(USER)
+  id            String   @id @default(uuid())
+  email         String   @unique
+  slug          String   @unique
+  username      String   @unique
+  password      String
+  invitedAt     DateTime @default(now())
+  inviterId     String?
+  inviter       User?    @relation("InviterInvitees", fields: [inviterId], references: [id])
+  invitees      User[]   @relation("InviterInvitees")
+  entries       Entry[]
+  role          Role     @default(USER)
+  tagsAsCreator Tag[]
 }
 
 model Entry {
@@ -46,4 +47,18 @@ model Entry {
   title           String
   resourceType    String
   width           Int
+  tags            Tag[]
+}
+
+model Tag {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  entries     Entry[]
+  children    Tag[]    @relation("tree")
+  parent      Tag?     @relation("tree", fields: [parentId], references: [id])
+  parentId    String?
+  createdAt   DateTime @default(now())
+  creator     User     @relation(fields: [creatorId], references: [id])
+  creatorId   String
 }
