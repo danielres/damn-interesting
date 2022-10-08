@@ -9,6 +9,7 @@
 	import Errors from '$components/forms/Errors.svelte'
 	import { format } from '$lib/date'
 	import Tags from './Tags.svelte'
+	import { onMount } from 'svelte'
 
 	export let data: {
 		user: App.Locals['user']
@@ -23,6 +24,12 @@
 	let description = data.entry?.description || ''
 
 	$: ischanged = title !== data.entry?.title || description !== data.entry?.description
+
+	onMount(() => {
+		const listener = (event: KeyboardEvent) => event.key === 'Escape' && (isEditing = false)
+		addEventListener('keydown', listener)
+		return () => removeEventListener('keydown', listener)
+	})
 </script>
 
 <div class="max-w-5xl mx-auto grid gap-16 py-12 md:px-8">
