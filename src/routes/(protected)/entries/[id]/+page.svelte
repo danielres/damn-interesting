@@ -8,6 +8,8 @@
 	import Entry from '$components/Entry.svelte'
 	import Errors from '$components/forms/Errors.svelte'
 	import { format } from '$lib/date'
+	import Tags from './Tags.svelte'
+
 	export let data: {
 		user: App.Locals['user']
 		entry: EntryView
@@ -70,7 +72,7 @@
 				<div class=" grid gap-4">
 					<h1 class="grid gap-2">
 						{#if isEditing}
-							<input type="text" name="title" id="title" bind:value={title} />
+							<input class="text-2xl" type="text" name="title" id="title" bind:value={title} />
 						{:else}
 							<div class="text-2xl text-slate-400">{data.entry.title}</div>
 						{/if}
@@ -84,6 +86,7 @@
 									{data.entry.authorName}
 								</a>
 							</div>
+
 							<div>
 								<span class="text-slate-400">Shared by</span>
 								<a
@@ -94,6 +97,8 @@
 							</div>
 						</div>
 					</h1>
+
+					<Tags entry={data.entry} {isEditing} />
 				</div>
 				<iframe
 					class="w-full rounded-lg"
