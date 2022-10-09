@@ -5,12 +5,11 @@
 	import { enhance } from '$app/forms'
 	import { invalidateAll } from '$app/navigation'
 	import { can } from '$can'
+	import ButtonEdit from '$components/ButtonEdit.svelte'
 	import Entry from '$components/Entry.svelte'
 	import Errors from '$components/forms/Errors.svelte'
 	import { format } from '$lib/date'
 	import Tags from './Tags.svelte'
-	import { onMount } from 'svelte'
-	import { onKey } from '$lib/onKey'
 
 	export let data: {
 		user: App.Locals['user']
@@ -25,35 +24,16 @@
 	let description = data.entry?.description || ''
 
 	$: ischanged = title !== data.entry?.title || description !== data.entry?.description
-
-	onMount(() => onKey('Escape', () => (isEditing = false)))
 </script>
 
 <div class="max-w-5xl mx-auto grid gap-16 py-12 md:px-8">
 	<div class="grid">
 		{#if can.updateEntry(data.user, data.entry)}
-			<button
-				class="mx-auto py-2 -mt-8 opacity-50 hover:opacity-100 transition-opacity"
-				class:active={isEditing}
-				title="Edit"
-				on:click={() => (isEditing = !isEditing)}
-			>
-				<span class="sr-only">Edit</span>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke-width="1.5"
-					stroke="currentColor"
-					class="w-8 h-8 rounded-full p-1"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-					/>
-				</svg>
-			</button>
+			<ButtonEdit
+				{isEditing}
+				toggle={() => (isEditing = !isEditing)}
+				end={() => (isEditing = false)}
+			/>
 		{/if}
 
 		<form
@@ -146,12 +126,3 @@
 		</div>
 	{/if}
 </div>
-
-<style lang="postcss">
-	button.active {
-		@apply opacity-70;
-		svg {
-			@apply bg-white stroke-slate-900 animate-pulse;
-		}
-	}
-</style>
