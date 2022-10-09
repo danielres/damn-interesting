@@ -4,7 +4,7 @@
 	import Modal from '$components/Modal.svelte'
 </script>
 
-<div class="mb-4 -mt-4 flex justify-center gap-4">
+<div class="flex justify-center gap-4">
 	<Modal let:open let:close>
 		<button
 			class="flex w-8 h-8 bg-slate-400 hover:bg-slate-200 transition-colors text-slate-900 text-3xl items-center justify-center rounded-full"
