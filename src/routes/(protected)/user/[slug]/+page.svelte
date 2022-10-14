@@ -1,15 +1,16 @@
 <script scope="module" lang="ts">
-	import type { EntryView, UserView } from '$types'
+	import type { PageData } from './$types'
 
 	import Entry from '$components/Entry.svelte'
 
-	export let data: { user: UserView; entries: EntryView[] }
+	export let data: PageData
+	$: user = data.user!
 </script>
 
 <div class="max-w-7xl mx-auto my-12 grid gap-12 md:p-8">
 	<h1>
 		<small class="block text-slate-500">Also curated by</small>
-		{data.user.username}
+		{user.username}
 	</h1>
 
 	<div>
