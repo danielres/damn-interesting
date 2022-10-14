@@ -1,6 +1,6 @@
 <script lang="ts" scope="module">
 	import type { FormError } from '$lib/validators'
-	import type { EntryView } from '$types'
+	import type { PageData } from './$types'
 
 	import { enhance } from '$app/forms'
 	import { invalidateAll } from '$app/navigation'
@@ -11,24 +11,21 @@
 	import { format } from '$lib/date'
 	import Tags from './Tags.svelte'
 
-	export let data: {
-		user: App.Locals['user']
-		entry: EntryView
-		suggestionsByAuthor: EntryView[]
-	}
+	export let data: PageData
 
 	let errors: FormError[] = []
 	let isEditing = false
 
-	let title = data.entry?.title || ''
-	let description = data.entry?.description || ''
+	let title = data.entry!.title || ''
+	let description = data.entry!.description || ''
 
 	$: ischanged = title !== data.entry?.title || description !== data.entry?.description
+	$: entry = data.entry!
 </script>
 
 <div class="max-w-5xl mx-auto grid gap-16 py-12 md:px-8">
 	<div class="grid">
-		{#if can.updateEntry(data.user, data.entry)}
+		{#if can.updateEntry(data.user, entry)}
 			<ButtonEdit
 				{isEditing}
 				toggle={() => (isEditing = !isEditing)}
@@ -37,9 +34,8 @@
 		{/if}
 
 		<form
-			class=""
 			method="POST"
-			action="/entries/{data.entry.id}?/update"
+			action="/entries/{entry.id}?/update"
 			use:enhance={() => {
 				return ({ result }) => {
 					errors = []
@@ -58,45 +54,44 @@
 						{#if isEditing}
 							<input class="text-2xl" type="text" name="title" id="title" bind:value={title} />
 						{:else}
-							<div class="text-2xl text-slate-400">{data.entry.title}</div>
+							<div class="text-2xl text-slate-400">{entry.title}</div>
 						{/if}
 						<div class="text-sm flex gap-4">
 							<div>
 								<span class="text-slate-400">Created by</span>
 								<a
 									class="inline-block hover:underline underline-offset-4"
-									href={`/user/${data.entry.authorUrl}`}
+									href="user/{entry.authorUrl}"
 								>
-									{data.entry.authorName}
+									{entry.authorName}
 								</a>
 							</div>
 
 							<div>
 								<span class="text-slate-400">Shared by</span>
-								<a
-									class="hover:underline underline-offset-4"
-									href={`/user/${data.entry.owner.slug}`}>{data.entry.owner.username}</a
-								>
-								<span class="text-slate-400 inline-block">on {format(data.entry.createdAt)}</span>
+								<a class="hover:underline underline-offset-4" href="/user/{entry.owner.slug}">
+									{entry.owner.username}
+								</a>
+								<span class="text-slate-400 inline-block">on {format(entry.createdAt)}</span>
 							</div>
 						</div>
 					</h1>
 
-					<Tags entry={data.entry} {isEditing} />
+					<Tags {entry} {isEditing} />
 				</div>
 				<iframe
 					class="w-full rounded-lg"
-					style={`aspect-ratio: ${data.entry.width} / ${data.entry.height}`}
+					style="aspect-ratio: {entry.width}/{entry.height}"
 					allowfullscreen
 					frameborder="0"
-					src={`https://www.youtube.com/embed/${data.entry.id}?feature=oembed`}
-					title={data.entry.title}
+					src="https://www.youtube.com/embed/{entry.id}?feature=oembed"
+					title={entry.title}
 				/>
 
 				{#if isEditing}
 					<textarea name="description" id="description" rows="3" bind:value={description} />
 				{:else}
-					<div class="">{data.entry.description}</div>
+					<div>{entry.description}</div>
 				{/if}
 
 				{#if isEditing}
@@ -114,7 +109,7 @@
 
 	{#if data.suggestionsByAuthor.length > 0}
 		<div class="grid gap-4">
-			<h3 class="border-b border-slate-500">Also by {data.entry.authorName}</h3>
+			<h3 class="border-b border-slate-500">Also by {entry.authorName}</h3>
 
 			<div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
 				{#each data.suggestionsByAuthor as suggested}
