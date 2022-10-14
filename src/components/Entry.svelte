@@ -1,10 +1,9 @@
 <script lang="ts">
-	import type { EntryView } from '$types'
+	import type { Entry, User } from '@prisma/client'
 
 	import { format } from '$lib/date'
 
-	export let entry: EntryView
-
+	export let entry: Entry & { owner: Pick<User, 'slug' | 'username'> }
 	export let mode: 'thumbnail' | 'view' = 'view'
 </script>
 
