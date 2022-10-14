@@ -16,26 +16,27 @@ enum Role {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  slug          String   @unique
-  username      String   @unique
-  password      String
-  invitedAt     DateTime @default(now())
-  inviterId     String?
-  inviter       User?    @relation("InviterInvitees", fields: [inviterId], references: [id])
-  invitees      User[]   @relation("InviterInvitees")
-  entries       Entry[]
-  role          Role     @default(USER)
-  tagsAsCreator Tag[]
+  id                String    @id @default(uuid())
+  email             String    @unique
+  slug              String    @unique
+  username          String    @unique
+  password          String
+  invitedAt         DateTime  @default(now())
+  inviterId         String?
+  inviter           User?     @relation("InviterInvitees", fields: [inviterId], references: [id])
+  invitees          User[]    @relation("InviterInvitees")
+  entries           Entry[]
+  role              Role      @default(USER)
+  tagsAsCreator     Tag[]
+  taggingsAsCreator Tagging[]
 }
 
 model Entry {
-  id              String   @id @default(uuid())
-  createdAt       DateTime @default(now())
+  id              String    @id @default(uuid())
+  createdAt       DateTime  @default(now())
   url             String
   description     String
-  owner           User     @relation(fields: [ownerId], references: [id])
+  owner           User      @relation(fields: [ownerId], references: [id])
   ownerId         String
   authorName      String
   authorUrl       String
@@ -47,18 +48,27 @@ model Entry {
   title           String
   resourceType    String
   width           Int
-  tags            Tag[]
+  taggings        Tagging[]
 }
 
 model Tag {
-  id          String   @id @default(uuid())
-  name        String   @unique
+  id          String    @id @default(uuid())
+  name        String    @unique
   description String?
-  entries     Entry[]
-  children    Tag[]    @relation("tree")
-  parent      Tag?     @relation("tree", fields: [parentId], references: [id])
-  parentId    String?
-  createdAt   DateTime @default(now())
-  creator     User     @relation(fields: [creatorId], references: [id])
+  createdAt   DateTime  @default(now())
+  creator     User      @relation(fields: [creatorId], references: [id])
   creatorId   String
+  taggings    Tagging[]
+}
+
+model Tagging {
+  entry     Entry    @relation(fields: [entryId], references: [id])
+  entryId   String
+  tag       Tag      @relation(fields: [tagId], references: [id])
+  tagId     String
+  createdAt DateTime @default(now())
+  creator   User     @relation(fields: [creatorId], references: [id])
+  creatorId String
+
+  @@id([entryId, tagId])
 }

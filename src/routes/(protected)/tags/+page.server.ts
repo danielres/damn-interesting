@@ -4,7 +4,6 @@ import type { Actions } from './$types'
 import { HTTP_CODES } from '$constants'
 import { getFormEntriesFromRequest } from '$lib/request'
 import { invalid } from '@sveltejs/kit'
-import { prisma } from '@prisma/client'
 
 export const actions: Actions = {
 	'connect-or-create': async ({ request, locals }) => {
@@ -19,13 +18,32 @@ export const actions: Actions = {
 			return invalid(HTTP_CODES.FORBIDDEN, { errors })
 		}
 
+		const newDate = new Date()
 		await locals.prisma.entry.update({
 			where: { id: entryId },
 			data: {
-				tags: {
-					connectOrCreate: {
-						where: { name },
-						create: { name, creatorId: user?.id },
+				taggings: {
+					create: {
+						createdAt: newDate,
+						creator: {
+							connect: {
+								id: user.id,
+							},
+						},
+						tag: {
+							connectOrCreate: {
+								where: { name },
+								create: {
+									name,
+									createdAt: newDate,
+									creator: {
+										connect: {
+											id: user.id,
+										},
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -44,9 +62,16 @@ export const actions: Actions = {
 			return invalid(HTTP_CODES.FORBIDDEN, { errors })
 		}
 
-		await locals.prisma.tag.update({
-			where: { id: tagId },
-			data: { entries: { disconnect: { id: entryId } } },
+		await locals.prisma.tagging.delete({
+			where: { entryId_tagId: { entryId, tagId } },
 		})
+
+		const tag = await locals.prisma.tag.findUnique({
+			where: { id: tagId },
+			include: { taggings: { select: { entryId: true } } },
+		})
+
+		if (tag?.taggings.length === 0 && tag.creatorId === user.id)
+			await locals.prisma.tag.delete({ where: { id: tagId } })
 	},
 }
