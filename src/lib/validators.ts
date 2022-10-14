@@ -1,5 +1,4 @@
-import type { EntryView } from '$types'
-
+import type { Entry } from '@prisma/client'
 export type FormError = { field?: string; message: string }
 
 import { dev } from '$app/environment'
@@ -34,7 +33,7 @@ export const newUserFromCode = (formData: FormData) => {
 	return errors
 }
 
-export const updatedEntry = (entry: EntryView) => {
+export const updatedEntry = (entry: Entry) => {
 	const { title, description } = entry
 	const errors: FormError[] = []
 	if (title.length < ENTRY_TITLE_MIN_LENGTH)
