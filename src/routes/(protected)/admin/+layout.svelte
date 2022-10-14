@@ -14,6 +14,7 @@
 			<ul class="flex">
 				<li><a href="/admin/users">Users</a></li>
 				<li><a href="/admin/entries">Entries</a></li>
+				<li><a href="/admin/tags">Tags</a></li>
 				<li class="ml-auto opacity-50"><a href="/admin/operations">Operations</a></li>
 			</ul>
 		</nav>
