@@ -1,5 +1,4 @@
-import type { YoutubeVideoDetails } from '$lib/Entry/types'
-import type { Role, Tag } from '@prisma/client'
+import type { Role } from '@prisma/client'
 
 type ID = string
 
@@ -22,18 +21,6 @@ export type CurrentUserView = null | {
 	invitedAt: Date
 	role: Role
 }
-
-export type EntryView = {
-	id: ID
-	url: string
-	description: string
-	createdAt: Date
-	owner: {
-		username: string
-		slug: string
-	}
-	tags: Tag[]
-} & YoutubeVideoDetails
 
 export type InvitationObject = {
 	email: string
