@@ -58,7 +58,7 @@
 		</li>
 	{/each}
 
-	{#if !isEditing}
+	{#if isEditing}
 		<li>
 			<form
 				action="/tags?/connect-or-create"
