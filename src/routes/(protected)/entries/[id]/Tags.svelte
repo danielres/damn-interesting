@@ -81,10 +81,6 @@
 </ul>
 
 <style lang="postcss">
-	.badge {
-		@apply bg-slate-700 px-2 py-1 rounded-lg flex items-center gap-2;
-	}
-
 	.mini-button {
 		@apply font-bold text-xl flex items-center justify-center rounded-full h-4 w-4 px-2;
 
