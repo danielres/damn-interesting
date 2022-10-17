@@ -1,14 +1,18 @@
 <script lang="ts">
-	import type { Entry, Tag } from '@prisma/client'
+	import type { Entry, Tag, Tagging, User } from '@prisma/client'
 
 	import { enhance } from '$app/forms'
 	import { invalidateAll } from '$app/navigation'
 	import { fade } from 'svelte/transition'
 
 	export let isEditing = false
-	export let entry: {
-		id: Entry['id']
-		taggings: { tag: Tag }[]
+	export let entry: Entry & {
+		owner: Pick<User, 'slug' | 'username'>
+		taggings: (Tagging & {
+			tag: Tag & {
+				taggings: Tagging[]
+			}
+		})[]
 	}
 </script>
 
