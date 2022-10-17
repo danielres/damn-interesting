@@ -19,3 +19,7 @@ export const slugify = (string: string) => {
 }
 
 export const truncate = (string: string, length = 30) => string.substring(0, length) + '…'
+
+export const capitalizeFirst = (string: string) => string.charAt(0).toUpperCase() + string.slice(1)
+
+export const sanitizeTagName = (tagName: string) => capitalizeFirst(tagName.trim())
