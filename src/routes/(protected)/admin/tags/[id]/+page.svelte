@@ -1,11 +1,10 @@
 <script lang="ts" scope="module">
 	import type { FormError } from '$lib/validators'
 	import type { PageData } from './$types'
-	import type { Tag } from '@prisma/client'
 
-	import { entries } from '$dev/seeds'
 	import Entry from '$components/Entry.svelte'
 	import { format } from '$lib/date'
+
 	export let data: PageData
 
 	let errors: FormError[] = []
