@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		where: { id: params.id },
 		include: {
 			owner: { select: { username: true, slug: true } },
-			taggings: { select: { tag: true } },
+			taggings: { include: { tag: { include: { taggings: true } } } },
 		},
 	})
 
