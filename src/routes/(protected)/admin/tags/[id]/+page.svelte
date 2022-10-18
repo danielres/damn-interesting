@@ -11,19 +11,21 @@
 	$: tag = data.admin.tag!
 </script>
 
-<div class="max-w-4xl mx-auto my-8 grid gap-8">
+<div class="mx-auto my-8 grid max-w-4xl gap-8">
 	<h1 class="text-2xl">Tag: {tag.name}</h1>
 
 	<div>
-		<div>Created by: <a href="/admin/users/{tag.creator.slug}">{tag.creator.username}</a></div>
+		<div>
+			Created by: <a href="/admin/users/{tag.creator.slug}">{tag.creator.username}</a>
+		</div>
 		<div>Created on: {format(tag.createdAt)}</div>
 	</div>
 
 	<h2 class="text-xl">Entries ({tag.taggings.length})</h2>
 
-	<div class="flex gap-4 flex-wrap">
+	<div class="flex flex-wrap gap-4">
 		{#each tag.taggings as { entry }}
-			<div class="w-64 card">
+			<div class="card w-64">
 				<Entry {entry} />
 			</div>
 		{/each}

@@ -12,7 +12,7 @@
 	let feedback = ''
 </script>
 
-<div class="card max-w-xl mx-auto my-16 text-center py-16">
+<div class="card mx-auto my-16 max-w-xl py-16 text-center">
 	{#if data.can.replay}
 		<form
 			action="/api?/replay"

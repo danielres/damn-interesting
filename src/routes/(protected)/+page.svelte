@@ -6,12 +6,12 @@
 	export let data: PageData
 </script>
 
-<div class="py-2 px-2 sm:px-8 max-w-7xl mx-auto grid gap-4">
+<div class="mx-auto grid max-w-7xl gap-4 py-2 px-2 sm:px-8">
 	<ButtonSubmitContentWithModal />
 
 	<div class="entries grid gap-8">
 		{#each data.entries as entry}
-			<div class="card p-4 md:p-6 hover:shadow-2xl hover:bg-slate-600 transition-all">
+			<div class="card p-4 transition-all hover:bg-slate-600 hover:shadow-2xl md:p-6">
 				<Entry {entry} mode="thumbnail" />
 			</div>
 		{/each}

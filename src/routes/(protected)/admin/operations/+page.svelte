@@ -25,7 +25,7 @@
 	const getWhere = (operation: any) => operation.params?.args.where
 </script>
 
-<div class="grid divide-y divide-white/20 card p-0 overflow-hidden">
+<div class="card grid divide-y divide-white/20 overflow-hidden p-0">
 	{#each operations as operation}
 		<a class="row" href={`/admin/operations/${operation.id}`}>
 			<div class="bg-black/10 py-2 px-4">
@@ -36,7 +36,7 @@
 					<div>{JSON.stringify(getWhere(operation)) ?? ''}</div>
 				</div>
 			</div>
-			<div class="md:grid grid-cols-2 py-2 px-4">
+			<div class="grid-cols-2 py-2 px-4 md:grid">
 				{#each Object.entries(getData(operation)) as [k, v]}
 					<div class=""><b>{k}</b></div>
 					<div class="">{v}</div>

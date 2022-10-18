@@ -12,15 +12,15 @@
 
 @layer components {
 	*:disabled {
-		@apply opacity-60 cursor-not-allowed;
+		@apply cursor-not-allowed opacity-60;
 	}
 
 	.badge {
-		@apply bg-slate-700 px-2 py-1 rounded-lg flex items-center gap-2;
+		@apply flex items-center gap-2 rounded-lg bg-slate-700 px-2 py-1;
 	}
 
 	.btn {
-		@apply bg-slate-400 enabled:hover:bg-slate-300 enabled:hover:shadow-lg px-3 py-2;
+		@apply bg-slate-400 px-3 py-2 enabled:hover:bg-slate-300 enabled:hover:shadow-lg;
 		@apply rounded font-semibold text-slate-800;
 		@apply transition-all;
 		@apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300;
@@ -30,7 +30,7 @@
 	}
 
 	.card {
-		@apply bg-slate-500 sm:rounded-lg p-6 shadow-lg;
+		@apply bg-slate-500 p-6 shadow-lg sm:rounded-lg;
 	}
 
 	.fade-bottom {

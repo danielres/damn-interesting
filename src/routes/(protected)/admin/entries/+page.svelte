@@ -8,7 +8,7 @@
 	const entries = data.admin.entries
 </script>
 
-<div class="grid divide-y divide-white/20 card">
+<div class="card grid divide-y divide-white/20">
 	{#each entries as entry}
 		<a class="entry" href={`/admin/entries/${entry.id}`}>
 			<div class="p-4">
@@ -40,7 +40,7 @@
 	}
 	.owner {
 		a {
-			@apply bg-black px-1 rounded bg-opacity-20;
+			@apply rounded bg-black bg-opacity-20 px-1;
 			&:hover {
 				@apply bg-opacity-40;
 			}
@@ -48,6 +48,6 @@
 	}
 
 	.grid img {
-		@apply w-24 rounded-lg border-white/20 border-4;
+		@apply w-24 rounded-lg border-4 border-white/20;
 	}
 </style>

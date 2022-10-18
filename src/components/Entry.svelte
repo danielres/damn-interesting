@@ -7,8 +7,8 @@
 	export let mode: 'thumbnail' | 'view' = 'view'
 </script>
 
-<div class="flex flex-col h-full space-y-4">
-	<h3 class="drop-shadow-sharp flex-grow">
+<div class="flex h-full flex-col space-y-4">
+	<h3 class="flex-grow drop-shadow-sharp">
 		<div>
 			{entry.title}
 		</div>
@@ -24,14 +24,14 @@
 			<img
 				src={entry.thumbnailUrl}
 				alt={entry.title}
-				class="w-full rounded-lg border-4 border-slate-600 hover:border-slate-400 transition-all hover:shadow-lg object-cover aspect-video"
+				class="aspect-video w-full rounded-lg border-4 border-slate-600 object-cover transition-all hover:border-slate-400 hover:shadow-lg"
 			/>
 		</a>
 	{/if}
 
 	{#if mode === 'view'}
 		<iframe
-			class="w-full rounded-lg border-4 border-slate-600 aspect-video"
+			class="aspect-video w-full rounded-lg border-4 border-slate-600"
 			allowfullscreen
 			frameborder="0"
 			src="https://www.youtube.com/embed/{entry.id}?feature=oembed"
@@ -43,7 +43,7 @@
 		<div class="flex items-baseline space-x-4">
 			<span class="ml-auto text-sm opacity-50">{format(entry.createdAt)}</span>
 			<span class="mx-4">
-				<a href="/user/{entry.owner.slug}" class="hover:underline underline-offset-4">
+				<a href="/user/{entry.owner.slug}" class="underline-offset-4 hover:underline">
 					{entry.owner.username}
 				</a>
 			</span>

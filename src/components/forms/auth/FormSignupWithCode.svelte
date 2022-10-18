@@ -64,7 +64,7 @@
 	</div>
 
 	<div>
-		<label class="flex gap-4 items-center">
+		<label class="flex items-center gap-4">
 			<input type="checkbox" bind:checked={isCodeOfConductApproved} />
 			<div>I have read the code of conduct, and I am a decent and nice human being.</div>
 		</label>

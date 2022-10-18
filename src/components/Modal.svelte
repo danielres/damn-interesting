@@ -22,11 +22,11 @@
 
 <style lang="postcss">
 	.modal {
-		@apply fixed z-20 max-w-xl md:w-2/3 mx-auto;
+		@apply fixed z-20 mx-auto max-w-xl md:w-2/3;
 	}
 
 	.backdrop {
-		@apply fixed z-10 top-0 left-0 min-w-full min-h-screen py-16 cursor-pointer;
+		@apply fixed top-0 left-0 z-10 min-h-screen min-w-full cursor-pointer py-16;
 		@apply bg-black/50 backdrop-blur;
 	}
 </style>

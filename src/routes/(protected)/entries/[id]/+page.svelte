@@ -23,7 +23,7 @@
 	$: entry = data.entry!
 </script>
 
-<div class="max-w-5xl mx-auto grid gap-16 py-12 md:px-8">
+<div class="mx-auto grid max-w-5xl gap-16 py-12 md:px-8">
 	<div class="grid">
 		{#if can.updateEntry(data.user, entry)}
 			<ButtonEdit
@@ -48,7 +48,7 @@
 				}
 			}}
 		>
-			<div class="card grid gap-6 bg-slate-900 border-2 border-black">
+			<div class="card grid gap-6 border-2 border-black bg-slate-900">
 				<div class=" grid gap-4">
 					<h1 class="grid gap-2">
 						{#if isEditing}
@@ -56,11 +56,11 @@
 						{:else}
 							<div class="text-2xl text-slate-400">{entry.title}</div>
 						{/if}
-						<div class="text-sm flex gap-4">
+						<div class="flex gap-4 text-sm">
 							<div>
 								<span class="text-slate-400">Created by</span>
 								<a
-									class="inline-block hover:underline underline-offset-4"
+									class="inline-block underline-offset-4 hover:underline"
 									href="user/{entry.authorUrl}"
 								>
 									{entry.authorName}
@@ -69,10 +69,10 @@
 
 							<div>
 								<span class="text-slate-400">Shared by</span>
-								<a class="hover:underline underline-offset-4" href="/user/{entry.owner.slug}">
+								<a class="underline-offset-4 hover:underline" href="/user/{entry.owner.slug}">
 									{entry.owner.username}
 								</a>
-								<span class="text-slate-400 inline-block">on {format(entry.createdAt)}</span>
+								<span class="inline-block text-slate-400">on {format(entry.createdAt)}</span>
 							</div>
 						</div>
 					</h1>
@@ -100,7 +100,7 @@
 							<Errors {errors} />
 						{/if}
 
-						<button disabled={!ischanged} class="btn w-fit mx-auto" type="submit">Submit</button>
+						<button disabled={!ischanged} class="btn mx-auto w-fit" type="submit">Submit</button>
 					</div>
 				{/if}
 			</div>
@@ -113,7 +113,7 @@
 
 			<div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
 				{#each data.suggestionsByAuthor as suggested}
-					<div class="card p-6 bg-slate-700">
+					<div class="card bg-slate-700 p-6">
 						<Entry entry={suggested} mode="thumbnail" />
 					</div>
 				{/each}

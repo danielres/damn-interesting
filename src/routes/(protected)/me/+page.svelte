@@ -14,7 +14,7 @@
 </script>
 
 {#if $userStore?.role === USER_ROLES.SUPERADMIN}
-	<section class="px-6 pt-6 grid">
+	<section class="grid px-6 pt-6">
 		<div class="ml-auto">
 			<a href="/admin" class="btn bg-red-500 opacity-60 hover:opacity-100">Admin</a>
 			<form class="inline-block " on:submit|preventDefault={() => seed()}>
@@ -24,10 +24,10 @@
 	</section>
 {/if}
 
-<div class="grid gap-12 my-12 max-w-3xl mx-auto md:grid-cols-2">
+<div class="my-12 mx-auto grid max-w-3xl gap-12 md:grid-cols-2">
 	<section class="md:col-span-2">
 		<h3>Account</h3>
-		<div class="card bg-slate-700 rounded-none grid grid-cols-2 gap-y-2 text-sm">
+		<div class="card grid grid-cols-2 gap-y-2 rounded-none bg-slate-700 text-sm">
 			<div>Username</div>
 			<div><b>{$userStore?.username}</b></div>
 			<div>Email</div>
@@ -55,7 +55,7 @@
 
 	<section>
 		<h3>Invite a new member</h3>
-		<div class="card bg-slate-900 rounded-none">
+		<div class="card rounded-none bg-slate-900">
 			<FormGenerateInvitationCode />
 		</div>
 	</section>
@@ -63,6 +63,6 @@
 
 <style lang="postcss">
 	h3 {
-		@apply drop-shadow-sharp ml-1 text-xl opacity-80;
+		@apply ml-1 text-xl opacity-80 drop-shadow-sharp;
 	}
 </style>

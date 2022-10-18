@@ -6,11 +6,11 @@
 	$: tags = data.admin.tags
 </script>
 
-<div class="max-w-3xl mx-auto">
-	<ul class="flex gap-2 flex-wrap">
+<div class="mx-auto max-w-3xl">
+	<ul class="flex flex-wrap gap-2">
 		{#each tags as tag}
 			<li>
-				<a class="bg-slate-900 py-1 px-2 rounded-lg" href="/admin/tags/{tag.id}">
+				<a class="rounded-lg bg-slate-900 py-1 px-2" href="/admin/tags/{tag.id}">
 					{tag.name}
 				</a>
 			</li>
