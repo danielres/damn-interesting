@@ -18,7 +18,7 @@
 	}
 </script>
 
-<ul class="text-sm flex gap-2 flex-wrap">
+<ul class="flex flex-wrap gap-2 text-sm">
 	{#each entry.taggings as { tag } (tag.id)}
 		{@const isAlone = tag.taggings.length === 1}
 		{@const isClickable = !isAlone}
@@ -29,7 +29,7 @@
 				<a
 					href="/tags/{tag.name}"
 					class="inline-block {isClickable
-						? 'hover:underline underline-offset-2'
+						? 'underline-offset-2 hover:underline'
 						: 'pointer-events-none opacity-60'}"
 				>
 					{tag.name}
@@ -63,7 +63,7 @@
 			<form
 				action="/tags?/connect-or-create"
 				method="post"
-				class="badge flex items-center gap-2 w-36"
+				class="badge flex w-36 items-center gap-2"
 				use:enhance={({ form, data }) => {
 					data.set('entryId', entry.id)
 					return () => {
@@ -82,7 +82,7 @@
 
 <style lang="postcss">
 	.mini-button {
-		@apply font-bold text-xl flex items-center justify-center rounded-full h-4 w-4 px-2;
+		@apply flex h-4 w-4 items-center justify-center rounded-full px-2 text-xl font-bold;
 
 		&.success {
 			@apply bg-green-600/50 hover:bg-green-600;

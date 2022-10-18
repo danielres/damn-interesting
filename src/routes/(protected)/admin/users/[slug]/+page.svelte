@@ -9,7 +9,7 @@
 </script>
 
 {#if user}
-	<div class="max-w-xl mx-auto grid gap-16 my-8">
+	<div class="mx-auto my-8 grid max-w-xl gap-16">
 		<div class="card">
 			<div class="grid grid-cols-2 gap-2">
 				<div>Username</div>
@@ -48,7 +48,7 @@
 				{#if user.entries.length > 0}
 					{#each user.entries as entry}
 						<a
-							class="block py-2 hover:bg-black/20 transition-all"
+							class="block py-2 transition-all hover:bg-black/20"
 							href={`/admin/entries/${entry.id}`}
 						>
 							<div class="text-sm opacity-40">{format(entry.createdAt)}</div>
@@ -67,7 +67,7 @@
 
 <style lang="postcss">
 	.card a {
-		@apply bg-black inline-block px-1 rounded bg-opacity-20;
+		@apply inline-block rounded bg-black bg-opacity-20 px-1;
 		&:hover {
 			@apply bg-opacity-40;
 		}

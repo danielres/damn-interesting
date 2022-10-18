@@ -12,13 +12,13 @@
 	$: name = $page.params.name
 </script>
 
-<div class="max-w-4xl mx-auto my-8 grid gap-12">
+<div class="mx-auto my-8 grid max-w-4xl gap-12">
 	{#if tags}
-		<ul class="text-sm flex gap-2 flex-wrap justify-center">
+		<ul class="flex flex-wrap justify-center gap-2 text-sm">
 			{#each tags as tag (tag.id)}
 				<li
 					class="badge {name === tag.name
-						? 'ring ring-black/50 pointer-events-none'
+						? 'pointer-events-none ring ring-black/50'
 						: 'opacity-70 hover:opacity-100'}"
 				>
 					<span>
@@ -33,7 +33,7 @@
 			{/each}
 		</ul>
 	{/if}
-	<h1 class="text-3xl mx-auto ">
+	<h1 class="mx-auto text-3xl ">
 		<span class="opacity-30">Tag:</span>
 
 		<span>
@@ -46,9 +46,9 @@
 	</h1>
 
 	{#if tag}
-		<ul class="flex flex-wrap gap-8 justify-center">
+		<ul class="flex flex-wrap justify-center gap-8">
 			{#each tag.taggings as { entry } (entry.id)}
-				<li class="w-80 card">
+				<li class="card w-80">
 					<Entry {entry} mode="thumbnail" />
 				</li>
 			{/each}

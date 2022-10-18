@@ -11,10 +11,10 @@
 	let step = 0
 </script>
 
-<div class="card max-w-2xl mx-auto my-12 ">
+<div class="card mx-auto my-12 max-w-2xl ">
 	<div class="grid gap-4">
 		{#if step === 0}
-			<div class="grid gap-8 mx-auto text-center py-8">
+			<div class="mx-auto grid gap-8 py-8 text-center">
 				<h4>
 					<div>Welcome!</div>
 					<div>You have been invited by {data.inviter.username}.</div>
@@ -26,7 +26,7 @@
 				</div>
 				<div>
 					<button
-						class="hover:underline underline-offset-4 opacity-60 hover:opacity-100 transition-opacity"
+						class="underline-offset-4 opacity-60 transition-opacity hover:underline hover:opacity-100"
 						on:click={() => goto('/')}
 					>
 						Cancel
@@ -38,7 +38,7 @@
 		{#if 0 < step && step < 3}
 			<div>
 				<button
-					class="hover:underline underline-offset-4 opacity-60 hover:opacity-100 transition-opacity"
+					class="underline-offset-4 opacity-60 transition-opacity hover:underline hover:opacity-100"
 					on:click={() => (step = Math.floor(step - 1))}
 				>
 					Back
@@ -47,7 +47,7 @@
 		{/if}
 
 		{#if step === 1}
-			<div class="grid gap-4 mx-auto py-8 max-w-md">
+			<div class="mx-auto grid max-w-md gap-4 py-8">
 				<h4>1. Please confirm that your email is correct</h4>
 				<label>
 					<input
@@ -76,23 +76,23 @@
 		{/if}
 
 		{#if step === 1.1}
-			<div class="grid gap-4 mx-auto py-8 max-w-md">
+			<div class="mx-auto grid max-w-md gap-4 py-8">
 				<p>
 					Please contact <b>{data.inviter.username}</b>
-					 and ask them to create a new invitation for you with your correct email.
+					and ask them to create a new invitation for you with your correct email.
 				</p>
 			</div>
 		{/if}
 
 		{#if step === 2}
-			<div class="grid gap-4 mx-auto py-8 max-w-md">
+			<div class="mx-auto grid max-w-md gap-4 py-8">
 				<h4>2. Last steps!</h4>
 				<FormSignupWithCode code={data.code} email={data.email} onSuccess={() => (step = 3)} />
 			</div>
 		{/if}
 
 		{#if step === 3}
-			<div class="grid gap-6 mx-auto text-center py-8">
+			<div class="mx-auto grid gap-6 py-8 text-center">
 				<div class="grid gap-4">
 					<h4>Welcome!</h4>
 					<p>You can now sign in with your email and password.</p>
@@ -110,6 +110,6 @@
 	}
 
 	label {
-		@apply flex gap-3 items-center;
+		@apply flex items-center gap-3;
 	}
 </style>

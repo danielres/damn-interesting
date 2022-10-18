@@ -15,10 +15,10 @@
 	}
 
 	.warning {
-		@apply bg-red-200  border-red-300 text-red-600;
+		@apply border-red-300  bg-red-200 text-red-600;
 	}
 
 	.success {
-		@apply bg-green-300  border-green-400 text-green-800;
+		@apply border-green-400  bg-green-300 text-green-800;
 	}
 </style>

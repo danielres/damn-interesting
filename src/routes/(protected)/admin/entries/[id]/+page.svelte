@@ -18,7 +18,7 @@
 	$: ischanged = title !== data.admin.entry?.title || description !== data.admin.entry?.description
 </script>
 
-<div class="max-w-4xl mx-auto my-8 grid gap-8 md:grid-cols-2">
+<div class="mx-auto my-8 grid max-w-4xl gap-8 md:grid-cols-2">
 	{#if data.admin.entry}
 		<form
 			class="card grid gap-4"
@@ -88,14 +88,14 @@
 
 <style lang="postcss">
 	form > div {
-		@apply py-1 grid gap-0.5;
+		@apply grid gap-0.5 py-1;
 
 		label {
 			@apply font-bold;
 		}
 
 		textarea {
-			@apply text-sm resize-y;
+			@apply resize-y text-sm;
 		}
 	}
 </style>

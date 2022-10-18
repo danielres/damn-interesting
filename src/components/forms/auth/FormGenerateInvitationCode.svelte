@@ -19,7 +19,7 @@
 </script>
 
 <form
-	class="flex flex-col space-y-4 h-full"
+	class="flex h-full flex-col space-y-4"
 	method="POST"
 	action="/auth?/generate-invitation-code"
 	use:enhance={() => {

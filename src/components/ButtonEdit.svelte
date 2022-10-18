@@ -10,7 +10,7 @@
 </script>
 
 <button
-	class="mx-auto py-2 -mt-8 opacity-50 hover:opacity-100 transition-opacity"
+	class="mx-auto -mt-8 py-2 opacity-50 transition-opacity hover:opacity-100"
 	class:active={isEditing}
 	title="Edit"
 	on:click={toggle}
@@ -22,7 +22,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="1.5"
 		stroke="currentColor"
-		class="w-8 h-8 rounded-full p-1"
+		class="h-8 w-8 rounded-full p-1"
 	>
 		<path
 			stroke-linecap="round"
@@ -36,7 +36,7 @@
 	button.active {
 		@apply opacity-70;
 		svg {
-			@apply bg-white stroke-slate-900 animate-pulse;
+			@apply animate-pulse bg-white stroke-slate-900;
 		}
 	}
 </style>

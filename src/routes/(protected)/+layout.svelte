@@ -25,13 +25,13 @@
 	$: isAdmin = $page.url.pathname.startsWith('/admin')
 </script>
 
-<div class="flex flex-col h-screen">
+<div class="flex h-screen flex-col">
 	{#if $userStore}
-		<header class=" {isAdmin ? 'bg-red-900/50' : 'bg-slate-900'} flex px-6 sm:px-8 py-4">
+		<header class=" {isAdmin ? 'bg-red-900/50' : 'bg-slate-900'} flex px-6 py-4 sm:px-8">
 			<h1 class="">
-				<a href="/" class="flex gap-2 transition-colors drop-shadow-sharp hover:text-white">
+				<a href="/" class="flex gap-2 drop-shadow-sharp transition-colors hover:text-white">
 					<svg
-						class="self-end w-8 h-8 opacity-70"
+						class="h-8 w-8 self-end opacity-70"
 						fill="none"
 						viewBox="0 0 24 24"
 						stroke="currentColor"
@@ -50,7 +50,7 @@
 				</a>
 			</h1>
 
-			<div class="flex self-end ml-auto space-x-8 leading-none">
+			<div class="ml-auto flex space-x-8 self-end leading-none">
 				<a class="nav-link-text" href="/me">{$userStore.username}</a>
 
 				<form
@@ -69,8 +69,8 @@
 		{#if $userStore}
 			<slot />
 		{:else}
-			<div class="grid content-center max-w-2xl px-8 py-24 mx-auto">
-				<div class="grid card md:grid-cols-2">
+			<div class="mx-auto grid max-w-2xl content-center px-8 py-24">
+				<div class="card grid md:grid-cols-2">
 					<div class="md:pr-8">
 						<h4>Sign in</h4>
 						<FormSignIn />
@@ -93,7 +93,7 @@
 	</main>
 
 	{#if $userStore}
-		<footer class="mt-auto bg-slate-900 px-6 sm:px-8 py-4">
+		<footer class="mt-auto bg-slate-900 px-6 py-4 sm:px-8">
 			<div class="flex justify-center">
 				<a href="/about" class="nav-link-text">About</a>
 			</div>
@@ -103,10 +103,10 @@
 
 <style lang="postcss">
 	.nav-link-text {
-		@apply transition-colors hover:underline underline-offset-4 hover:text-white;
+		@apply underline-offset-4 transition-colors hover:text-white hover:underline;
 		@apply drop-shadow-sharp;
 	}
 	h4 {
-		@apply text-xl mb-6 border-b-2 pb-1 border-slate-400/50;
+		@apply mb-6 border-b-2 border-slate-400/50 pb-1 text-xl;
 	}
 </style>

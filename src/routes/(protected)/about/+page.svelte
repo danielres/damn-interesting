@@ -2,10 +2,10 @@
 	import { OWNER } from '$constants'
 </script>
 
-<div class="max-w-4xl mx-auto my-12 grid gap-8 md:p-8 text-slate-300">
+<div class="mx-auto my-12 grid max-w-4xl gap-8 text-slate-300 md:p-8">
 	<h1 class="px-6">
 		What is this about?
-		<small class="block text-slate-500 text-sm">
+		<small class="block text-sm text-slate-500">
 			(If you're reading this, there's a good chance that you already have some idea...)
 		</small>
 	</h1>

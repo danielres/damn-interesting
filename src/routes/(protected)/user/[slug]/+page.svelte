@@ -7,16 +7,16 @@
 	$: user = data.user!
 </script>
 
-<div class="max-w-7xl mx-auto my-12 grid gap-12 md:p-8">
+<div class="mx-auto my-12 grid max-w-7xl gap-12 md:p-8">
 	<h1>
 		<small class="block text-slate-500">Also curated by</small>
 		{user.username}
 	</h1>
 
 	<div>
-		<div class="grid entries gap-8">
+		<div class="entries grid gap-8">
 			{#each data.entries as entry}
-				<div class="card p-4 md:p-6 hover:shadow-2xl hover:bg-slate-600 transition-all">
+				<div class="card p-4 transition-all hover:bg-slate-600 hover:shadow-2xl md:p-6">
 					<Entry {entry} mode="thumbnail" />
 				</div>
 			{/each}
@@ -26,7 +26,7 @@
 
 <style lang="postcss">
 	h1 {
-		@apply text-2xl text-center;
+		@apply text-center text-2xl;
 	}
 
 	.grid.entries {
