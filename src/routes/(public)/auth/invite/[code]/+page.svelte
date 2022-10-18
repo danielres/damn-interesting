@@ -27,8 +27,10 @@
 				<div>
 					<button
 						class="hover:underline underline-offset-4 opacity-60 hover:opacity-100 transition-opacity"
-						on:click={() => goto('/')}>Cancel</button
+						on:click={() => goto('/')}
 					>
+						Cancel
+					</button>
 				</div>
 			</div>
 		{/if}
@@ -37,8 +39,10 @@
 			<div>
 				<button
 					class="hover:underline underline-offset-4 opacity-60 hover:opacity-100 transition-opacity"
-					on:click={() => (step = Math.floor(step - 1))}>Back</button
+					on:click={() => (step = Math.floor(step - 1))}
 				>
+					Back
+				</button>
 			</div>
 		{/if}
 
@@ -52,7 +56,9 @@
 						bind:group={isEmailCorrect}
 						value={true}
 					/>
-					<div>My email is indeed <b>{data.email}</b></div>
+					<div>
+						My email is indeed <b>{data.email}</b>
+					</div>
 				</label>
 				<label>
 					<input
@@ -61,7 +67,10 @@
 						bind:group={isEmailCorrect}
 						value={false}
 					/>
-					<div>Oopsie! My email is <u>NOT</u> <b>{data.email}</b></div>
+					<div>
+						Oopsie! My email is <u>NOT</u>
+						<b>{data.email}</b>
+					</div>
 				</label>
 			</div>
 		{/if}
@@ -69,8 +78,8 @@
 		{#if step === 1.1}
 			<div class="grid gap-4 mx-auto py-8 max-w-md">
 				<p>
-					Please contact <b>{data.inviter.username}</b> and ask them to create a new invitation for you
-					with your correct email.
+					Please contact <b>{data.inviter.username}</b>
+					 and ask them to create a new invitation for you with your correct email.
 				</p>
 			</div>
 		{/if}

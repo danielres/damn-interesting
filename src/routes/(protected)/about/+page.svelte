@@ -14,11 +14,12 @@
 		<p>Damn Interesting is a platform to share content privately with friends.</p>
 		<p>
 			This project is
-			<a rel="external" href="https://github.com/danielres/damn-interesting"> open-source </a>
+			<a rel="external" href="https://github.com/danielres/damn-interesting">open-source</a>
 			and you are welcome to inspect, use and fork the code, and host your own instance if you wish.
 		</p>
 		<p>
-			This particular instance is hosted by <a href="/user/{OWNER.slug}">{OWNER.username}</a>.
+			This particular instance is hosted by <a href="/user/{OWNER.slug}">{OWNER.username}</a>
+			.
 		</p>
 		<p>
 			At the time of this writing, only Youtube videos are supported. However, other types of
@@ -35,7 +36,8 @@
 		</p>
 		<p>
 			This instance is dedicated for content that is, in general:
-			<br />In-depth / Enlightening / Inspiring / Educational / Beneficial in some way / ...
+			<br />
+			In-depth / Enlightening / Inspiring / Educational / Beneficial in some way / ...
 		</p>
 		<p>
 			In the case of videos, any content less than 10 minutes long probably doesn't satisfy those...

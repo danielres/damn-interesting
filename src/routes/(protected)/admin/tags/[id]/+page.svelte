@@ -15,7 +15,9 @@
 	<h1 class="text-2xl">Tag: {tag.name}</h1>
 
 	<div>
-		<div>Created by: <a href="/admin/users/{tag.creator.slug}">{tag.creator.username}</a></div>
+		<div>
+			Created by: <a href="/admin/users/{tag.creator.slug}">{tag.creator.username}</a>
+		</div>
 		<div>Created on: {format(tag.createdAt)}</div>
 	</div>
 

@@ -51,7 +51,7 @@
 			</h1>
 
 			<div class="flex self-end ml-auto space-x-8 leading-none">
-				<a class="nav-link-text" href="/me">{$userStore.username} </a>
+				<a class="nav-link-text" href="/me">{$userStore.username}</a>
 
 				<form
 					class="inline-block"

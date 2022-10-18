@@ -12,7 +12,10 @@
 	{#each users as user}
 		<div class="card card py-4 px-4">
 			<div class=" grid gap-1">
-				<div><b><a href={`/admin/users/${user.slug}`}>{user.username}</a></b> [{user.slug}]</div>
+				<div>
+					<b><a href={`/admin/users/${user.slug}`}>{user.username}</a></b>
+					[{user.slug}]
+				</div>
 				<div>{user.email}</div>
 				<div>{user.role}</div>
 				<div>{format(user.invitedAt)}</div>
