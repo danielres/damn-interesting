@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Read target environment from command line parameters, default to "production"
+# Ex: (requires a .env.development file)
+#   $> ./pg_dump development
+ENVIRONMENT=${1:-production}
+
+# Define the output folder
+FOLDER=dumps/$ENVIRONMENT
+
+# Get current date and time (in UTC +0)
+DATETIME=$(date -u '+%Y-%m-%d_%H-%M-%S')
+
+# Read connection string from .env file (default: .env.production)
+export $(grep -v '^#' .env.$ENVIRONMENT | xargs)
+
+# Create output folder
+mkdir -p $FOLDER
+
+# Produce a dump in the output folder
+pg_dump --dbname=$CONNECTION_STRING > $FOLDER/$DATETIME.sql
