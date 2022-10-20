@@ -3,18 +3,14 @@
 
 	import { enhance } from '$app/forms'
 	import { invalidateAll } from '$app/navigation'
-	import { format } from '$lib/input'
-	import { sanitizeTagName } from '$lib/string'
+	import FormEntryAssignTag from '$components/forms/FormEntryAssignTag.svelte'
 	import { fade } from 'svelte/transition'
 
 	export let isEditing = false
+
 	export let entry: Entry & {
 		owner: Pick<User, 'slug' | 'username'>
-		taggings: (Tagging & {
-			tag: Tag & {
-				taggings: Tagging[]
-			}
-		})[]
+		taggings: (Tagging & { tag: Tag & { taggings: Tagging[] } })[]
 	}
 </script>
 
@@ -52,7 +48,7 @@
 						return invalidateAll
 					}}
 				>
-					<button class="mini-button danger" type="submit">-</button>
+					<button class="mini-circle danger" type="submit">-</button>
 				</form>
 			{/if}
 		</li>
@@ -60,35 +56,7 @@
 
 	{#if isEditing}
 		<li>
-			<form
-				action="/tags?/connect-or-create"
-				method="post"
-				class="badge flex w-36 items-center gap-2"
-				use:enhance={({ form, data }) => {
-					data.set('entryId', entry.id)
-					return () => {
-						form.reset()
-						invalidateAll()
-					}
-				}}
-			>
-				<input type="text" name="name" class="py-0 px-1" use:format={sanitizeTagName} />
-
-				<button class="mini-button success" type="submit">+</button>
-			</form>
+			<FormEntryAssignTag {entry} />
 		</li>
 	{/if}
 </ul>
-
-<style lang="postcss">
-	.mini-button {
-		@apply flex h-4 w-4 items-center justify-center rounded-full px-2 text-xl font-bold;
-
-		&.success {
-			@apply bg-green-600/50 hover:bg-green-600;
-		}
-		&.danger {
-			@apply bg-red-600/50 hover:bg-red-600;
-		}
-	}
-</style>

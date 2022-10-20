@@ -22,4 +22,11 @@ export const truncate = (string: string, length = 30) => string.substring(0, len
 
 export const capitalizeFirst = (string: string) => string.charAt(0).toUpperCase() + string.slice(1)
 
-export const sanitizeTagName = (tagName: string) => capitalizeFirst(tagName.trim())
+export const sanitizeInputValue = (string: string, { trimEnd } = { trimEnd: true }) => {
+	const result = string
+		.trimStart()
+		.replace(/\s\s+/g, ' ') // Collapses multiple spaces
+		.replace(/[^\w\s()-]/g, '') // Removes anything that is NOT a word character, space character, or allowed chars
+
+	return trimEnd ? result.trimEnd() : result
+}
