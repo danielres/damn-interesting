@@ -4,12 +4,14 @@ import type { Actions } from './$types'
 import { HTTP_CODES } from '$constants'
 import { getFormEntriesFromRequest } from '$lib/request'
 import { invalid } from '@sveltejs/kit'
+import { capitalizeFirst, sanitizeInputValue } from '$lib/string'
 
 export const actions: Actions = {
 	'connect-or-create': async ({ request, locals }) => {
 		const errors: FormError[] = []
-		const { name, entryId } = await getFormEntriesFromRequest(request)
+		const { name: _name, entryId } = await getFormEntriesFromRequest(request)
 
+		const name = capitalizeFirst(sanitizeInputValue(_name))
 		const user = locals.user
 		const entry = await locals.prisma.entry.findUnique({ where: { id: entryId } })
 
