@@ -30,7 +30,9 @@
 	}
 
 	const makeMatchBold = (str: string) => {
-		let matched = str.substring(0, value.length)
+		const start = str.toLocaleLowerCase().indexOf(value.toLowerCase())
+		const end = value.length
+		let matched = str.substring(start, start + end)
 		let bold = `<b>${matched}</b>`
 		return str.replace(matched, bold)
 	}
