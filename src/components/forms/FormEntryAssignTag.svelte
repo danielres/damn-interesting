@@ -18,17 +18,23 @@
 	let suggestions: string[] = []
 	let value = ''
 
+	const cache = new Map()
+
 	$: value = capitalizeFirst(sanitizeInputValue(value, { trimEnd: false }))
 	$: if (!value) suggestions = []
-	$: if (value.length > 0) handleQuery(value)
+	$: if (value.length > 0) {
+		if (cache.get(value)) suggestions = cache.get(value)
+		else handleQuery(value)
+	}
 
 	const filter = (str: string) => !entry.taggings.map(({ tag }) => tag.name).includes(str)
 
 	const handleQuery = debounce(async (q: string) => {
 		const body = new FormData()
 		body.set('q', q)
-		const res = await fetch('/tags?/query-tag-names', { method: 'POST', body })
-		suggestions = (await res.json()).data.filter(filter)
+		const response = await fetch('/tags?/query-tag-names', { method: 'POST', body })
+		suggestions = (await response.json()).data.filter(filter)
+		cache.set(q, suggestions)
 	})
 </script>
 
