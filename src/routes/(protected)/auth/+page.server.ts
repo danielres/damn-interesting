@@ -33,13 +33,18 @@ const handlePrismaCreate = async (fn: () => Promise<unknown>) => {
 
 export const actions: Actions = {
 	renew: async ({ cookies }) => {
+		const errors: FormError[] = []
 		const encryptedSession = cookies.get(COOKIES.session.name)
-		if (!encryptedSession) return
+
+		if (!encryptedSession) {
+			errors.push({ message: 'Session expired' })
+			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
+		}
+
 		cookies.set(COOKIES.session.name, encryptedSession, {
 			...COOKIES.session.options,
 			maxAge: COOKIES.session.maxAge,
 		})
-		return
 	},
 
 	signin: async ({ cookies, request, locals }) => {

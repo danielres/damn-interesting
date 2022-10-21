@@ -9,20 +9,22 @@
 	import FormSignUp from '$components/forms/auth/FormSignUp.svelte'
 	import { COOKIES } from '$constants'
 	import { onInterval } from '$lib/interval'
-	import { renewSession } from '$lib/session'
+	import * as auth from '$lib/auth'
 	import { userStore } from '$stores/user'
+	import { onMount } from 'svelte'
 
 	export let data: LayoutData
 
 	$userStore = data.user
-
-	onInterval(() => $userStore && renewSession(), (COOKIES.session.maxAge * 1000) / 3)
 
 	let signupSuccess = false
 	const onSignupSuccess = () => (signupSuccess = true)
 
 	let isAdmin = false
 	$: isAdmin = $page.url.pathname.startsWith('/admin')
+
+	onMount(() => (document.onfocus = auth.renew))
+	onInterval(auth.renew, (COOKIES.session.maxAge * 1000) / 3)
 </script>
 
 <div class="flex h-screen flex-col">
