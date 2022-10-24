@@ -6,7 +6,7 @@
 	import { debounce } from '$lib/event'
 	import { capitalizeFirst, sanitizeInputValue } from '$lib/string'
 	import InputAutocomplete from './InputAutocomplete.svelte'
-
+	import { Cache } from '$lib/cache'
 	type Props = {
 		Entry: Entry & {
 			taggings: (Tagging & { tag: Tag })[]
@@ -18,12 +18,12 @@
 	let suggestions: string[] = []
 	let value = ''
 
-	const cache = new Map()
+	const cache = new Cache('suggestions', 15, 45)
 
 	$: value = capitalizeFirst(sanitizeInputValue(value, { trimEnd: false }))
 	$: if (!value) suggestions = []
 	$: if (value.length > 0) {
-		if (cache.get(value)) suggestions = cache.get(value)
+		if (cache.has(value)) suggestions = cache.get(value)
 		else handleQuery(value)
 	}
 
