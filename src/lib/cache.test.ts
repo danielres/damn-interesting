@@ -56,5 +56,14 @@ describe('Cache', () => {
 			expect(cache.get('1')).toBeUndefined()
 			expect(cache.get('2')).toBeUndefined()
 		})
+
+		it('returns undefined for keys "null" or "undefined"', () => {
+			const cache = new Cache('users')
+			cache.set(undefined, { foo: 'foo' })
+			cache.set(null, { bar: 'bar' })
+
+			expect(cache.get(undefined)).toBeUndefined()
+			expect(cache.get(null)).toBeUndefined()
+		})
 	})
 })

@@ -1,4 +1,4 @@
-type Id = string | number
+type Id = string | number | undefined | null
 type Value = any // eslint-disable-line @typescript-eslint/no-explicit-any
 
 export class Cache {
@@ -15,6 +15,8 @@ export class Cache {
 	}
 
 	set(id: Id, value: Value, ttl = this.defaultTtl) {
+		if (id === undefined || id === null) return
+
 		const keys = Array.from(this.values.keys())
 
 		const size = keys.length
