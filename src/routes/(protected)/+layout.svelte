@@ -7,9 +7,10 @@
 	import { page } from '$app/stores'
 	import FormSignIn from '$components/forms/auth/FormSignIn.svelte'
 	import FormSignUp from '$components/forms/auth/FormSignUp.svelte'
+	import MenuMain from '$components/MenuMain.svelte'
 	import { COOKIES } from '$constants'
-	import { onInterval } from '$lib/interval'
 	import * as auth from '$lib/auth'
+	import { onInterval } from '$lib/interval'
 	import { userStore } from '$stores/user'
 	import { onMount } from 'svelte'
 
@@ -69,7 +70,11 @@
 
 	<main>
 		{#if $userStore}
-			<slot />
+			<div class="mt-4 grid gap-2">
+				<MenuMain />
+
+				<slot />
+			</div>
 		{:else}
 			<div class="mx-auto grid max-w-2xl content-center px-8 py-24">
 				<div class="card grid md:grid-cols-2">
