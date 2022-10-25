@@ -5,6 +5,7 @@
 	import { enhance } from '$app/forms'
 	import Errors from '$components/forms/Errors.svelte'
 	import * as validators from '$lib/validators'
+	import zxcvbn from 'zxcvbn'
 
 	export let onSuccess: () => void
 	export let code: string
@@ -13,6 +14,9 @@
 	let username: string = dev ? email.split('@')[0] : ''
 	let password: string = dev ? 'pass' : ''
 	let password2: string = dev ? 'pass' : ''
+
+	$: pwCheck = zxcvbn(password)
+	$: percents = (pwCheck.score === 0 ? 0.5 : pwCheck.score) * 25
 
 	let isCodeOfConductApproved = dev ? true : false
 
@@ -54,6 +58,31 @@
 			<div>Password</div>
 			<input type="password" name="password" bind:value={password} />
 		</label>
+		<div
+			style="width: {percents}%"
+			class="mt-1 h-1 rounded-full transition-all {!password && 'h-0'} {pwCheck.score === 0
+				? 'bg-red-600'
+				: pwCheck.score === 1
+				? 'bg-red-400'
+				: pwCheck.score === 2
+				? 'bg-orange-600'
+				: pwCheck.score === 3
+				? 'bg-emerald-600'
+				: 'bg-green-600'}"
+		/>
+		{#if pwCheck.feedback.warning}
+			<ul class="text-sm opacity-70">
+				<li><b>{pwCheck.feedback.warning}</b></li>
+			</ul>
+		{/if}
+
+		{#if pwCheck.feedback.suggestions}
+			<ul class="text-sm opacity-70">
+				{#each pwCheck.feedback.suggestions as suggestion}
+					<li>{suggestion}</li>
+				{/each}
+			</ul>
+		{/if}
 	</div>
 
 	<div>
@@ -77,6 +106,8 @@
 	{/if}
 
 	<div class="text-center">
-		<button class="btn" disabled={!isCodeOfConductApproved}>Create my account</button>
+		<button class="btn" disabled={!isCodeOfConductApproved || pwCheck.score < 3}>
+			Create my account
+		</button>
 	</div>
 </form>
