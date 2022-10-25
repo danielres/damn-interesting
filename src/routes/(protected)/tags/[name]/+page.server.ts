@@ -10,12 +10,5 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		},
 	})
 
-	if (!tag) return {}
-
-	const tags = await locals.prisma.tag.findMany({
-		include: { taggings: true },
-		orderBy: { name: 'asc' },
-	})
-
-	return { tag, tags }
+	return { tag }
 }
