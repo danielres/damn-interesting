@@ -1,21 +1,18 @@
 <script lang="ts" scope="module">
-	import { page } from '$app/stores'
 	import type { FormError } from '$lib/validators'
 
 	import { dev } from '$app/environment'
 	import { enhance } from '$app/forms'
+	import { page } from '$app/stores'
 	import Errors from '../Errors.svelte'
+
+	let errors: FormError[] = []
 
 	let email = dev ? 'tom@example.com' : ''
 	let code = ''
-	let errors: FormError[] = []
+	let copied = false
 
 	$: invitationHref = `${$page.url.origin}/auth/invite/${code}`
-
-	const copyToClipboard = (text: string) => {
-		window.prompt('Copy to clipboard: Ctrl+C, Enter', text)
-		code = ''
-	}
 </script>
 
 <form
@@ -31,7 +28,7 @@
 		}
 	}}
 >
-	{#if !code}
+	{#if !code && !copied}
 		<div>
 			<input type="email" name="email" placeholder="email" bind:value={email} />
 		</div>
@@ -50,9 +47,25 @@
 	{#if code}
 		<div class="grid gap-4">
 			<p>Invitation link generated!</p>
-			<button class="btn" on:click={() => copyToClipboard(invitationHref)}>
+			<textarea>{invitationHref}</textarea>
+			<button
+				class="btn"
+				on:click={() => {
+					navigator.clipboard.writeText(invitationHref)
+					code = ''
+					copied = true
+				}}
+			>
 				Copy to clipboard
 			</button>
+		</div>
+	{/if}
+
+	{#if copied}
+		<div class="grid gap-4">
+			<p>Link copied to the clipboard!</p>
+			<p>You can now paste the secret link in a message and send it to the person.</p>
+			<button class="btn" on:click={() => (copied = false)}>Ok</button>
 		</div>
 	{/if}
 </form>
