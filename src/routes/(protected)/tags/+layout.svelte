@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { PageData } from './$types'
+	import type { LayoutData } from './$types'
 
 	import { page } from '$app/stores'
 
-	export let data: PageData
+	export let data: LayoutData
 
 	$: tags = data.tags
 	$: name = $page.params.name
