@@ -9,18 +9,6 @@
 	$: tag = data.tag
 </script>
 
-<h1 class="mx-auto text-3xl ">
-	<span class="opacity-30">Tag:</span>
-
-	<span>
-		{#if tag}
-			{tag.name}
-		{:else}
-			Not found
-		{/if}
-	</span>
-</h1>
-
 {#if tag}
 	<ul class="flex flex-wrap justify-center gap-8">
 		{#each tag.taggings as { entry } (entry.id)}
@@ -29,4 +17,6 @@
 			</li>
 		{/each}
 	</ul>
+{:else}
+	<div class="mx-auto my-6 text-3xl opacity-30">Tag not found</div>
 {/if}
