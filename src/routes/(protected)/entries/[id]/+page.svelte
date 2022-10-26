@@ -52,7 +52,7 @@
 				<div class=" grid gap-4">
 					<h1 class="grid gap-2">
 						{#if isEditing}
-							<input class="text-2xl" type="text" name="title" id="title" bind:value={title} />
+							<input class="p-0 text-2xl" type="text" name="title" id="title" bind:value={title} />
 						{:else}
 							<div class="text-2xl text-slate-400">{entry.title}</div>
 						{/if}
