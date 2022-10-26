@@ -23,7 +23,7 @@
 	$: entry = data.entry!
 </script>
 
-<div class="mx-auto grid max-w-5xl gap-16 py-12 md:px-8">
+<div class="mx-auto grid w-full max-w-5xl gap-16 py-12 md:px-8">
 	<div class="grid">
 		{#if can.updateEntry(data.user, entry)}
 			<ButtonEdit
