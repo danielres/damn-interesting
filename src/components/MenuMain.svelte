@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/stores'
 
-	$: active = $page.url.pathname.startsWith('/tags') ? 'tags' : 'entries'
+	$: active = $page.url.pathname.split('/')[1] || 'entries'
 </script>
 
-<div class="mx-auto grid space-x-8 self-end">
-	<ul class="mx-auto flex gap-2">
-		<li><a href="/" class:active={active === 'entries'}>Entries</a></li>
-		<li><a href="/tags" class:active={active === 'tags'}>Tags</a></li>
-	</ul>
-</div>
+{#if ['entries', 'tags'].includes(active)}
+	<div class="mx-auto grid space-x-8 self-end">
+		<ul class="mx-auto flex gap-2">
+			<li><a href="/" class:active={active === 'entries'}>Entries</a></li>
+			<li><a href="/tags" class:active={active === 'tags'}>Tags</a></li>
+		</ul>
+	</div>
+{/if}
 
 <style lang="postcss">
 	a {
