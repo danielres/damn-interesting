@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type { Entry, User } from '@prisma/client'
 
+	import Prose from '$components/Prose.svelte'
 	import { format } from '$lib/date'
+	import { marked } from 'marked'
 
 	export let entry: Entry & { owner: Pick<User, 'slug' | 'username'> }
 	export let mode: 'thumbnail' | 'view' = 'view'
@@ -49,10 +51,16 @@
 			</span>
 		</div>
 
-		<div class="fade-bottom h-20 overflow-y-hidden text-sm">
-			{#each entry.description.split('\n') as paragraph}
-				<p>{paragraph}</p>
-			{/each}
+		<div class="description fade-bottom h-20 overflow-y-hidden text-sm">
+			<Prose>
+				{@html marked(entry.description)}
+			</Prose>
 		</div>
 	</div>
 </div>
+
+<style lang="postcss">
+	.description :global(*) {
+		@apply my-0;
+	}
+</style>
