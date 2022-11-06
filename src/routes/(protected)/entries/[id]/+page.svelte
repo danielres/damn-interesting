@@ -64,13 +64,19 @@
 
 				<div class="grid h-fit gap-6">
 					{#if isEditing}
-						<div class="custom-textarea">
-							<TextareaAutogrow
-								bind:value={description}
-								id="description"
-								name="description"
-								placeholder="Description"
-							/>
+						<div>
+							<div class="custom-textarea">
+								<TextareaAutogrow
+									bind:value={description}
+									id="description"
+									name="description"
+									placeholder="Description"
+								/>
+							</div>
+							<small class="mt-1 block leading-tight opacity-60">
+								Markdown supported, long descriptions supported. <br />
+								Only the first 3 lines are visible in the previews.
+							</small>
 						</div>
 					{:else}
 						<Prose>
