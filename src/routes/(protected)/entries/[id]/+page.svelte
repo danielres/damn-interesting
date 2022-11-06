@@ -64,7 +64,14 @@
 
 				<div class="grid h-fit gap-6">
 					{#if isEditing}
-						<TextareaAutogrow bind:value={description} name="description" id="description" />
+						<div class="custom-textarea">
+							<TextareaAutogrow
+								bind:value={description}
+								id="description"
+								name="description"
+								placeholder="Description"
+							/>
+						</div>
 					{:else}
 						<Prose>
 							{@html marked(entry.description)}
@@ -148,3 +155,9 @@
 		</div>
 	{/if}
 </div>
+
+<style lang="postcss">
+	.custom-textarea :global(textarea) {
+		@apply p-0 text-sm;
+	}
+</style>
