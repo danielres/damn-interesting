@@ -3,10 +3,11 @@ import type { RequestHandler } from './$types'
 import { HTTP_CODES } from '$constants'
 import { getYoutubeGetVideoDetails } from '$lib/Entry/youtube'
 import { makeUnauthorizedResponse } from '$lib/response'
+import * as validators from '$lib/validators'
 import { Prisma } from '@prisma/client'
 
 export const POST: RequestHandler = async ({ locals, request }) => {
-	const errors: { field?: string; message: string }[] = []
+	let errors: { field?: string; message: string }[] = []
 
 	const { user } = locals
 	if (!user) return makeUnauthorizedResponse('Unauthorized: User not found')
@@ -21,6 +22,11 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 		errors.push({ field: 'url', message: 'Youtube url not valid' })
 		return new Response(JSON.stringify(errors), { status: HTTP_CODES.UNPROCESSABLE_ENTITY })
 	}
+
+	errors = [...errors, ...validators.entry({ title: youtubeVideoDetails.title, description })]
+
+	if (errors.length > 0)
+		return new Response(JSON.stringify(errors), { status: HTTP_CODES.UNPROCESSABLE_ENTITY })
 
 	const resourceId = youtubeVideoDetails.thumbnailUrl.split('/vi/')[1].split('/')[0]
 
