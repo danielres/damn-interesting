@@ -6,6 +6,7 @@
 	import { invalidateAll } from '$app/navigation'
 	import { can } from '$can'
 	import Errors from '$components/forms/Errors.svelte'
+	import TextareaAutogrow from '$components/forms/TextareaAutogrow.svelte'
 	import Prose from '$components/Prose.svelte'
 	import { format } from '$lib/date'
 	import { marked } from 'marked'
@@ -63,13 +64,7 @@
 
 				<div class="grid h-fit gap-6">
 					{#if isEditing}
-						<textarea
-							class="p-0 text-sm"
-							name="description"
-							id="description"
-							rows="3"
-							bind:value={description}
-						/>
+						<TextareaAutogrow bind:value={description} name="description" id="description" />
 					{:else}
 						<Prose>
 							{@html marked(entry.description)}
