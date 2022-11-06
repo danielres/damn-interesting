@@ -32,8 +32,10 @@
 		<small>Only Youtube urls are currently supported</small>
 	</div>
 
-	<div>
-		<label for="description">What do you find particularly interesting in this content?</label>
+	<div class="grid gap-2">
+		<label for="description" class="leading-tight">
+			What do you find particularly interesting in this content?
+		</label>
 
 		<TextareaAutogrow
 			bind:value={description}
@@ -60,9 +62,6 @@
 
 <style lang="postcss">
 	input[type='text'],
-	textarea {
-		@apply w-full;
-	}
 	small {
 		@apply mt-1 block leading-tight opacity-60;
 	}
