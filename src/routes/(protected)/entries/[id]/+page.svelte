@@ -7,7 +7,9 @@
 	import { can } from '$can'
 	import ButtonEdit from '$components/ButtonEdit.svelte'
 	import Errors from '$components/forms/Errors.svelte'
+	import Prose from '$components/Prose.svelte'
 	import { format } from '$lib/date'
+	import { marked } from 'marked'
 	import Suggestions from './Suggestions.svelte'
 	import Tags from './Tags.svelte'
 
@@ -70,7 +72,9 @@
 							bind:value={description}
 						/>
 					{:else}
-						<div class="text-sm">{entry.description}</div>
+						<Prose>
+							{@html marked(entry.description)}
+						</Prose>
 					{/if}
 
 					<Tags {entry} {isEditing} />

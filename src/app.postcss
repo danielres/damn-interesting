@@ -48,4 +48,35 @@
 			@apply bg-red-600/50 hover:bg-red-600;
 		}
 	}
+
+	.prose-invert {
+		@apply leading-snug text-slate-300;
+		a {
+			@apply underline underline-offset-2 opacity-70;
+			&:hover {
+				@apply opacity-100 transition-all;
+			}
+			&.external {
+				&::after {
+					@apply mx-1 inline-block h-4 w-4 bg-white;
+					content: '';
+					mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' %3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25' /%3E%3C/svg%3E%0A")
+						no-repeat 50% 50%;
+					mask-size: cover;
+				}
+			}
+		}
+		ul {
+			@apply list-disc;
+		}
+		ol {
+			@apply list-decimal;
+		}
+		li {
+			@apply m-0  p-0;
+		}
+		hr {
+			@apply my-4 opacity-20;
+		}
+	}
 }
