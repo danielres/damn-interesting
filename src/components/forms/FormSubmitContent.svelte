@@ -3,6 +3,7 @@
 
 	import { dev } from '$app/environment'
 	import Errors from './Errors.svelte'
+	import TextareaAutogrow from './TextareaAutogrow.svelte'
 
 	export let autofocus = false
 	export let onSuccess = () => {}
@@ -28,22 +29,22 @@
 	<div>
 		<!-- svelte-ignore a11y-autofocus -->
 		<input {autofocus} type="text" name="url" id="url" placeholder="url" bind:value={url} />
-		<div>
-			<small class="opacity-60">Note: only Youtube urls are currently supported</small>
-		</div>
+		<small>Only Youtube urls are currently supported</small>
 	</div>
 
-	<div class="grid gap-4">
+	<div>
 		<label for="description">What do you find particularly interesting in this content?</label>
 
-		<textarea
+		<TextareaAutogrow
 			bind:value={description}
-			cols="30"
 			id="description"
 			name="description"
 			placeholder="Description"
-			rows="3"
 		/>
+		<small>
+			Markdown supported, long descriptions supported. <br />
+			Only the first 3 lines are visible in the previews.
+		</small>
 	</div>
 
 	{#if errors.length > 0}
@@ -61,5 +62,8 @@
 	input[type='text'],
 	textarea {
 		@apply w-full;
+	}
+	small {
+		@apply mt-1 block leading-tight opacity-60;
 	}
 </style>
