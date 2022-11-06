@@ -68,7 +68,7 @@
 		</header>
 	{/if}
 
-	<main>
+	<main class="mb-6">
 		{#if $userStore}
 			<div class="mt-4 grid gap-2">
 				<MenuMain />
