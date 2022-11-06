@@ -33,7 +33,7 @@ export const newUserFromCode = (formData: FormData) => {
 	return errors
 }
 
-export const updatedEntry = (entry: Entry) => {
+export const entry = (entry: Pick<Entry, 'title' | 'description'>) => {
 	const { title, description } = entry
 	const errors: FormError[] = []
 	if (title.length < ENTRY_TITLE_MIN_LENGTH)
@@ -42,6 +42,11 @@ export const updatedEntry = (entry: Entry) => {
 		errors.push({
 			field: 'description',
 			message: 'Please tell us what YOU find particularly interesting in this content.',
+		})
+	if (description.includes('<'))
+		errors.push({
+			field: 'description',
+			message: 'Sorry, HTML characters ("<", ">", ...), are not allowed.',
 		})
 	return errors
 }

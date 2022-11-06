@@ -40,7 +40,7 @@ export const actions: Actions = {
 			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
 		}
 		const { id: _id, ...data } = await getFormEntriesFromRequest(request) // eslint-disable-line @typescript-eslint/no-unused-vars
-		errors = [...errors, ...validators.updatedEntry(data)]
+		errors = [...errors, ...validators.entry(data)]
 		if (errors.length > 0) return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
 
 		await locals.prisma.entry.update({ data, where: { id } })
