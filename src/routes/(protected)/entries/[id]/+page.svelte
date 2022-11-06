@@ -1,11 +1,10 @@
-<script lang="ts" scope="module">
+<script lang="ts">
 	import type { FormError } from '$lib/validators'
 	import type { PageData } from './$types'
 
 	import { enhance } from '$app/forms'
 	import { invalidateAll } from '$app/navigation'
 	import { can } from '$can'
-	import ButtonEdit from '$components/ButtonEdit.svelte'
 	import Errors from '$components/forms/Errors.svelte'
 	import Prose from '$components/Prose.svelte'
 	import { format } from '$lib/date'
@@ -21,7 +20,7 @@
 	let title = data.entry!.title || ''
 	let description = data.entry!.description || ''
 
-	$: ischanged = title !== data.entry?.title || description !== data.entry?.description
+	$: isChanged = title !== data.entry?.title || description !== data.entry?.description
 	$: entry = data.entry!
 </script>
 
@@ -100,9 +99,13 @@
 					</div>
 
 					{#if can.updateEntry(data.user, entry)}
-						<div class="flex gap-4">
-							{#if isEditing}
+						{#if isEditing}
+							{#if errors.length > 0}
+								<Errors {errors} />
+							{/if}
+							<div class="flex gap-4">
 								<button
+									disabled={!isChanged}
 									type="submit"
 									class="rounded bg-green-600 bg-opacity-30 py-1 px-2 transition-all hover:bg-opacity-50"
 								>
@@ -115,28 +118,28 @@
 								>
 									Cancel
 								</button>
-							{:else}
-								<button
-									class="opacity-50 transition-opacity hover:opacity-100"
-									on:click={() => (isEditing = true)}
+							</div>
+						{:else}
+							<button
+								class="opacity-50 transition-opacity hover:opacity-100"
+								on:click={() => (isEditing = true)}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="h-6 w-6 rounded-full"
 								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke-width="1.5"
-										stroke="currentColor"
-										class="h-6 w-6 rounded-full"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-										/>
-									</svg>
-								</button>
-							{/if}
-						</div>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+									/>
+								</svg>
+							</button>
+						{/if}
 					{/if}
 				</div>
 			</div>
