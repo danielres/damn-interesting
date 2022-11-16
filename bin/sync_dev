@@ -17,4 +17,4 @@ LATEST=$(cd $FOLDER && ls -t *.processed.sql | head -1)
 echo "==    using dump file: $LATEST"
 echo ""
 
-cd ../prisma && rm data.db || true  && yarn prisma migrate reset -f && pwd && sqlite3 data.db ".read ../bin/$FOLDER/$LATEST"
+cd ../prisma && rm data.db || true  && yarn prisma migrate reset -f && pwd && yarn prisma db execute --file ./bin/$FOLDER/$LATEST
