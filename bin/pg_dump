@@ -18,4 +18,7 @@ export $(grep -v '^#' .env.$ENVIRONMENT | xargs)
 mkdir -p $FOLDER
 
 # Produce a dump in the output folder
-pg_dump --dbname=$CONNECTION_STRING > $FOLDER/$DATETIME.sql
+DUMPFILENAME=$FOLDER/$DATETIME-data-inserts
+pg_dump --data-only --inserts --dbname=$CONNECTION_STRING > $DUMPFILENAME.sql 
+# Postprocess the dump for sqlite (produces a new file)
+./pg_dump_postprocess.js $DUMPFILENAME.sql > $DUMPFILENAME.processed.sql

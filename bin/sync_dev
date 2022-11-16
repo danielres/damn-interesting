@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo ""
+echo ""
+echo "== 1) dumping production DB ==========================================="
+echo ""
+
+./pg_dump\
+
+echo ""
+echo ""
+echo "== 2) updating local db ==============================================="
+
+FOLDER=dumps/production
+LATEST=$(cd $FOLDER && ls -t *.processed.sql | head -1)
+
+echo "==    using dump file: $LATEST"
+echo ""
+
+cd ../prisma && rm data.db || true  && yarn prisma migrate reset -f && pwd && sqlite3 data.db ".read ../bin/$FOLDER/$LATEST"
