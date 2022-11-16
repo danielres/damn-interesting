@@ -34,7 +34,7 @@ CREATE TABLE "Entry" (
 -- CreateTable
 CREATE TABLE "Tag" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
+    "name" TEXT NOT NULL COLLATE NOCASE,
     "description" TEXT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "creatorId" TEXT NOT NULL,
