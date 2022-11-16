@@ -9,3 +9,4 @@ node_modules
 
 .history
 bin/dumps
+prisma*/*.db
