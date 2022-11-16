@@ -80,7 +80,7 @@ export const actions: Actions = {
 	'query-tag-names': async ({ locals, request }) => {
 		const { q } = await getFormEntriesFromRequest(request)
 		const tags = await locals.prisma.tag.findMany({
-			where: { name: { contains: q, mode: 'insensitive' } },
+			where: { name: { contains: q } },
 		})
 		const names = tags.map((t) => t.name)
 		const startingWith = names.filter((name) => name.startsWith(q))
