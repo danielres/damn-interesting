@@ -6,13 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("PG_URL")
-}
-
-enum Role {
-  USER
-  SUPERADMIN
+  provider = "sqlite"
+  url      = "file:./data.db"
 }
 
 model User {
@@ -26,7 +21,7 @@ model User {
   inviter           User?     @relation("InviterInvitees", fields: [inviterId], references: [id])
   invitees          User[]    @relation("InviterInvitees")
   entries           Entry[]
-  role              Role      @default(USER)
+  role              String    @default("USER")
   tagsAsCreator     Tag[]
   taggingsAsCreator Tagging[]
 }
