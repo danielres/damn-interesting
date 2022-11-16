@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "prisma generate --schema=./prisma2/schema.prisma && prisma migrate deploy && prisma migrate deploy --schema=./prisma2/schema.prisma && vite build",
+		"build": "prisma migrate deploy && vite build",
 		"package": "svelte-kit package",
 		"preview": "vite preview",
 		"test": "playwright test",

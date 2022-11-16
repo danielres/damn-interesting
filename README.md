@@ -6,21 +6,17 @@ A platform to curate and share high quality contents privately with friends.
 
 Prerequisites:
 
-- docker
-- docker-compose
 - nodejs (version: see `.tool-versions`)
 - yarn
 
 1. in a terminal: `cp .env.example .env`
 2. open `.env` and set the environment variables to your liking
-3. in a terminal: `docker-compose up`
-4. in a terminal: `yarn dev`
+3. in a terminal: `yarn dev`
 
 Gotchas:
 
 - You might need to generate the prisma definitions manually:
   1. in a terminal: `yarn prisma generate --schema=./prisma/schema.prisma`
-  1. in a terminal: `yarn prisma generate --schema=./prisma2/schema.prisma`
   1. start, or restart, the dev server: `yarn dev`
 
 ## Hosting a small instance for free
@@ -58,11 +54,10 @@ If you're reading this, I assume you already have some experience in programming
 ### On Vercel
 
 1. Create a new project, point it to your Github repository.
-2. Under "Settings > Environment variables", define the environment variables needed by DI. You will have to replicate the ones found in `.env.example`, ignoring the ones needed stricly for development (at the moment these are the ones defined under `# docker-compose`).
+2. Under "Settings > Environment variables", define the environment variables needed by DI. You will have to replicate the ones found in `.env.example`.
 
    Notes:
 
-   - For `PG_URL` and `PG_URL2`: use the values (connection strings) provided by Heroku.
    - For `ENCRYPTION_SECRET` and `ENCRYPTION_SALT`: make sure to use long and secure strings different than the ones found in `.env.example`
    - `PUBLIC_OWNER_USERNAME` has to match exactly your username inside the app
    - `PUBLIC_OWNER_SLUG` has to match exactly the slug (your slugified username) associated to you inside the app

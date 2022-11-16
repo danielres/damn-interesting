@@ -14,11 +14,6 @@ export const can = {
 		throw backendOnlyAbilityError
 	},
 
-	replay: async (prisma: PrismaClient) => {
-		if (!browser) return (await prisma.user.count()) === 0
-		throw backendOnlyAbilityError
-	},
-
 	updateEntry: (user: Pick<User, 'role' | 'id'> | null, entry: Pick<Entry, 'ownerId'> | null) => {
 		if (!user || !entry) return false
 		if (user.role === USER_ROLES.SUPERADMIN) return true
