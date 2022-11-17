@@ -1,8 +1,9 @@
 import crypto from 'crypto'
-import { ENCRYPTION_SALT, ENCRYPTION_SECRET } from '$env/static/private'
 
-const SALT = ENCRYPTION_SALT
-const SECRET = ENCRYPTION_SECRET
+import { env as private_env } from '$env/dynamic/private'
+
+const SALT = private_env.ENCRYPTION_SALT
+const SECRET = private_env.ENCRYPTION_SECRET
 
 const ALGORITHM = 'aes-192-cbc'
 // const ENCODING = 'base64'

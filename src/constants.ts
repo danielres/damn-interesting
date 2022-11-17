@@ -1,4 +1,4 @@
-import { PUBLIC_OWNER_SLUG, PUBLIC_OWNER_USERNAME } from '$env/static/public'
+import { env as public_env } from '$env/dynamic/public'
 
 export const HTTP_CODES = {
 	FORBIDDEN: 403,
@@ -20,6 +20,6 @@ export const COOKIES = {
 }
 
 export const OWNER = {
-	slug: PUBLIC_OWNER_SLUG,
-	username: PUBLIC_OWNER_USERNAME,
+	slug: public_env.PUBLIC_OWNER_SLUG,
+	username: public_env.PUBLIC_OWNER_USERNAME,
 }
