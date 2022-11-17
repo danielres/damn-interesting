@@ -9,4 +9,5 @@ node_modules
 
 .history
 bin/dumps
+bin/fly/backups
 data/*.db

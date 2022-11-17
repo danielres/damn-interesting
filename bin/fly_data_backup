@@ -1,0 +1,8 @@
+#!/bin/sh
+
+FOLDER=fly/backups
+DATETIME=$(date -u '+%Y-%m-%d_%H-%M-%S')
+
+mkdir -p $FOLDER
+cd .. && fly ssh sftp get /app/data/data.db bin/$FOLDER/data-$DATETIME.db
+
