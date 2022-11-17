@@ -1,0 +1,13 @@
+.DS_Store
+node_modules
+/.svelte-kit/build
+/build
+/package
+.env
+.env.*
+# !.env*.example
+
+.history
+bin/dumps
+data/*.db
+.git
