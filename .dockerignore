@@ -10,4 +10,10 @@ node_modules
 .history
 bin/dumps
 data/*.db
-.git
+.git*
+.eslint*
+.prettier*
+.vscode
+Dockerfile
+docker-compose.yml
+.svelte-kit
