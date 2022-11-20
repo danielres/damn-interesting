@@ -11,7 +11,7 @@
 	const getOpacity = (count: number) => ((100 / max) * count * (2 / 3) + 100 / 3) / 100
 </script>
 
-<div class="mx-auto  my-6 grid max-w-4xl gap-8">
+<div class="mx-auto my-6 grid max-w-4xl gap-8">
 	{#if tags}
 		<ul class="flex flex-wrap justify-center gap-2 text-sm">
 			{#each tags as tag (tag.id)}
@@ -31,7 +31,9 @@
 			{/each}
 		</ul>
 	{/if}
+</div>
 
+<div class="mx-auto grid max-w-7xl gap-4 py-2 px-2 sm:px-8 ">
 	<slot />
 </div>
 
