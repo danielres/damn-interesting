@@ -5,7 +5,7 @@
 
 	export let data: PageData
 
-	const user = data.admin.user
+	$: user = data.admin.user
 </script>
 
 {#if user}
