@@ -9,6 +9,7 @@
 		<button
 			class="flex h-8 w-8 items-center justify-center rounded-full bg-slate-400 text-3xl text-slate-900 transition-colors hover:bg-slate-200"
 			title="Add content"
+			disabled
 			on:click={open}
 		>
 			+
