@@ -21,6 +21,7 @@ model User {
   inviter           User?     @relation("InviterInvitees", fields: [inviterId], references: [id])
   invitees          User[]    @relation("InviterInvitees")
   entries           Entry[]
+  lastLoginAt       DateTime?
   role              String    @default("USER")
   tagsAsCreator     Tag[]
   taggingsAsCreator Tagging[]
