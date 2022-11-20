@@ -76,14 +76,50 @@
 				<slot />
 			</div>
 		{:else}
-			<div class="mx-auto grid max-w-2xl content-center px-8 py-24">
-				<div class="card grid md:grid-cols-2">
+			<div class="mx-auto grid max-w-2xl content-center space-y-32 px-8 py-24">
+				<div class="text-center leading-relaxed">
+					<div class="mx-auto my-4 w-fit opacity-70">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="h-16 w-16"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+							/>
+						</svg>
+					</div>
+					<div class="text-xl">
+						<p>Damn interesting has moved to</p>
+
+						<p>
+							<a
+								href="https://di.fly.dev"
+								class="underline underline-offset-4 opacity-70 transition-opacity hover:opacity-100"
+							>
+								<b>https://di.fly.dev</b>
+							</a>
+						</p>
+					</div>
+
+					<div class="mt-6 opacity-70">
+						<p>This instance is now in read-only mode, and will be shut down on Nov 28 latest.</p>
+						<p>Please update your bookmarks.</p>
+					</div>
+				</div>
+
+				<div class="card grid opacity-70">
 					<div class="md:pr-8">
 						<h4>Sign in</h4>
 						<FormSignIn />
 					</div>
 
-					<div class="mt-8 md:mt-0">
+					<!-- <div class="mt-8 md:mt-0">
 						<h4>Sign up</h4>
 						{#if signupSuccess}
 							<div class="success">
@@ -93,7 +129,7 @@
 						{:else}
 							<FormSignUp onSuccess={onSignupSuccess} />
 						{/if}
-					</div>
+					</div> -->
 				</div>
 			</div>
 		{/if}
