@@ -65,6 +65,7 @@ export const actions: Actions = {
 			return invalid(HTTP_CODES.FORBIDDEN, { errors })
 		}
 
+		await locals.prisma.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } })
 		const encryptedSession = encryptObject({ userId: user.id })
 
 		cookies.set(COOKIES.session.name, encryptedSession, {
