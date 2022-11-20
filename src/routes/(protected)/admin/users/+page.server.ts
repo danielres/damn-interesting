@@ -8,6 +8,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			username: true,
 			slug: true,
 			invitedAt: true,
+			lastLoginAt: true,
 			role: true,
 			inviter: {
 				select: {

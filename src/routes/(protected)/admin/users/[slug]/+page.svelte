@@ -20,6 +20,8 @@
 				<div>{user.slug}</div>
 				<div>Email</div>
 				<div>{user.email}</div>
+				<div>Last login at:</div>
+				<div>{user.lastLoginAt ? format(user.lastLoginAt) : '/'}</div>
 				<div>Invited at</div>
 				<div>{format(user.invitedAt)}</div>
 				<div>Invited by:</div>
