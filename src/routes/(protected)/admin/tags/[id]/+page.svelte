@@ -1,5 +1,4 @@
 <script lang="ts" scope="module">
-	import type { FormError } from '$lib/validators'
 	import type { PageData } from './$types'
 
 	import Entry from '$components/Entry.svelte'
@@ -7,7 +6,6 @@
 
 	export let data: PageData
 
-	let errors: FormError[] = []
 	$: tag = data.admin.tag!
 </script>
 
