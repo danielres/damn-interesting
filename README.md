@@ -21,46 +21,51 @@ Gotchas:
 
 ## Hosting a small instance for free
 
----
-
-**Warning:** Unfortunately, Heroku is putting an end to its free postgres "Hobby dev" plans.
-
-From the Heroku Dashboard:
-
-> Starting November 28th, 2022, free Heroku Dynos, free Heroku Postgres, and free Heroku Data for Redis® will no longer be available.
-> You have apps using these resources. To keep your apps running and retain your data, upgrade to paid resources as soon as possible.
-
----
-
 If you're reading this, I assume you already have some experience in programming and hosting your code, so I won't go into every detail of these steps.
 
 ### Prerequisites
 
 - A [Github](https://github.com) account
-- A [Vercel](https://vercel.com) account
-- A [Heroku](https://www.heroku.com) account
+- A [Fly.io](https://fly.io/) account
+- The `flyctl` [command-line tool from fly.io](https://fly.io/docs/hands-on/install-flyctl/)
 
 ### On Github
 
 1. Fork this repository, keep the resulting repository public
 2. Locally: use `git clone` to have your local instance
 
-### On Heroku
+### Deploying to fly.io
 
-1. Create a new app
-2. Under this app, create 2 postgres databases, pick the plan "Hobby dev" (free)
-3. For each db, under "Settings", pick "View Credentials" and note the URI (aka connection string). It is a long string starting with `postgres://`
+In your local folder:
 
-### On Vercel
+1. Create the app on fly.io: `flyctl launch`\
+   It will attempt to deploy and will fail. This is normal.
+2. Create a new 1Gb volume for that app (for the sqlite db) : `fly volumes create data -s 1`
+3. Set the environment variables:
+   ```
+   fly secrets set \
+   ENCRYPTION_SALT=<some_secure_string> \
+   ENCRYPTION_SECRET=<some_secure_string> \
+   PUBLIC_OWNER_USERNAME=<your_superuser_username> \
+   PUBLIC_OWNER_SLUG=<your_superuser_slug>`
+   ```
+4. Deploy:
 
-1. Create a new project, point it to your Github repository.
-2. Under "Settings > Environment variables", define the environment variables needed by DI. You will have to replicate the ones found in `.env.example`.
+- To deploy your current local dev code "as is": `fly deploy`
+- Or `git push` to github into a branch named `fly`. This will trigger a deployment automatically from the this `fly` branch.
 
-   Notes:
+5. You might need to run the db migration manually on fly.io:
+   ```
+   fly ssh console
+   cd app
+   yarn migrate deploy
+   ```
 
-   - For `ENCRYPTION_SECRET` and `ENCRYPTION_SALT`: make sure to use long and secure strings different than the ones found in `.env.example`
-   - `PUBLIC_OWNER_USERNAME` has to match exactly your username inside the app
-   - `PUBLIC_OWNER_SLUG` has to match exactly the slug (your slugified username) associated to you inside the app
+Notes:
+
+- For `ENCRYPTION_SECRET` and `ENCRYPTION_SALT`: make sure to use long and secure strings different than the ones found in `.env.example`
+- `PUBLIC_OWNER_USERNAME` has to match exactly your username inside the app
+- `PUBLIC_OWNER_SLUG` has to match exactly the slug (your slugified username) associated to you inside the app
 
 ### Congrats!
 
