@@ -20,8 +20,4 @@
 	h1 {
 		@apply text-center text-2xl;
 	}
-
-	.grid.entries {
-		grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-	}
 </style>

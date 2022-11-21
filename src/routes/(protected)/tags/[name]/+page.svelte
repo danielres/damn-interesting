@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores'
 	import type { PageData } from './$types'
 
-	import Entry from '$components/Entry.svelte'
 	import Entries from '$components/Entries.svelte'
 
 	export let data: PageData
