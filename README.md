@@ -58,7 +58,7 @@ In your local folder:
    ```
    fly ssh console
    cd app
-   yarn migrate deploy
+   yarn prisma migrate deploy
    ```
 
 Notes:
