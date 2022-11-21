@@ -20,6 +20,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 		include: {
 			owner: { select: { username: true, slug: true } },
 		},
+		orderBy: { createdAt: 'desc' },
 	})
 
 	return { entry, suggestionsByAuthor }
