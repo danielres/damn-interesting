@@ -86,9 +86,11 @@
 			<button type="submit" class="btn">Submit</button>
 		</div>
 	{:catch error}
-		<div>
-			<Errors errors={[{ message: 'Invalid Youtube URL.' }]} />
-		</div>
+		{#if url.length > 0}
+			<div>
+				<Errors errors={[{ message: 'Invalid Youtube URLB.' }]} />
+			</div>
+		{/if}
 	{/await}
 </form>
 
