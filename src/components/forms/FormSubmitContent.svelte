@@ -2,6 +2,7 @@
 	import type { FormError } from '$lib/validators'
 
 	import { getYoutubeGetVideoDetails } from '$lib/Entry/youtube'
+	import { formatDuration } from '$lib/time'
 	import Errors from './Errors.svelte'
 	import TextareaAutogrow from './TextareaAutogrow.svelte'
 
@@ -47,9 +48,21 @@
 		<input {autofocus} type="text" name="url" id="url" placeholder="url" bind:value={url} />
 		<small>Only Youtube urls are currently supported</small>
 	</div>
+
 	{#await oembedPromise then value}
-		<div>
-			<img src={value.thumbnailUrl} alt="Preview" class="w-1/2 mx-auto" />
+		<div class="relative max-w-xs mx-auto rounded-lg">
+			<img
+				src={value.thumbnailUrl}
+				alt="Preview"
+				class="aspect-video w-full rounded-lg border-4 border-slate-600 object-cover transition-all hover:border-slate-400 hover:shadow-lg "
+			/>
+			{#if value.duration}
+				<div
+					class="absolute right-0 bottom-0 rounded-tl-lg rounded-br-lg bg-slate-600 px-2 py-1 text-sm "
+				>
+					{formatDuration(value.duration)}
+				</div>
+			{/if}
 		</div>
 
 		<div>
