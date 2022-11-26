@@ -34,7 +34,7 @@
 
 <style lang="postcss">
 	.modal {
-		@apply absolute top-16 z-20 mx-auto max-w-xl md:fixed md:top-auto md:w-2/3;
+		@apply absolute top-16 z-20 mx-auto max-w-xl  md:w-2/3;
 	}
 
 	button.close {
