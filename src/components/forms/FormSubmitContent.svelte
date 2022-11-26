@@ -88,7 +88,7 @@
 	{:catch error}
 		{#if url.length > 0}
 			<div>
-				<Errors errors={[{ message: 'Invalid Youtube URLB.' }]} />
+				<Errors errors={[{ message: 'Invalid Youtube URL.' }]} />
 			</div>
 		{/if}
 	{/await}
