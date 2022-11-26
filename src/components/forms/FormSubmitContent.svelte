@@ -1,14 +1,13 @@
 <script lang="ts">
 	import type { FormError } from '$lib/validators'
 
-	import { dev } from '$app/environment'
 	import Errors from './Errors.svelte'
 	import TextareaAutogrow from './TextareaAutogrow.svelte'
 
 	export let autofocus = false
 	export let onSuccess = () => {}
 
-	let url = dev ? 'https://youtu.be/1G72936Y3xA' : ''
+	let url = ''
 	let description = ''
 	let errors: FormError[] = []
 
