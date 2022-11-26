@@ -2,19 +2,21 @@
 
 echo ""
 echo ""
-echo "== 1) dumping production DB ==========================================="
+echo "== 1) saving local sqlite backup ==========================================="
 echo ""
 
-./pg_dump\
+./fly_data_backup
 
 echo ""
 echo ""
 echo "== 2) updating local db ==============================================="
 
-FOLDER=dumps/production
-LATEST=$(cd $FOLDER && ls -t *.processed.sql | head -1)
+FOLDER=fly/backups
+LATEST=$(cd $FOLDER && ls -t *.db | head -1)
 
-echo "==    using dump file: $LATEST"
+echo "==    using backup file: $LATEST"
 echo ""
 
-cd ../data && rm data.db || true  && yarn prisma migrate reset -f && pwd && yarn prisma db execute --file ./bin/$FOLDER/$LATEST
+cp $FOLDER/$LATEST ../data/data.db
+
+# cd ../data && rm ../data/data.db || true  && yarn prisma migrate reset -f && pwd && yarn prisma db execute --file ./bin/$FOLDER/$LATEST
