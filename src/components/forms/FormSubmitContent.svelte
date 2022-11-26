@@ -1,22 +1,39 @@
 <script lang="ts">
 	import type { FormError } from '$lib/validators'
 
+	import { getYoutubeGetVideoDetails } from '$lib/Entry/youtube'
 	import Errors from './Errors.svelte'
 	import TextareaAutogrow from './TextareaAutogrow.svelte'
 
 	export let autofocus = false
 	export let onSuccess = () => {}
 
-	let url = ''
-	let description = ''
 	let errors: FormError[] = []
+
+	let url = 'https://www.youtube.com/watch?v=1rtS2OEV6bM'
+	let description = ''
+	let titleInput: HTMLInputElement
+
+	$: oembedPromise = getYoutubeGetVideoDetails(url)
+
+	$: {
+		oembedPromise
+		errors = []
+	}
 
 	const onSubmit = async () => {
 		errors = []
 
+		const data = {
+			...(await oembedPromise),
+			title: titleInput.value,
+			description,
+			url,
+		}
+
 		const response = await fetch('/api/content', {
 			method: 'POST',
-			body: JSON.stringify({ url, description }),
+			body: JSON.stringify(data),
 		})
 
 		if (response.ok) onSuccess()
@@ -30,33 +47,49 @@
 		<input {autofocus} type="text" name="url" id="url" placeholder="url" bind:value={url} />
 		<small>Only Youtube urls are currently supported</small>
 	</div>
-
-	<div class="grid gap-2">
-		<label for="description" class="leading-tight">
-			What do you find particularly interesting in this content?
-		</label>
-
-		<TextareaAutogrow
-			bind:value={description}
-			id="description"
-			name="description"
-			placeholder="Description"
-		/>
-		<small>
-			Markdown supported, long descriptions supported. <br />
-			Only the first 3 lines are visible in the previews.
-		</small>
-	</div>
-
-	{#if errors.length > 0}
+	{#await oembedPromise then value}
 		<div>
-			<Errors {errors} />
+			<img src={value.thumbnailUrl} alt="Preview" class="w-1/2 mx-auto" />
 		</div>
-	{/if}
 
-	<div>
-		<button type="submit" class="btn">Submit</button>
-	</div>
+		<div>
+			<label for="title" class="leading-tight">Title</label>
+			<input type="text" name="title" id="title" value={value.title} bind:this={titleInput} />
+			<small>Please clean, shorten or reword if appropriate.</small>
+		</div>
+
+		<div>
+			<label for="description" class="leading-tight">
+				What do you find particularly interesting in this content?
+			</label>
+
+			<TextareaAutogrow
+				bind:value={description}
+				id="description"
+				name="description"
+				placeholder="Description"
+			/>
+
+			<small>
+				Markdown supported, long descriptions supported. <br />
+				Only the first 3 lines are visible in the previews.
+			</small>
+		</div>
+
+		{#if errors.length > 0}
+			<div>
+				<Errors {errors} />
+			</div>
+		{/if}
+
+		<div class="text-center">
+			<button type="submit" class="btn">Submit</button>
+		</div>
+	{:catch error}
+		<div>
+			<Errors errors={[{ message: 'Invalid Youtube URL.' }]} />
+		</div>
+	{/await}
 </form>
 
 <style lang="postcss">
