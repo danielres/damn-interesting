@@ -1,14 +1,13 @@
 <script lang="ts" scope="module">
 	import type { FormError } from '$lib/validators'
 
-	import { dev } from '$app/environment'
 	import { enhance } from '$app/forms'
 	import Errors from '../Errors.svelte'
 
 	export let onSuccess = () => window.location.reload()
 
-	export let email = dev ? 'dan@example.com' : ''
-	let password = dev ? 'pass' : ''
+	export let email = ''
+	let password = ''
 
 	let errors: FormError[] = []
 </script>
