@@ -5,6 +5,8 @@
 	import { formatDuration } from '$lib/time'
 	import Errors from './Errors.svelte'
 	import TextareaAutogrow from './TextareaAutogrow.svelte'
+	import EntryImage from '$components/Entry/EntryImage.svelte'
+	import { validate_each_argument } from 'svelte/internal'
 
 	export let autofocus = false
 	export let onSuccess = () => {}
@@ -50,19 +52,8 @@
 	</div>
 
 	{#await oembedPromise then value}
-		<div class="relative max-w-xs mx-auto rounded-lg">
-			<img
-				src={value.thumbnailUrl}
-				alt="Preview"
-				class="aspect-video w-full rounded-lg border-4 border-slate-600 object-cover transition-all hover:border-slate-400 hover:shadow-lg "
-			/>
-			{#if value.duration}
-				<div
-					class="absolute right-0 bottom-0 rounded-tl-lg rounded-br-lg bg-slate-600 px-2 py-1 text-sm "
-				>
-					{formatDuration(value.duration)}
-				</div>
-			{/if}
+		<div class="max-w-xs mx-auto ">
+			<EntryImage duration={value.duration} thumbnailUrl={value.thumbnailUrl} title="Preview" />
 		</div>
 
 		<div>

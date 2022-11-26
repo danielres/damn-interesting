@@ -5,6 +5,7 @@
 	import { format } from '$lib/date'
 	import { formatDuration } from '$lib/time'
 	import { marked } from 'marked'
+	import EntryImage from './Entry/EntryImage.svelte'
 
 	export let entry: Entry & { owner: Pick<User, 'slug' | 'username'> }
 	export let mode: 'thumbnail' | 'view' = 'view'
@@ -23,24 +24,8 @@
 	</h3>
 
 	{#if mode === 'thumbnail'}
-		<a
-			href="/entries/{entry.id}"
-			class="relative opacity-70 hover:opacity-100"
-			data-sveltekit-prefetch
-		>
-			<img
-				src={entry.thumbnailUrl}
-				alt={entry.title}
-				class="aspect-video w-full rounded-lg border-4 border-slate-600 object-cover transition-all hover:border-slate-400 hover:shadow-lg "
-			/>
-
-			{#if entry.duration}
-				<div
-					class="absolute right-0 bottom-0 rounded-tl-lg rounded-br-lg bg-slate-600 px-2 py-1 text-sm "
-				>
-					{formatDuration(entry.duration)}
-				</div>
-			{/if}
+		<a href="/entries/{entry.id}" class="opacity-70 hover:opacity-100" data-sveltekit-prefetch>
+			<EntryImage duration={entry.duration} thumbnailUrl={entry.thumbnailUrl} title={entry.title} />
 		</a>
 	{/if}
 
