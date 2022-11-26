@@ -36,6 +36,7 @@ model Entry {
   ownerId         String
   authorName      String
   authorUrl       String
+  duration        Int?
   height          Int
   providerName    String
   thumbnailHeight Int
