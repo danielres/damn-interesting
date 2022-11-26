@@ -52,8 +52,9 @@
 	</div>
 
 	{#await oembedPromise then value}
-		<div class="max-w-xs mx-auto ">
+		<div class="max-w-xs mx-auto relative">
 			<EntryImage duration={value.duration} thumbnailUrl={value.thumbnailUrl} title="Preview" />
+			<div class="absolute top-0 left-0 right-0 bottom-0" />
 		</div>
 
 		<div>
