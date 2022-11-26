@@ -4,7 +4,7 @@
 	export let type: 'warning' | 'success' | undefined = undefined
 </script>
 
-<div class="{type} alert " transition:fade>
+<div class="{type} alert">
 	<slot />
 </div>
 
