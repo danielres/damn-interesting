@@ -14,9 +14,7 @@
 	/>
 
 	{#if duration}
-		<div
-			class="absolute right-0 bottom-0 rounded-tl-lg rounded-br-lg bg-slate-600 px-2 py-1 text-sm "
-		>
+		<div class="absolute right-1 bottom-1 rounded-tl-lg rounded-br bg-slate-600 px-2 pt-1 text-sm ">
 			{formatDuration(duration)}
 		</div>
 	{/if}
