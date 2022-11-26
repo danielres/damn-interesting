@@ -1,6 +1,18 @@
 // Credits:
 // Based on https://github.com/LinusU/node-parse-iso-duration
 
+export const formatDuration = (seconds: number) => {
+	if (seconds < 60) return `${seconds} sec`
+
+	const result = new Date(seconds * 1000)
+		.toISOString()
+		.split('T')[1]
+		.split('.')[0]
+		.replace(/^00:/, '')
+
+	return result
+}
+
 const WEEK_REGEXP = /^P([0-9]+W)$/
 const DATETIME_REGEXP = /^P(([0-9]+Y)?([0-9]+M)?([0-9]+D)?)?(T([0-9]+H)?([0-9]+M)?([0-9]+S)?)?$/
 
