@@ -10,7 +10,7 @@
 
 	let errors: FormError[] = []
 
-	let url = 'https://www.youtube.com/watch?v=1rtS2OEV6bM'
+	let url = ''
 	let description = ''
 	let titleInput: HTMLInputElement
 
