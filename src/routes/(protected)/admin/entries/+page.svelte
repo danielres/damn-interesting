@@ -2,6 +2,7 @@
 	import type { PageData } from './$types'
 
 	import { format } from '$lib/date'
+	import { formatDuration } from '$lib/time'
 
 	export let data: PageData
 
@@ -18,9 +19,17 @@
 					</div>
 
 					<div class="grid gap-2">
-						<div class="">
+						<div>
 							{entry.title}
-							<div class="opacity-50">{format(entry.createdAt)}</div>
+							<div class="opacity-50">
+								{format(entry.createdAt)}
+								|
+								{#if entry.duration}
+									{formatDuration(entry.duration)}
+								{:else}
+									<span class="bg-red-600 px-2 py-1 text-xs">duration missing</span>
+								{/if}
+							</div>
 						</div>
 						<div class="owner">
 							Added by <a href={`/admin/users/${entry.owner.slug}`}>{entry.owner.username}</a>

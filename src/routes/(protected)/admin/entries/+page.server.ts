@@ -7,6 +7,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			title: true,
 			thumbnailUrl: true,
 			createdAt: true,
+			duration: true,
 			owner: {
 				select: {
 					slug: true,
