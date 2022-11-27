@@ -28,7 +28,7 @@ export const getYoutubeGetVideoDetails = async (url: string): Promise<YoutubeVid
 	const resourceId = response.thumbnail_url.split('/vi/')[1].split('/')[0]
 
 	let duration
-	if (resourceId) {
+	if (resourceId && YOUTUBE_DATA_API_KEY) {
 		try {
 			duration = await getYoutubeVideoDuration(resourceId)
 		} catch (error) {
