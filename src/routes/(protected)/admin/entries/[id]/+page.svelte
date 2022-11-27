@@ -14,8 +14,12 @@
 	let errors: FormError[] = []
 	let title = data.admin.entry?.title || ''
 	let description = data.admin.entry?.description || ''
+	let duration = data.admin.entry?.duration
 
-	$: ischanged = title !== data.admin.entry?.title || description !== data.admin.entry?.description
+	$: ischanged =
+		title !== data.admin.entry?.title ||
+		description !== data.admin.entry?.description ||
+		duration !== data.admin.entry?.duration
 </script>
 
 <div class="mx-auto my-8 grid max-w-4xl gap-8 md:grid-cols-2">
@@ -63,6 +67,16 @@
 			<div>
 				<label for="description">Description</label>
 				<textarea name="description" id="description" bind:value={description} rows="4" />
+			</div>
+
+			<div>
+				<label for="duration">
+					Duration
+					{#if !duration}
+						<span class="bg-red-600 px-2 py-1 text-xs">missing</span>
+					{/if}
+				</label>
+				<input type="text" name="duration" id="duration" bind:value={duration} />
 			</div>
 
 			{#if errors.length > 0}

@@ -2,8 +2,11 @@
 	import type { FormError } from '$lib/validators'
 
 	import { getYoutubeGetVideoDetails } from '$lib/Entry/youtube'
+	import { formatDuration } from '$lib/time'
 	import Errors from './Errors.svelte'
 	import TextareaAutogrow from './TextareaAutogrow.svelte'
+	import EntryImage from '$components/Entry/EntryImage.svelte'
+	import { validate_each_argument } from 'svelte/internal'
 
 	export let autofocus = false
 	export let onSuccess = () => {}
@@ -47,9 +50,11 @@
 		<input {autofocus} type="text" name="url" id="url" placeholder="url" bind:value={url} />
 		<small>Only Youtube urls are currently supported</small>
 	</div>
+
 	{#await oembedPromise then value}
-		<div>
-			<img src={value.thumbnailUrl} alt="Preview" class="w-1/2 mx-auto" />
+		<div class="max-w-xs mx-auto relative">
+			<EntryImage duration={value.duration} thumbnailUrl={value.thumbnailUrl} title="Preview" />
+			<div class="absolute top-0 left-0 right-0 bottom-0" />
 		</div>
 
 		<div>

@@ -1,6 +1,7 @@
 export type YoutubeVideoDetails = {
 	authorName: string
 	authorUrl: string
+	duration: number | undefined
 	height: number
 	providerName: string
 	resourceType: string
