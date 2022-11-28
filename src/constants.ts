@@ -23,3 +23,7 @@ export const OWNER = {
 	slug: public_env.PUBLIC_OWNER_SLUG,
 	username: public_env.PUBLIC_OWNER_USERNAME,
 }
+
+export const SITE = {
+	base_url: public_env.PUBLIC_BASE_URL || 'https://di.fly.dev',
+}
