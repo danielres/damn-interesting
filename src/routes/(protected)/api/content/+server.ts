@@ -2,6 +2,7 @@ import type { RequestHandler } from './$types'
 
 import { HTTP_CODES } from '$constants'
 import { makeUnauthorizedResponse } from '$lib/response'
+import * as bot from '$lib/bot'
 import * as validators from '$lib/validators'
 import { Prisma } from '@prisma/client'
 
@@ -29,6 +30,8 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 				...data,
 			},
 		})
+
+		bot.handleNewEntry(user.username, result)
 
 		return new Response(JSON.stringify(result))
 	} catch (error) {
