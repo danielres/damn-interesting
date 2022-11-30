@@ -67,5 +67,5 @@ export const getBotUpdates = async () => {
 		return { success: false, error: { code: error_code, description } }
 	}
 
-	return { success: true }
+	return { success: true, data: await res.json() }
 }
