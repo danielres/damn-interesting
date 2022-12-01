@@ -15,6 +15,7 @@
 				<li><a href="/admin/users">Users</a></li>
 				<li><a href="/admin/entries">Entries</a></li>
 				<li><a href="/admin/tags">Tags</a></li>
+				<li class="ml-auto"><a href="/admin/bot">Bot</a></li>
 			</ul>
 		</nav>
 		<div class="py-4 md:px-8">
