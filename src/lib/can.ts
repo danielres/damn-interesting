@@ -20,4 +20,10 @@ export const can = {
 		if (entry.ownerId === user.id) return true
 		return false
 	},
+
+	sendTelegramMessage: (user: Pick<User, 'role'> | null) => {
+		if (!user) return false
+		if (user.role === USER_ROLES.SUPERADMIN) return true
+		return false
+	},
 }
