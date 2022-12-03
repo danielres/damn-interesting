@@ -19,6 +19,9 @@ export const sendBotMessage = async (text: string, destination: Destination) => 
 
 	const chat_id = getChatId(destination)
 
+	if (!chat_id)
+		return { success: false, error: { code: 400, description: 'Telegram chat_id not found' } }
+
 	const apiUrl = `https://api.telegram.org/bot${TOKEN}/sendMessage`
 	const res = await fetch(apiUrl, {
 		method: 'POST',
@@ -72,15 +75,20 @@ export const getBotUpdates = async () => {
 	if (!TOKEN) return
 
 	const apiUrl = `https://api.telegram.org/bot${TOKEN}/getUpdates`
-	const res = await fetch(apiUrl)
 
-	if (!res.ok) {
-		const { error_code, description } = await res.json()
-		console.log(
-			`Error: getUpdates(): Telegram request failed, code: ${error_code}: "${description}"`
-		)
-		return { success: false, error: { code: error_code, description } }
+	try {
+		const res = await fetch(apiUrl)
+
+		if (!res.ok) {
+			const { error_code, description } = await res.json()
+			console.log(
+				`Error: getUpdates(): Telegram request failed, code: ${error_code}: "${description}"`
+			)
+			return { success: false, error: { code: error_code, description } }
+		}
+
+		return { success: true, data: await res.json() }
+	} catch (error) {
+		console.log(error)
 	}
-
-	return { success: true, data: await res.json() }
 }
