@@ -16,7 +16,7 @@
 	let url = ''
 	let description = ''
 	let titleInput: HTMLInputElement
-	let tags: string[]
+	let tags: string[] = []
 
 	$: oembedPromise = getYoutubeGetVideoDetails(url)
 
