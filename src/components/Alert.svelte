@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition'
-
 	export let type: 'warning' | 'success' | undefined = undefined
 </script>
 
