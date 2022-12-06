@@ -6,8 +6,8 @@
 </script>
 
 <div class="auto-grow">
-	<textarea {name} {id} bind:value {placeholder} />
-	<span class="replicated">{value + ' '}</span>
+	<textarea class="p-0" {name} {id} bind:value {placeholder} />
+	<div class="replicated p-0">{value + ' '}</div>
 </div>
 
 <style lang="postcss">
@@ -22,6 +22,7 @@
 		.replicated {
 			white-space: pre-wrap;
 			visibility: hidden;
+			padding-bottom: 0.5em;
 		}
 
 		textarea,
