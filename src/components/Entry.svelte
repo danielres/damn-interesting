@@ -3,7 +3,6 @@
 
 	import Prose from '$components/Prose.svelte'
 	import { format } from '$lib/date'
-	import { formatDuration } from '$lib/time'
 	import { marked } from 'marked'
 	import EntryImage from './Entry/EntryImage.svelte'
 

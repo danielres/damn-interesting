@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { FormError } from '$lib/validators'
 
-	import { getYoutubeGetVideoDetails } from '$lib/Entry/youtube'
-	import { formatDuration } from '$lib/time'
-	import Errors from './Errors.svelte'
-	import TextareaAutogrow from './TextareaAutogrow.svelte'
 	import EntryImage from '$components/Entry/EntryImage.svelte'
-	import { validate_each_argument } from 'svelte/internal'
+	import { getYoutubeGetVideoDetails } from '$lib/Entry/youtube'
+	import { fade } from 'svelte/transition'
+	import Errors from './Errors.svelte'
+	import TagInputAutocomplete from './FormSubmitContent/TagInputAutocomplete.svelte'
+	import TextareaAutogrow from './TextareaAutogrow.svelte'
 
 	export let autofocus = false
 	export let onSuccess = () => {}
@@ -16,6 +16,7 @@
 	let url = ''
 	let description = ''
 	let titleInput: HTMLInputElement
+	let tags: string[]
 
 	$: oembedPromise = getYoutubeGetVideoDetails(url)
 
@@ -32,6 +33,7 @@
 			title: titleInput.value,
 			description,
 			url,
+			tags,
 		}
 
 		const response = await fetch('/api/content', {
@@ -81,6 +83,27 @@
 			</small>
 		</div>
 
+		<div>
+			<div class="leading-tight">Tags</div>
+			<ul class="flex flex-wrap gap-2 text-sm mt-1">
+				{#each tags as tag (tag)}
+					<li class="badge" transition:fade>
+						{tag}
+						<button
+							class="mini-circle danger"
+							type="button"
+							on:click={() => (tags = tags.filter((t) => t !== tag))}
+						>
+							-
+						</button>
+					</li>
+				{/each}
+				<li>
+					<TagInputAutocomplete bind:tags />
+				</li>
+			</ul>
+		</div>
+
 		{#if errors.length > 0}
 			<div>
 				<Errors {errors} />
@@ -100,8 +123,18 @@
 </form>
 
 <style lang="postcss">
-	input[type='text'],
-	small {
-		@apply mt-1 block leading-tight opacity-60;
+	form {
+		input[type='text'],
+		:global(textarea),
+		:global(.replicated) {
+			@apply p-2;
+		}
+
+		small {
+			@apply mt-1 ml-2 block leading-snug drop-shadow-sharp;
+		}
+		:global(textarea),
+		:global(textarea) {
+		}
 	}
 </style>

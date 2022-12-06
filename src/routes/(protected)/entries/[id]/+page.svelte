@@ -163,7 +163,10 @@
 </div>
 
 <style lang="postcss">
-	.custom-textarea :global(textarea) {
-		@apply p-0 text-sm;
+	.custom-textarea {
+		:global(textarea),
+		:global(.replicated) {
+			@apply text-sm;
+		}
 	}
 </style>

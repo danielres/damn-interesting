@@ -12,7 +12,8 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 	const { user } = locals
 	if (!user) return makeUnauthorizedResponse('Unauthorized: User not found')
 
-	const data = await request.json()
+	const { tags, ...data } = await request.json()
+	data.description = data.description.trim()
 	const { description, title } = data
 
 	errors = [...errors, ...validators.entry({ title, description })]
@@ -22,12 +23,41 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 
 	const resourceId = data.thumbnailUrl.split('/vi/')[1].split('/')[0]
 
+	const newDate = new Date()
+
 	try {
 		const result = await locals.prisma.entry.create({
 			data: {
 				id: resourceId,
 				ownerId: user.id,
 				...data,
+				taggings: {
+					create: tags.map((name: string) => ({
+						createdAt: newDate,
+						creator: {
+							connect: {
+								id: user.id,
+							},
+						},
+						tag: {
+							connectOrCreate: {
+								where: { name },
+								create: {
+									name,
+									createdAt: newDate,
+									creator: {
+										connect: {
+											id: user.id,
+										},
+									},
+								},
+							},
+						},
+					})),
+				},
+			},
+			include: {
+				taggings: { select: { tag: { select: { name: true } } } },
 			},
 		})
 
