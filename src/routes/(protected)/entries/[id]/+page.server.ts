@@ -40,12 +40,16 @@ export const actions: Actions = {
 			errors.push({ message: 'Sorry, not allowed.' })
 			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
 		}
+
 		const { id: _id, duration, ...data } = await getFormEntriesFromRequest(request) // eslint-disable-line @typescript-eslint/no-unused-vars
+
+		console.log(data, { duration })
+
 		errors = [...errors, ...validators.entry(data)]
 		if (errors.length > 0) return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
 
 		await locals.prisma.entry.update({
-			data: { ...data, duration: parseInt(duration, 10) },
+			data: { ...data, ...(duration && { duration: parseInt(duration, 10) }) },
 			where: { id },
 		})
 	},
