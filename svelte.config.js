@@ -21,6 +21,7 @@ const config = {
 			$components2: 'src/routes/v2/components',
 			$constants: 'src/constants.ts',
 			$dev: 'src/dev',
+			$paths: 'src/routes/v2/paths.ts',
 			$stores: 'src/stores',
 			$types: 'src/types.d.ts',
 		},
