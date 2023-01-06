@@ -18,6 +18,7 @@ const config = {
 		alias: {
 			$can: 'src/lib/can.ts',
 			$components: 'src/components',
+			$components2: 'src/routes/v2/components',
 			$constants: 'src/constants.ts',
 			$dev: 'src/dev',
 			$stores: 'src/stores',
