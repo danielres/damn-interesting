@@ -1,0 +1,21 @@
+@layer base {
+	body,
+	body * {
+		scrollbar-color: theme(colors.slate.600) transparent;
+		scrollbar-width: auto;
+
+		&::-webkit-scrollbar {
+			@apply w-2 rounded bg-slate-600;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			@apply w-2 rounded-sm bg-slate-500 shadow;
+		}
+	}
+
+	:global(body) {
+		&::-webkit-scrollbar {
+			@apply w-3 bg-slate-900;
+		}
+	}
+}
