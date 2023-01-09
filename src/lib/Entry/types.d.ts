@@ -10,4 +10,5 @@ export type YoutubeVideoDetails = {
 	thumbnailWidth: number
 	title: string
 	width: number
+	url: string
 }
