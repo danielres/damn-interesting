@@ -8,7 +8,7 @@ import { compare } from '$lib/password'
 import { getFormEntriesFromRequest } from '$lib/request'
 import { slugify } from '$lib/string'
 import { Prisma } from '@prisma/client'
-import { invalid } from '@sveltejs/kit'
+import { fail } from '@sveltejs/kit'
 import { randomUUID } from 'crypto'
 
 const handlePrismaCreate = async (fn: () => Promise<unknown>) => {
@@ -23,7 +23,7 @@ const handlePrismaCreate = async (fn: () => Promise<unknown>) => {
 					field,
 					message: 'already in use',
 				}))
-				return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
+				return fail(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
 			}
 		}
 
@@ -38,7 +38,7 @@ export const actions: Actions = {
 
 		if (!encryptedSession) {
 			errors.push({ message: 'Session expired' })
-			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
+			return fail(HTTP_CODES.UNAUTHORIZED, { errors })
 		}
 
 		cookies.set(COOKIES.session.name, encryptedSession, {
@@ -55,14 +55,14 @@ export const actions: Actions = {
 
 		if (!user) {
 			errors.push({ message: 'Email/password combination is not valid' })
-			return invalid(HTTP_CODES.FORBIDDEN, { errors })
+			return fail(HTTP_CODES.FORBIDDEN, { errors })
 		}
 
 		const isPasswordValid = await compare(password.toString(), user.password)
 
 		if (!isPasswordValid) {
 			errors.push({ message: 'Email/password combination is not valid' })
-			return invalid(HTTP_CODES.FORBIDDEN, { errors })
+			return fail(HTTP_CODES.FORBIDDEN, { errors })
 		}
 
 		await locals.prisma.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } })
@@ -83,7 +83,7 @@ export const actions: Actions = {
 
 		if (!canSignup) {
 			errors.push({ message: 'Sorry, by invitation only at this time.' })
-			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
+			return fail(HTTP_CODES.UNAUTHORIZED, { errors })
 		}
 		const { password2, ...values } = await getFormEntriesFromRequest(request) // eslint-disable-line @typescript-eslint/no-unused-vars
 
@@ -110,7 +110,7 @@ export const actions: Actions = {
 		if (countByUsername > 0) errors.push({ field: 'username', message: 'already in use' })
 		if (countByEmail > 0) errors.push({ field: 'email', message: 'already in use' })
 
-		if (errors.length > 0) return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
+		if (errors.length > 0) return fail(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
 
 		const data: Prisma.UserUncheckedCreateInput = {
 			id: randomUUID(),
@@ -133,14 +133,14 @@ export const actions: Actions = {
 
 		if (user) {
 			errors.push({ message: 'This person is a member already.' })
-			return invalid(HTTP_CODES.FORBIDDEN, { errors })
+			return fail(HTTP_CODES.FORBIDDEN, { errors })
 		}
 
 		const currentUser = locals.user
 
 		if (!currentUser) {
 			errors.push({ message: 'Unauthorized, please sign in first.' })
-			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
+			return fail(HTTP_CODES.UNAUTHORIZED, { errors })
 		}
 
 		const invitationObject: InvitationObject = {

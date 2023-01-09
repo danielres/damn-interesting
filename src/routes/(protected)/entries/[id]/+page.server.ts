@@ -4,7 +4,7 @@ import type { Actions, PageServerLoad } from './$types'
 import { HTTP_CODES } from '$constants'
 import { getFormEntriesFromRequest } from '$lib/request'
 import * as validators from '$lib/validators'
-import { invalid } from '@sveltejs/kit'
+import { fail } from '@sveltejs/kit'
 
 export const load: PageServerLoad = async ({ params, locals }) => {
 	const entry = await locals.prisma.entry.findUnique({
@@ -38,7 +38,7 @@ export const actions: Actions = {
 
 		if (!canUpdateEntry) {
 			errors.push({ message: 'Sorry, not allowed.' })
-			return invalid(HTTP_CODES.UNAUTHORIZED, { errors })
+			return fail(HTTP_CODES.UNAUTHORIZED, { errors })
 		}
 
 		const { id: _id, duration, ...data } = await getFormEntriesFromRequest(request) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -46,7 +46,7 @@ export const actions: Actions = {
 		console.log(data, { duration })
 
 		errors = [...errors, ...validators.entry(data)]
-		if (errors.length > 0) return invalid(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
+		if (errors.length > 0) return fail(HTTP_CODES.UNPROCESSABLE_ENTITY, { errors })
 
 		await locals.prisma.entry.update({
 			data: { ...data, ...(duration && { duration: parseInt(duration, 10) }) },

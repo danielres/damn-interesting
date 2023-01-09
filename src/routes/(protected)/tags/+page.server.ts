@@ -3,7 +3,7 @@ import type { Actions } from './$types'
 
 import { HTTP_CODES } from '$constants'
 import { getFormEntriesFromRequest } from '$lib/request'
-import { invalid } from '@sveltejs/kit'
+import { fail } from '@sveltejs/kit'
 import { capitalizeFirst, sanitizeInputValue } from '$lib/string'
 
 export const actions: Actions = {
@@ -17,7 +17,7 @@ export const actions: Actions = {
 
 		if (!user || !locals.can.updateEntry(user, entry)) {
 			errors.push({ message: 'Forbidden' })
-			return invalid(HTTP_CODES.FORBIDDEN, { errors })
+			return fail(HTTP_CODES.FORBIDDEN, { errors })
 		}
 
 		const newDate = new Date()
@@ -61,7 +61,7 @@ export const actions: Actions = {
 
 		if (!user || !locals.can.updateEntry(user, entry)) {
 			errors.push({ message: 'Forbidden' })
-			return invalid(HTTP_CODES.FORBIDDEN, { errors })
+			return fail(HTTP_CODES.FORBIDDEN, { errors })
 		}
 
 		await locals.prisma.tagging.delete({

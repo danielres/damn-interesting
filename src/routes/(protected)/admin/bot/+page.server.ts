@@ -6,7 +6,7 @@ import { HTTP_CODES } from '$constants'
 import { can } from '$lib/can'
 import { getFormEntriesFromRequest } from '$lib/request'
 import * as telegram from '$lib/telegram'
-import { invalid } from '@sveltejs/kit'
+import { fail } from '@sveltejs/kit'
 
 export const load: PageServerLoad = async () => {
 	const botUpdates = await telegram.getBotUpdates()
@@ -24,7 +24,7 @@ export const actions: Actions = {
 
 		if (!canSendTelegramMessage) {
 			errors.push({ message: 'User not allowed to send telegram messages.' })
-			return invalid(HTTP_CODES.FORBIDDEN, { errors })
+			return fail(HTTP_CODES.FORBIDDEN, { errors })
 		}
 
 		const entries = await getFormEntriesFromRequest(request)
