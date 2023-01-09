@@ -71,13 +71,17 @@
 			}
 		}
 		ul {
-			@apply list-disc;
+			@apply list-none;
+			li::before {
+				content: '•';
+				@apply -ml-3 inline-block w-3 text-white/60;
+			}
 		}
 		ol {
 			@apply list-decimal;
 		}
 		li {
-			@apply m-0  p-0;
+			@apply m-0 p-0;
 		}
 		hr {
 			@apply my-4 opacity-20;
