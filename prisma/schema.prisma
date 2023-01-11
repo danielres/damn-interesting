@@ -28,24 +28,18 @@ model User {
 }
 
 model Entry {
-  id              String    @id @default(uuid())
-  createdAt       DateTime  @default(now())
-  url             String
-  description     String
-  owner           User      @relation(fields: [ownerId], references: [id])
-  ownerId         String
-  authorName      String
-  authorUrl       String
-  duration        Int?
-  height          Int
-  providerName    String
-  thumbnailHeight Int
-  thumbnailUrl    String
-  thumbnailWidth  Int
-  title           String
-  resourceType    String
-  width           Int
-  taggings        Tagging[]
+  id           String    @id @default(uuid())
+  createdAt    DateTime  @default(now())
+  url          String
+  description  String
+  owner        User      @relation(fields: [ownerId], references: [id])
+  ownerId      String
+  authorName   String
+  authorUrl    String
+  duration     Int?
+  thumbnailUrl String
+  title        String
+  taggings     Tagging[]
 }
 
 model Tag {
