@@ -23,7 +23,7 @@
 		return ({ result }) => {
 			errors = []
 			if (result.type === 'success') code = result.data?.code
-			if (result.type === 'invalid') errors = result.data?.errors
+			if (result.type === 'failure') errors = result.data?.errors
 			if (result.type === 'error') errors = [result.error]
 		}
 	}}
