@@ -1,4 +1,4 @@
-export const highlight = (str = '', match: string | null | undefined = '') => {
+export const highlight = (str = '', match: string | null | undefined = '', tag = 'mark') => {
 	if (!match) return str
 
 	const isSafeMatch = /^[a-zA-Z0-9_\- ]*$/.test(match)
@@ -14,5 +14,5 @@ export const highlight = (str = '', match: string | null | undefined = '') => {
 	}
 
 	const re = new RegExp(`(${match})`, 'gi')
-	return str.replace(re, '<mark>$1</mark>')
+	return str.replace(re, `<${tag}>$1</${tag}>`)
 }
