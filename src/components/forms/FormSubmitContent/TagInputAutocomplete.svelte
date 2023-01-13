@@ -15,7 +15,7 @@
 		return !tags.includes(str) && value !== str
 	}
 
-	$: value = capitalizeFirst(sanitizeInputValue(value, { trimEnd: false }))
+	$: value = capitalizeFirst(sanitizeInputValue(value, { trimEnd: false })) || ''
 	$: if (!value) suggestions = []
 	$: if (value.length > 0) {
 		if (cache.has(value)) suggestions = cache.get(value).filter(filter)
