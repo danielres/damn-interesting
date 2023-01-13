@@ -33,7 +33,7 @@
 
 		return async ({ result }) => {
 			if (result.type === 'success') onSuccess()
-			if (result.type === 'invalid') errors = result.data?.errors
+			if (result.type === 'failure') errors = result.data?.errors
 			if (result.type === 'error') errors = [result.error]
 		}
 	}}
