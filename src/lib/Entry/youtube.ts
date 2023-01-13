@@ -39,28 +39,16 @@ export const getYoutubeGetVideoDetails = async (url: string): Promise<YoutubeVid
 	const {
 		author_name: authorName,
 		author_url: authorUrl,
-		height,
-		provider_name: providerName,
-		thumbnail_height: thumbnailHeight,
 		thumbnail_url: thumbnailUrl,
-		thumbnail_width: thumbnailWidth,
 		title,
-		type: resourceType,
-		width,
 	} = response
 
 	return {
 		authorName,
 		authorUrl,
 		duration,
-		height,
-		providerName,
-		thumbnailHeight,
 		thumbnailUrl,
-		thumbnailWidth,
 		title,
-		resourceType,
-		width,
 		url,
 	}
 }
