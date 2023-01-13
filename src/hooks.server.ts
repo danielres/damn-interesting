@@ -1,6 +1,7 @@
 import { error, type Handle } from '@sveltejs/kit'
 
 import { can } from '$can'
+import { HTTP_CODES } from '$constants'
 import { prisma } from '$lib/prisma/clients'
 import { hashUserPassword } from '$lib/prisma/middlewares'
 import { routes } from './routes/v2/guard'
@@ -14,7 +15,7 @@ prisma.$use(hashUserPassword)
 const guard: Handle = async ({ event, resolve }) => {
 	if (!event.route.id?.startsWith('/v2')) return resolve(event) // TODO: remove after V2 complete
 	if (!event.route.id || event.route.id in routes) return resolve(event)
-	throw error(401, `Missing route guard declaration for "${event.route.id}"`)
+	throw error(HTTP_CODES.SERVER_ERROR, `Missing route guard declaration for "${event.route.id}"`)
 }
 
 const localPrisma: Handle = async ({ event, resolve }) => {

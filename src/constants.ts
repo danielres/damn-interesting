@@ -2,6 +2,7 @@ import { env as public_env } from '$env/dynamic/public'
 
 export const HTTP_CODES = {
 	FORBIDDEN: 403,
+	SERVER_ERROR: 500,
 	UNAUTHORIZED: 401,
 	UNPROCESSABLE_ENTITY: 422,
 }
