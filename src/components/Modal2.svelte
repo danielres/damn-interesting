@@ -4,7 +4,7 @@
 	import { portal } from '$lib/actions/portal'
 	import ButtonClose from '$components/Modal2/ButtonClose.svelte'
 
-	let _class = 'bg-slate-600 p-8 rounded border border-black shadow-lg'
+	let _class = 'bg-slate-700 p-8 rounded border border-black shadow-lg'
 	export { _class as class }
 
 	export let isOpen = false
@@ -26,6 +26,7 @@
 		if (browser && isOpen) clipBody(true)
 		if (browser && !isOpen) clipBody(false)
 	}
+
 	onDestroy(() => clipBody(false))
 </script>
 
