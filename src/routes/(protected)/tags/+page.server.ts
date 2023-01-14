@@ -12,6 +12,8 @@ export const actions: Actions = {
 		const { name: _name, entryId } = await getFormEntriesFromRequest(request)
 
 		const name = capitalizeFirst(sanitizeInputValue(_name))
+		if (!name) return
+
 		const user = locals.user
 		const entry = await locals.prisma.entry.findUnique({ where: { id: entryId } })
 
