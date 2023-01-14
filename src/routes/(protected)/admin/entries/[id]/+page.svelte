@@ -32,7 +32,7 @@
 				return ({ result }) => {
 					errors = []
 					if (result.type === 'success') invalidateAll()
-					if (result.type === 'invalid') errors = result.data?.errors
+					if (result.type === 'failure') errors = result.data?.errors
 					if (result.type === 'error') errors = [result.error]
 				}
 			}}

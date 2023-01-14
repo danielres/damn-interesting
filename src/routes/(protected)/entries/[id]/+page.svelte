@@ -36,7 +36,7 @@
 					invalidateAll()
 					isEditing = false
 				}
-				if (result.type === 'invalid') errors = result.data?.errors
+				if (result.type === 'failure') errors = result.data?.errors
 				if (result.type === 'error') errors = [result.error]
 			}
 		}}
@@ -53,8 +53,7 @@
 			<div class=" grid gap-4 md:grid-cols-2 md:gap-8">
 				<div class="card h-fit border-2 border-black bg-slate-900">
 					<iframe
-						class="w-full rounded-lg"
-						style="aspect-ratio: {entry.width}/{entry.height}"
+						class="aspect-video w-full rounded-lg"
 						allowfullscreen
 						frameborder="0"
 						src="https://www.youtube.com/embed/{entry.id}?feature=oembed"
