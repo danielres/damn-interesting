@@ -114,6 +114,8 @@
 			<button type="submit" class="btn">Submit</button>
 		</div>
 	{:catch error}
+		{console.log(error)}
+
 		{#if url.length > 0}
 			<div>
 				<Errors errors={[{ message: 'Invalid Youtube URL.' }]} />
