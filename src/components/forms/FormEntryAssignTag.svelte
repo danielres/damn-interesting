@@ -20,7 +20,7 @@
 
 	const cache = new Cache('suggestions', 15, 45)
 
-	$: value = capitalizeFirst(sanitizeInputValue(value, { trimEnd: false }))
+	$: value = capitalizeFirst(sanitizeInputValue(value, { trimEnd: false })) || ''
 	$: if (!value) suggestions = []
 	$: if (value.length > 0) {
 		if (cache.has(value)) suggestions = cache.get(value)
