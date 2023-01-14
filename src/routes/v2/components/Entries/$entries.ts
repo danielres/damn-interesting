@@ -1,8 +1,8 @@
 import type { Entry } from '@prisma/client'
-import type { EntriesGETResponse } from '../routes/v2/entries/+server'
+import type { EntriesGETResponse } from '../../entries/+server'
 
 import { page as pageStore } from '$app/stores'
-import * as paths from '$paths'
+import { to } from '$paths'
 import { derived, get, writable } from 'svelte/store'
 import { error } from '@sveltejs/kit'
 
@@ -16,7 +16,7 @@ export const loadMore = async () => {
 	const apiSearchParams = new URLSearchParams(get(pageStore).url.searchParams)
 	apiSearchParams.set('page', String(get(page)))
 
-	const res = await fetch(paths.api.entries() + '?' + apiSearchParams)
+	const res = await fetch(to.entries() + '?' + apiSearchParams)
 	if (!res.ok) throw error(401, 'Loadmore failed')
 	const newEntries: EntriesGETResponse = await res.json()
 	newEntriesCount.set(newEntries.length)
@@ -35,5 +35,5 @@ export const getEntry = async (id: Entry['id']) => {
 	const found = get(entries).find((e) => e.id === id)
 	if (found) return found
 
-	return await fetch(paths.api.entry(id)).then((res) => res.json())
+	return await fetch(to.entry(id)).then((res) => res.json())
 }
