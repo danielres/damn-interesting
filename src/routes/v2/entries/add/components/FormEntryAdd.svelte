@@ -2,15 +2,14 @@
 	import { browser, dev } from '$app/environment'
 	import { applyAction, enhance, type SubmitFunction } from '$app/forms'
 	import { goto } from '$app/navigation'
-
-	import { page } from '$app/stores'
 	import TextareaAutogrow from '$components/forms/TextareaAutogrow2.svelte'
+	import SchemaErrors from '$components2/forms/SchemaErrors.svelte'
 	import { to } from '$paths'
 	import { reload as reloadEntries } from '$components2/Entries/entries'
 	import { onMount, tick } from 'svelte'
 	import { fade } from 'svelte/transition'
+	import type { ActionData } from '../$types'
 	import EntryItem from '../../components/EntryItem.svelte'
-	import PageFormErrors from '../../../components/forms/PageFormErrors.svelte'
 	import {
 		devResourceIds,
 		newEntryPreview,
@@ -21,12 +20,12 @@
 	} from './FormEntryAdd/$stores'
 	import TagInputAutocomplete from './FormEntryAdd/TagInputAutocomplete2.svelte'
 
-	$: errors = $page.form?.errors || {}
-
 	let inputUrl: HTMLInputElement
 	let inputTitle: HTMLInputElement
 
 	let tags: string[] = []
+
+	export let form: ActionData
 
 	$: if (browser && !$url) tick().then(() => inputUrl.focus())
 	$: if (browser && $youtubeVideoDetails) tick().then(() => inputTitle.focus())
@@ -53,7 +52,7 @@
 <div class="grid gap-6">
 	<form>
 		<fieldset disabled={Boolean($youtubeVideoDetails)}>
-			<label class:hasError={errors.url}>
+			<label class:hasError={form?.errors.url}>
 				<span class="flex gap-8">
 					Youtube URL
 					{#if dev}
@@ -86,7 +85,7 @@
 			<!-- COL1 -->
 			<div class="grid gap-6">
 				<div class="flex flex-col gap-6">
-					<label class:hasError={errors.title}>
+					<label class:hasError={form?.errors.title}>
 						<span>Title</span>
 						<div class="field">
 							<input
@@ -100,7 +99,7 @@
 					</label>
 
 					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class:hasError={errors.description}>
+					<label class:hasError={form?.errors.description}>
 						<span>Description</span>
 						<div class="field">
 							<TextareaAutogrow
@@ -114,7 +113,7 @@
 					</label>
 
 					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class:hasError={errors.tags}>
+					<label class:hasError={form?.errors.tags}>
 						<span>Tags</span>
 						<div class="field">
 							<ul class="mt-1 flex flex-wrap gap-2 text-sm">
@@ -137,7 +136,7 @@
 						</div>
 					</label>
 
-					<PageFormErrors />
+					<SchemaErrors errors={form?.errors} />
 				</div>
 
 				<div class="flex items-end justify-between max-sm:hidden">
