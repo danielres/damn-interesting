@@ -17,7 +17,7 @@
 		url,
 		values,
 		youtubeVideoDetails,
-	} from './FormEntryAdd/$stores'
+	} from './FormEntryAdd/$formEntryAdd'
 	import TagInputAutocomplete from './FormEntryAdd/TagInputAutocomplete2.svelte'
 
 	let inputUrl: HTMLInputElement

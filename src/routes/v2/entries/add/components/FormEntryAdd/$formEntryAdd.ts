@@ -2,24 +2,25 @@ import type { YoutubeVideoDetails } from '$lib/Entry/types'
 import type { User } from '@prisma/client'
 import type { Readable } from 'svelte/store'
 import type { z } from 'zod'
-import type * as schemas from './schemas.server'
+import type * as schemas from './schemas'
 
+import { invalidateAll } from '$app/navigation'
 import { page } from '$app/stores'
 import { getYoutubeGetVideoDetails } from '$lib/Entry/youtube'
 import { capitalizeFirst } from '$lib/string'
 import { derived, writable } from 'svelte/store'
-import { invalidateAll } from '$app/navigation'
 
 type Values = z.infer<typeof schemas.newEntry>
 type ValuesWithOwner = Values & { owner: Pick<User, 'slug' | 'username'> }
 
 export const url = writable('')
 export const youtubeVideoDetails = writable<YoutubeVideoDetails | undefined>(undefined)
-export const values = writable<Partial<Values>>({})
+const initialValues = { tags: [] }
+export const values = writable<Partial<Values>>(initialValues)
 
 const resetUrl = () => url.set('')
 const resetYoutubeVideoDetails = () => youtubeVideoDetails.set(undefined)
-const resetValues = () => values.set({})
+const resetValues = () => values.set(initialValues)
 
 export const resetAll = () => {
 	resetUrl()
@@ -37,7 +38,7 @@ url.subscribe(async ($url) => {
 })
 
 youtubeVideoDetails.subscribe(($details) => {
-	if ($details) values.update(($values) => ({ ...$values, ...$details }))
+	values.update(($values) => ({ ...$values, ...$details }))
 })
 
 values.subscribe(($values) => {
