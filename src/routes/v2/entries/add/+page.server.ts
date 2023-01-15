@@ -7,7 +7,7 @@ import { Prisma } from '@prisma/client'
 import { fail } from '@sveltejs/kit'
 import { ZodError } from 'zod'
 import guardRoute from '../../guard.server'
-import * as schemas from './components/FormEntryAdd/schemas.server'
+import * as schemas from './components/FormEntryAdd/schemas'
 
 export const load = (async ({ locals, route, request }) => {
 	guardRoute(route.id, locals.user, request.method)

@@ -13,9 +13,9 @@ export const newEntry = z
 		title: z.string(),
 		thumbnailUrl: z.string().url(),
 		tags: z.array(z.string()).default([]),
+		createdAt: z.date().default(new Date()),
 	})
 	.transform((obj) => ({
 		...obj,
 		id: obj.thumbnailUrl.split('/vi/')[1].split('/')[0],
-		createdAt: new Date(),
 	}))
