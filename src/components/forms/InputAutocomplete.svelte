@@ -41,7 +41,14 @@
 <svelte:window on:keydown={navigateSuggestions} />
 
 <div class="inline-block">
-	<input name="name" type="text" {placeholder} bind:this={searchInput} bind:value />
+	<input
+		name="name"
+		type="text"
+		{placeholder}
+		bind:this={searchInput}
+		bind:value
+		autocomplete="off"
+	/>
 	<div class="absolute bottom-0 left-0 w-full">
 		{#if suggestions.length > 0}
 			<ul class="suggestions">
