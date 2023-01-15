@@ -12,7 +12,7 @@
 	import YoutubePlayer from '$components/YoutubePlayer.svelte'
 	import { format } from '$lib/date'
 	import { to } from '$paths'
-	import { getEntry } from '$components2/Entries/entries'
+	import { getEntry } from '$components2/Entries/$entries'
 	import { marked } from 'marked'
 	import { onMount } from 'svelte'
 	import colors from 'tailwindcss/colors'
