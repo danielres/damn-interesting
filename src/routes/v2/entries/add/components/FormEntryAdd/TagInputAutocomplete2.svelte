@@ -1,8 +1,7 @@
 <script lang="ts">
-	import InputAutocomplete from '$components2/forms/InputAutocomplete2.svelte'
+	import InputAutocomplete from '$components/forms/InputAutocomplete.svelte'
 	import { Cache } from '$lib/cache'
 	import { debounce } from '$lib/event'
-	// TODO: change
 	import { capitalizeFirst, sanitizeInputValue } from '$lib/string'
 	import { to } from '$paths'
 
