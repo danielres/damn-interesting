@@ -32,8 +32,9 @@
 	const handleQuery = debounce(async (q: string) => {
 		const body = new FormData()
 		body.set('q', q)
-		const response = await fetch('/tags?/query-tag-names', { method: 'POST', body })
-		suggestions = (await response.json()).data.filter(filter)
+		const response = await fetch('/tags', { method: 'POST', body })
+		const fetchedTags = await response.json()
+		suggestions = fetchedTags.filter(filter)
 		cache.set(q, suggestions)
 	})
 </script>

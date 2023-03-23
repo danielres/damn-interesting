@@ -11,9 +11,7 @@
 
 	const cache = new Cache('suggestions', 15, 45)
 
-	const filter = (str: string) => {
-		return !tags.includes(str) && value !== str
-	}
+	const filter = (str: string) => !tags.includes(str) && value !== str
 
 	$: value = capitalizeFirst(sanitizeInputValue(value, { trimEnd: false }))
 	$: if (!value) suggestions = []
@@ -25,8 +23,9 @@
 	const handleQuery = debounce(async (q: string) => {
 		const body = new FormData()
 		body.set('q', q)
-		const response = await fetch('/tags?/query-tag-names', { method: 'POST', body })
-		suggestions = (await response.json()).data.filter(filter)
+		const response = await fetch('/tags', { method: 'POST', body })
+		const fetchedTags = await response.json()
+		suggestions = fetchedTags.filter(filter)
 		cache.set(q, suggestions)
 	})
 </script>
